@@ -44,7 +44,7 @@ export function Services() {
         <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-16">
           {categories.map((category, idx) => (
             <StaggerItem key={idx} className="group cursor-pointer">
-              <div className="relative aspect-[4/3] overflow-hidden mb-8 bg-background">
+              <div className="relative aspect-[4/3] overflow-hidden mb-8 bg-background shadow-[0_8px_24px_rgba(0,0,0,0.25)]">
                 <img 
                   src={category.image} 
                   alt={category.title}
