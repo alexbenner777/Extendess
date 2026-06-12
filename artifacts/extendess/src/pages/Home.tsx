@@ -684,7 +684,7 @@ export default function Home() {
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Философия</span>
             <motion.div
               className="relative w-full flex items-center justify-center"
-              style={{ x: sculptureX, rotate: sculptureRotate }}
+              style={{ x: sculptureX, y: sculptureY, perspective: "900px" }}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
@@ -695,17 +695,19 @@ export default function Home() {
                 alt="Organic sculpture"
                 className="w-full h-auto object-contain"
                 style={{
-                  y: sculptureY,
-                  filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12)) drop-shadow(0 10px 20px rgba(0,0,0,0.08))",
+                  filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.13)) drop-shadow(0 10px 20px rgba(0,0,0,0.08))",
                   maxHeight: "70vh",
+                  transformStyle: "preserve-3d",
                 }}
                 animate={{
-                  y: [0, -24, 0],
-                  rotate: [-1.2, 1.2, -1.2],
+                  rotateY: [0, 360],
                 }}
                 transition={{
-                  y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
-                  rotate: { repeat: Infinity, duration: 8, ease: "easeInOut" },
+                  rotateY: {
+                    repeat: Infinity,
+                    duration: 14,
+                    ease: "linear",
+                  },
                 }}
               />
             </motion.div>
