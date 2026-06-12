@@ -56,9 +56,9 @@ const allServices = [
 
 const FACE_COUNT = 6;
 const FACE_ANGLE = 360 / FACE_COUNT; // 60° per face
-const FACE_W = 380;
-const FACE_H = 540;
-const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT)); // ≈330px
+const FACE_W = 420;
+const FACE_H = 590;
+const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT));
 
 export function Services() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -155,7 +155,7 @@ export function Services() {
                   position: "absolute",
                   top: "7%", left: "50%",
                   transform: "translateX(-50%)",
-                  width: 300, height: 290,
+                  width: 350, height: 340,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {/* Drop shadow that follows the float */}
@@ -207,13 +207,13 @@ export function Services() {
                 }}>
                   <div style={{ width: 24, height: 1, background: "rgba(0,0,0,0.18)", marginBottom: 9 }} />
                   <h3 style={{
-                    fontSize: 17, fontWeight: 200, lineHeight: 1.15,
+                    fontSize: 22, fontWeight: 200, lineHeight: 1.15,
                     letterSpacing: "-0.01em", color: "rgba(0,0,0,0.85)",
-                    whiteSpace: "pre-line", marginBottom: 5,
+                    whiteSpace: "pre-line", marginBottom: 7,
                   }}>
                     {svc.title}
                   </h3>
-                  <p style={{ fontSize: 9, color: "rgba(0,0,0,0.4)", lineHeight: 1.55, fontWeight: 300, marginBottom: 14 }}>
+                  <p style={{ fontSize: 12, color: "rgba(0,0,0,0.42)", lineHeight: 1.6, fontWeight: 300, marginBottom: 16 }}>
                     {svc.desc}
                   </p>
                   <Link
