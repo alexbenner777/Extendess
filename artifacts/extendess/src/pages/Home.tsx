@@ -448,7 +448,7 @@ function InnovationsCarousel() {
   };
 
   return (
-    <section className="py-32 md:py-48 overflow-hidden">
+    <section className="py-16 md:py-20 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 md:px-8">
 
         {/* Single AnimatePresence wraps both text and image — no duplication */}
