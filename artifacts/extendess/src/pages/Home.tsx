@@ -257,17 +257,19 @@ function StickyServices() {
       const wrapper = wrapperRef.current;
       if (!wrapper) return;
 
-      // Direct rect check — most reliable, no stale state
+      // Section is "active" when it has been scrolled into and not yet out of:
+      // outer section top <= 0 (we've entered it) AND bottom still in viewport (not exited yet)
       const rect = wrapper.getBoundingClientRect();
-      const pinned = rect.top > -8 && rect.top <= 8 && rect.bottom >= window.innerHeight - 8;
+      const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight - 8;
       if (!pinned) return;
 
       const idx = activeIdxRef.current;
       const goingDown = e.deltaY > 0;
 
-      // Always prevent default while pinned (stops page scroll during cooldown too)
-      if (!(goingDown && idx >= allServices.length - 1) &&
-          !(!goingDown && idx <= 0)) {
+      // Prevent page scroll while we're inside the barrel (except when exiting last/first slide)
+      const atEnd = goingDown && idx >= allServices.length - 1;
+      const atStart = !goingDown && idx <= 0;
+      if (!atEnd && !atStart) {
         e.preventDefault();
       }
 
@@ -306,74 +308,78 @@ function StickyServices() {
 
   return (
     <section ref={wrapperRef} className="relative h-[500vh]">
-      <div
-        className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]"
-        style={{ perspective: "140vh", perspectiveOrigin: "50% 50%" }}
-      >
-        {/* 6-face barrel */}
-        <motion.div
+      {/* sticky shell — overflow-hidden clips the hidden faces vertically */}
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]">
+        {/* perspective wrapper — separate from overflow-hidden so 3D content isn't clipped horizontally */}
+        <div
           className="absolute inset-0 w-full h-full"
-          animate={{ rotateX: cubeRotateX }}
-          transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-          style={{ transformStyle: "preserve-3d", transformOrigin: "50% 50%" }}
+          style={{ perspective: "140vh", perspectiveOrigin: "50% 50%" }}
         >
-          {allServices.map((s, i) => (
-            <div
-              key={i}
-              className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
-              style={{
-                transform: `rotateX(${i * -60}deg) translateZ(86.6vh)`,
-                backfaceVisibility: "hidden",
-              }}
-            >
-              {/* Service image — right side */}
-              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-center pointer-events-none select-none pr-8">
-                <img
-                  src={s.img}
-                  alt={s.title}
-                  className="h-[70vh] w-auto object-contain"
-                  style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.15))" }}
+          {/* 6-face barrel */}
+          <motion.div
+            className="absolute inset-0 w-full h-full"
+            animate={{ rotateX: cubeRotateX }}
+            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
+            style={{ transformStyle: "preserve-3d", transformOrigin: "50% 50%" }}
+          >
+            {allServices.map((s, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
+                style={{
+                  transform: `rotateX(${i * -60}deg) translateZ(86.6vh)`,
+                  backfaceVisibility: "hidden",
+                }}
+              >
+                {/* Service image — right side */}
+                <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-center pointer-events-none select-none pr-8">
+                  <img
+                    src={s.img}
+                    alt={s.title}
+                    className="h-[70vh] w-auto object-contain"
+                    style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.15))" }}
+                  />
+                </div>
+
+                {/* Text — left side */}
+                <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-10 md:px-20 pb-16">
+                  <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
+                    {s.num} / 06
+                  </span>
+                  <h3
+                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8 whitespace-pre-line"
+                    style={{ fontSize: "clamp(2rem, 5vw, 5rem)" }}
+                  >
+                    {s.title}
+                  </h3>
+                  <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
+                    {s.desc}
+                  </p>
+                  <Link
+                    href={s.href}
+                    className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500 self-start"
+                  >
+                    Подробнее
+                    <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
+                  </Link>
+                </div>
+
+                {/* Bottom edge shadow */}
+                <motion.div
+                  className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
+                  animate={{ opacity: edgeShadow }}
+                  transition={{ duration: 0.43 }}
+                  style={{
+                    background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.10) 40%, transparent 100%)",
+                  }}
                 />
               </div>
+            ))}
+          </motion.div>
+        </div>
 
-              {/* Text — left side */}
-              <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-8 md:px-20 pb-16">
-                <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
-                  {s.num} / 06
-                </span>
-                <h3
-                  className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8 whitespace-pre-line"
-                  style={{ fontSize: "clamp(2rem, 5.5vw, 5.5rem)" }}
-                >
-                  {s.title}
-                </h3>
-                <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
-                  {s.desc}
-                </p>
-                <Link
-                  href={s.href}
-                  className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500 self-start"
-                >
-                  Подробнее
-                  <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
-                </Link>
-              </div>
-
-              {/* Bottom edge shadow */}
-              <motion.div
-                className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-                animate={{ opacity: edgeShadow }}
-                transition={{ duration: 0.43 }}
-                style={{
-                  background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.10) 40%, transparent 100%)",
-                }}
-              />
-            </div>
-          ))}
-        </motion.div>
-
-        {/* Nav buttons — outside cube, compact for 6 items */}
-        <div className="absolute bottom-6 left-8 md:left-20 right-8 md:right-8 flex flex-wrap items-center gap-2 z-10">
+        {/* Nav buttons — outside cube, above perspective layer */}
+        <div className="absolute bottom-6 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-10">
           {allServices.map((sv, i) => (
             <button
               key={i}
