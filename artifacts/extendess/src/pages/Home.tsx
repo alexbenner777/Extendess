@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring, useAnimate } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
@@ -236,230 +236,215 @@ const allServices = [
   },
 ];
 
+// Geometry constants for a 6-face prism rotating on Y
+const FACE_COUNT = 6;
+const FACE_ANGLE = 360 / FACE_COUNT; // 60° per face
+const FACE_W = 360;
+const FACE_H = 490;
+const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT)); // ≈312px
+
 function StickyServices() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const activeIdxRef = useRef(0);
+  const [activeIdx, setActiveIdx] = useState(0);
 
-  // displayIdx = content on front face (what user sees)
-  // incomingIdx = content pre-loaded on the incoming face
-  const [displayIdx, setDisplayIdx] = useState(0);
-  const [incomingIdx, setIncomingIdx] = useState(0);
-  const [flipDir, setFlipDir] = useState<1 | -1>(1);
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
 
-  const [cubeScope, animateCube] = useAnimate();
-  const isTransitioning = useRef(false);
-  const accDelta = useRef(0);
+  // Cube rotates on Y: 0° → −300° (5 steps × 60°) over full scroll
+  const rotateY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, -(FACE_ANGLE * (FACE_COUNT - 1))]
+  );
 
-  const goTo = useCallback(async (next: number, direction: 1 | -1 = 1) => {
-    if (isTransitioning.current) return;
-    isTransitioning.current = true;
-    accDelta.current = 0;
-    setFlipDir(direction);
-    setIncomingIdx(next);
-    activeIdxRef.current = next;
+  // Track which face is front-facing
+  useMotionValueEvent(scrollYProgress, "change", (v) => {
+    const idx = Math.min(FACE_COUNT - 1, Math.round(v * (FACE_COUNT - 1)));
+    setActiveIdx(idx);
+  });
 
-    // Rotate the cube: down → rotateX(-90), up → rotateX(+90)
-    await animateCube(
-      cubeScope.current,
-      { rotateX: direction > 0 ? -90 : 90 },
-      { duration: 0.75, ease: [0.22, 1, 0.36, 1] }
-    );
-
-    // Swap content onto front face and instantly reset cube rotation
-    setDisplayIdx(next);
-    setIncomingIdx(next);
-    animateCube(cubeScope.current, { rotateX: 0 }, { duration: 0 });
-
-    setTimeout(() => { isTransitioning.current = false; }, 60);
-  }, [animateCube, cubeScope]);
-
-  useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
-      const wrapper = wrapperRef.current;
-      if (!wrapper) return;
-      const rect = wrapper.getBoundingClientRect();
-      const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight - 8;
-      if (!pinned) return;
-
-      const idx = activeIdxRef.current;
-      const goingDown = e.deltaY > 0;
-      const atEnd = goingDown && idx >= allServices.length - 1;
-      const atStart = !goingDown && idx <= 0;
-      if (!atEnd && !atStart) e.preventDefault();
-
-      if (isTransitioning.current) return;
-      accDelta.current += e.deltaY;
-      if (Math.abs(accDelta.current) < 80) return;
-
-      if (accDelta.current > 0 && idx < allServices.length - 1) {
-        goTo(idx + 1, 1);
-      } else if (accDelta.current < 0 && idx > 0) {
-        goTo(idx - 1, -1);
-      } else {
-        accDelta.current = 0;
-      }
-    };
-    window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
-  }, [goTo]);
-
-  const front = allServices[displayIdx];
-  const incoming = allServices[incomingIdx];
-
-  // Content animations: scale+fade (unchanged)
-  const textVariants = {
-    enter: { opacity: 0, y: 18 },
-    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    exit:   { opacity: 0, y: -10, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
-  };
-  const imgVariants = {
-    enter: { opacity: 0, scale: 1.07 },
-    center: { opacity: 1, scale: 1, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
-    exit:   { opacity: 0, scale: 0.95, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
-  };
+  const s = allServices[activeIdx];
 
   return (
-    <section ref={wrapperRef} className="relative h-[500vh]">
-      <div className="sticky top-0 h-screen bg-[#F1EBE3] overflow-hidden">
+    <section ref={wrapperRef} className="relative h-[550vh] bg-[#EFE9E1]">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
-        {/* Progress line */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/8 z-20">
+        {/* Progress bar */}
+        <div className="absolute top-0 inset-x-0 h-[1px] bg-black/10 z-20">
           <motion.div
             className="h-full bg-black/30 origin-left"
-            animate={{ scaleX: (displayIdx + 1) / allServices.length }}
-            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            style={{ scaleX: scrollYProgress }}
           />
         </div>
 
-        {/* ── 3D Cube background ── */}
-        {/*
-          Scene: perspective on this wrapper
-          Cube: ref=cubeScope, transformStyle preserve-3d, animates rotateX
-          Face A (front):  local rotateX(0deg)   → always at front when cube=0
-          Face B (below):  local rotateX(90deg)  → below front, comes in when cube→-90
-          Face C (above):  local rotateX(-90deg) → above front, comes in when cube→+90
-        */}
-        <div
-          className="absolute inset-0 z-[1]"
-          style={{ perspective: "1800px", perspectiveOrigin: "50% 100%" }}
-        >
-          <div
-            ref={cubeScope}
-            className="absolute inset-0"
-            style={{ transformStyle: "preserve-3d", transformOrigin: "50% 100%" }}
+        {/* Section label */}
+        <p className="absolute top-9 left-10 md:left-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none">
+          Услуги
+        </p>
+
+        {/* Slide counter */}
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={activeIdx}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            className="absolute top-9 right-10 md:right-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none"
           >
-            {/* Face A — front face (current, faces viewer at rest) */}
-            <div
-              className="absolute inset-0 bg-[#F1EBE3]"
-              style={{ backfaceVisibility: "hidden", transformOrigin: "50% 100%" }}
-            />
+            {allServices[activeIdx].num} / 06
+          </motion.p>
+        </AnimatePresence>
 
-            {/* Face B — bottom face: starts perpendicular (extending forward from bottom edge)
-                        comes to front when cube rotates −90° (scroll down) */}
-            <div
-              className="absolute inset-0 bg-[#F1EBE3]"
-              style={{
-                transform: "rotateX(90deg)",
-                backfaceVisibility: "hidden",
-                transformOrigin: "50% 100%",
-              }}
-            >
-              {/* Shadow at the top (entering edge) as the face unfolds from below */}
+        {/* ── 3D CUBE SCENE ── */}
+        <div
+          style={{
+            perspective: "1100px",
+            perspectiveOrigin: "50% 48%",
+          }}
+        >
+          <motion.div
+            style={{
+              width: FACE_W,
+              height: FACE_H,
+              position: "relative",
+              transformStyle: "preserve-3d",
+              rotateY,
+            }}
+          >
+            {allServices.map((svc, i) => (
               <div
-                className="absolute inset-x-0 top-0 h-28 pointer-events-none"
-                style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)" }}
-              />
-            </div>
+                key={i}
+                style={{
+                  position: "absolute",
+                  inset: 0,
+                  transform: `rotateY(${i * FACE_ANGLE}deg) translateZ(${PRISM_RADIUS}px)`,
+                  backfaceVisibility: "hidden",
+                  borderRadius: 6,
+                  overflow: "hidden",
+                  boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
+                }}
+              >
+                {/* Service photo as full background */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    backgroundImage: `url(${svc.img})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                />
+                {/* Gradient overlay — bottom-heavy so text is readable */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(to top, rgba(15,10,8,0.78) 0%, rgba(15,10,8,0.28) 55%, rgba(15,10,8,0.05) 100%)",
+                  }}
+                />
+                {/* Top-left warm tint */}
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "linear-gradient(135deg, rgba(239,233,225,0.12) 0%, transparent 60%)",
+                  }}
+                />
 
-            {/* Face C — top face: starts perpendicular (extending back from bottom edge)
-                        comes to front when cube rotates +90° (scroll up) */}
-            <div
-              className="absolute inset-0 bg-[#F1EBE3]"
-              style={{
-                transform: "rotateX(-90deg)",
-                backfaceVisibility: "hidden",
-                transformOrigin: "50% 100%",
-              }}
-            >
-              {/* Shadow at the bottom (entering edge) as the face unfolds from above */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)" }}
-              />
-            </div>
-          </div>
+                {/* Text content pinned to bottom */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    padding: "0 32px 32px",
+                  }}
+                >
+                  <span
+                    style={{
+                      display: "block",
+                      fontSize: 9,
+                      letterSpacing: "0.5em",
+                      color: "rgba(255,255,255,0.45)",
+                      textTransform: "uppercase",
+                      marginBottom: 10,
+                      fontWeight: 300,
+                    }}
+                  >
+                    {svc.num}
+                  </span>
+                  <h3
+                    style={{
+                      fontSize: 28,
+                      fontWeight: 200,
+                      lineHeight: 1.05,
+                      letterSpacing: "-0.01em",
+                      color: "rgba(255,255,255,0.92)",
+                      whiteSpace: "pre-line",
+                      marginBottom: 10,
+                    }}
+                  >
+                    {svc.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontSize: 11.5,
+                      color: "rgba(255,255,255,0.52)",
+                      lineHeight: 1.65,
+                      fontWeight: 300,
+                    }}
+                  >
+                    {svc.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </motion.div>
         </div>
 
-        {/* ── Content layer — above the cube ── */}
-        <div className="absolute inset-0 z-[2] grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
-
-          {/* Left — text */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={`text-${displayIdx}`}
-              variants={textVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="flex flex-col justify-center pr-0 md:pr-16"
+        {/* Active service CTA */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeIdx}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            className="mt-9 flex items-center justify-center"
+          >
+            <Link
+              href={s.href}
+              className="group inline-flex items-center gap-2.5 border-b border-black/25 pb-1.5 text-[10px] uppercase tracking-[0.38em] text-black/50 hover:text-black/80 transition-colors duration-300"
             >
-              <span className="text-[10px] uppercase tracking-[0.5em] text-black/35 mb-8 block font-light">
-                {front.num} / 06
-              </span>
-              <h3
-                className="font-extralight tracking-[-0.02em] leading-[1] text-black mb-8 whitespace-pre-line"
-                style={{ fontSize: "clamp(2.2rem, 4vw, 4.5rem)" }}
-              >
-                {front.title}
-              </h3>
-              <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-md">
-                {front.desc}
-              </p>
-              <Link
-                href={front.href}
-                className="group inline-flex items-center gap-3 border-b border-black/30 pb-2 text-xs uppercase tracking-[0.3em] text-black hover:gap-5 transition-all duration-300 self-start"
-              >
-                Подробнее
-                <ArrowUpRight size={13} className="transition-transform group-hover:rotate-45" />
-              </Link>
-            </motion.div>
-          </AnimatePresence>
+              Подробнее
+              <ArrowUpRight size={11} className="transition-transform duration-300 group-hover:rotate-45" />
+            </Link>
+          </motion.div>
+        </AnimatePresence>
 
-          {/* Right — image */}
-          <div className="hidden md:flex items-center justify-center h-full overflow-hidden">
-            <AnimatePresence mode="wait">
-              <motion.img
-                key={`img-${displayIdx}`}
-                src={front.img}
-                alt={front.title}
-                variants={imgVariants}
-                initial="enter"
-                animate="center"
-                exit="exit"
-                className="max-h-[65vh] w-auto max-w-full object-contain"
-                style={{ filter: "drop-shadow(0 32px 56px rgba(0,0,0,0.12))" }}
-              />
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* ── Nav pills ── */}
-        <div className="absolute bottom-7 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-[3]">
-          {allServices.map((sv, i) => (
-            <button
+        {/* Dot indicators */}
+        <div className="absolute bottom-8 flex items-center gap-2">
+          {allServices.map((_, i) => (
+            <div
               key={i}
-              onClick={() => goTo(i, (i > displayIdx ? 1 : -1) as 1 | -1)}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-300 whitespace-nowrap border ${
-                displayIdx === i
-                  ? "border-black bg-black text-white"
-                  : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
-              }`}
-            >
-              <span className="opacity-50 text-[8px]">{sv.num}</span>
-              {sv.title.replace("\n", " ")}
-            </button>
+              className="rounded-full transition-all duration-500"
+              style={{
+                width: activeIdx === i ? 22 : 6,
+                height: 6,
+                background: activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)",
+              }}
+            />
           ))}
         </div>
+
+        {/* Scroll hint */}
+        <p className="absolute bottom-[34px] right-10 md:right-20 text-[9px] uppercase tracking-[0.45em] text-black/18 font-light select-none">
+          Скролл ↓
+        </p>
       </div>
     </section>
   );
