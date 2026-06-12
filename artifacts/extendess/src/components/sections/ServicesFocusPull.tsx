@@ -245,7 +245,7 @@ export function Services() {
                       (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.6)";
                     }}
                   >
-                    Подробнее
+                    Открыть
                     <ArrowUpRight size={10} />
                   </Link>
                 </div>
