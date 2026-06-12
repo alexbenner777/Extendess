@@ -56,8 +56,8 @@ const allServices = [
 
 const FACE_COUNT = 6;
 const FACE_ANGLE = 360 / FACE_COUNT; // 60° per face
-const FACE_W = 420;
-const FACE_H = 590;
+const FACE_W = 340;
+const FACE_H = 480;
 const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT));
 
 export function Services() {
@@ -155,7 +155,7 @@ export function Services() {
                   position: "absolute",
                   top: "7%", left: "50%",
                   transform: "translateX(-50%)",
-                  width: 350, height: 340,
+                  width: 280, height: 260,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {/* Drop shadow that follows the float */}
