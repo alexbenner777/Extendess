@@ -34,7 +34,7 @@ import {
   NescensLogo,
   KerastaseLogo,
 } from "@/components/sections/BrandLogos";
-import svcMakeup from "../assets/svc-makeup.png";
+import svcMakeup from "@assets/Макияж_и_визаж_1781298033085.png";
 import svcHair from "../assets/svc-hair.png";
 import svcNails from "../assets/svc-nails.png";
 import svcMedicine from "../assets/svc-medicine.png";
