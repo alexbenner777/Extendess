@@ -31,7 +31,9 @@ import {
   SisleyLogo,
   EnhelLogo,
   NescensLogo,
+  KerastaseLogo,
 } from "@/components/sections/BrandLogos";
+import stonesImg from "../assets/brands/stones.png";
 
 function BrandEvolution() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -239,83 +241,52 @@ function StickyServices() {
     window.scrollTo({ top: top + targets[i] * totalHeight, behavior: "smooth" });
   };
 
-  // ── TRUE CUBE: wrapper rotates, faces positioned as cube sides ──
-  // Cube rotates positively on X: bottom face comes forward (снизу вверх)
-  // Scroll 0→1 maps to cube rotation 0°→270° (4 slides × 90° each)
-  // Each slide "holds" for ~20% of scroll, transition takes ~10%
-
-  // Cube wrapper: 0 → 90 → 180 → 270 across scroll
-  // With easing: each face holds longer, transitions are crisp
-  const cubeRotateX = useTransform(
-    scrollYProgress,
-    [0, 0.20, 0.30, 0.45, 0.55, 0.70, 0.80, 1],
-    [0,    0,   90,   90,  180,  180,  270, 270],
-  );
-
   return (
     <section ref={containerRef} className="relative h-[800vh]">
-      <div
-        className="sticky top-0 h-screen overflow-hidden bg-black"
-        style={{ perspective: "250vh", perspectiveOrigin: "50% 50%" }}
-      >
-        {/* Rotating cube wrapper — images only, no text inside */}
-        <motion.div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            transformStyle: "preserve-3d",
-            rotateX: cubeRotateX,
-            transformOrigin: "50% 50%",
-          }}
-        >
-          {allServices.map((s, i) => (
-            <div
-              key={i}
-              className="absolute inset-0 w-full h-full"
-              style={{
-                transform: `rotateX(${i * -90}deg) translateZ(50vh)`,
-                transformStyle: "preserve-3d",
-                backfaceVisibility: "hidden",
-              }}
-            >
-              <img
-                src={s.img}
-                alt={s.title}
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-            </div>
-          ))}
-        </motion.div>
+      <div className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]">
 
-        {/* Text content — outside cube to avoid 3D perspective clipping */}
-        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36 z-10">
+        {/* Right side: stones image — static, decorative */}
+        <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-end justify-end pointer-events-none select-none">
+          <img
+            src={stonesImg}
+            alt="Zen stones"
+            className="h-[90vh] w-auto object-contain object-bottom"
+            style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
+          />
+        </div>
+
+        {/* Left side: text with 3D cube-flip animation */}
+        <div
+          className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36 z-10"
+          style={{ perspective: "1000px" }}
+        >
           <AnimatePresence mode="wait">
             {allServices.map((s, i) =>
               i === activeIdx ? (
                 <motion.div
                   key={i}
                   className="max-w-xl"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                  initial={{ rotateX: 70, opacity: 0, y: 40 }}
+                  animate={{ rotateX: 0, opacity: 1, y: 0 }}
+                  exit={{ rotateX: -70, opacity: 0, y: -40 }}
+                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+                  style={{ transformOrigin: "center 80%" }}
                 >
-                  <span className="text-[10px] uppercase tracking-[0.5em] text-white/50 mb-6 block font-light">
+                  <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
                     {s.num} / 04
                   </span>
                   <h3
-                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-white mb-8"
+                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8"
                     style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
                   >
                     {s.title}
                   </h3>
-                  <p className="text-sm md:text-base text-white/60 font-light leading-relaxed mb-10 max-w-sm">
+                  <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
                     {s.desc}
                   </p>
                   <Link
                     href={s.href}
-                    className="group inline-flex items-center gap-3 border border-white/30 bg-white/5 backdrop-blur-sm px-8 py-4 text-xs uppercase tracking-[0.3em] text-white hover:bg-white hover:text-black transition-all duration-500"
+                    className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500"
                   >
                     Подробнее
                     <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
@@ -326,7 +297,7 @@ function StickyServices() {
           </AnimatePresence>
         </div>
 
-        {/* Service nav buttons */}
+        {/* Service nav buttons — dark style on beige */}
         <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
           {allServices.map((s, i) => (
             <button
@@ -334,8 +305,8 @@ function StickyServices() {
               onClick={() => scrollToService(i)}
               className={`inline-flex items-center gap-2 border px-5 py-2.5 text-[10px] uppercase tracking-[0.3em] transition-all duration-500 ${
                 activeIdx === i
-                  ? "border-white bg-white text-black"
-                  : "border-white/25 bg-white/5 text-white/50 hover:border-white/50 hover:text-white/80"
+                  ? "border-black bg-black text-white"
+                  : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
               }`}
             >
               <span className="opacity-50 text-[9px]">{s.num}</span>
@@ -677,6 +648,7 @@ export default function Home() {
               { Logo: NescensLogo, tag: "Anti-Aging" },
               { Logo: NoadadaLogo, tag: "Cosmeric Series" },
               { Logo: EnhelLogo, tag: "Aesthetics" },
+              { Logo: KerastaseLogo, tag: "Hair Care" },
             ]).map(({ Logo, tag }, i) => (
               <div
                 key={i}
