@@ -20,7 +20,7 @@ import service4 from "@assets/images/service-4.png";
 import dessangeLogo from "@assets/logo_1781078340581.svg";
 import extendessLogo from "@assets/logo-big_1776857562328.png";
 import philosophyImg from "@assets/112_1781267429252.png";
-import sculpturePng from "@assets/578b80ac-297d-4c46-b7ee-22955185bcd2_1781290151582.png";
+import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
@@ -541,22 +541,6 @@ export default function Home() {
   const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0.3]);
   const titleY = useTransform(heroProgress, [0, 1], ["0%", "-50%"]);
 
-  // Mouse parallax for sculpture
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const sculptureX = useSpring(useTransform(mouseX, [-1, 1], [-22, 22]), { stiffness: 60, damping: 20 });
-  const sculptureY = useSpring(useTransform(mouseY, [-1, 1], [-14, 14]), { stiffness: 60, damping: 20 });
-  const sculptureRotate = useSpring(useTransform(mouseX, [-1, 1], [-4, 4]), { stiffness: 50, damping: 18 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set((e.clientX / window.innerWidth) * 2 - 1);
-      mouseY.set((e.clientY / window.innerHeight) * 2 - 1);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
@@ -683,33 +667,13 @@ export default function Home() {
           <div className="md:col-span-5 flex flex-col gap-6 items-start">
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Философия</span>
             <motion.div
-              className="relative w-full flex items-center justify-center"
-              style={{ x: sculptureX, y: sculptureY, perspective: "900px" }}
+              className="relative w-full"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.3 }}
               transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
             >
-              <motion.img
-                src={sculpturePng}
-                alt="Organic sculpture"
-                className="w-full h-auto object-contain"
-                style={{
-                  filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.13)) drop-shadow(0 10px 20px rgba(0,0,0,0.08))",
-                  maxHeight: "70vh",
-                  transformStyle: "preserve-3d",
-                }}
-                animate={{
-                  rotateY: [0, 360],
-                }}
-                transition={{
-                  rotateY: {
-                    repeat: Infinity,
-                    duration: 14,
-                    ease: "linear",
-                  },
-                }}
-              />
+              <Sculpture3D />
             </motion.div>
           </div>
 
