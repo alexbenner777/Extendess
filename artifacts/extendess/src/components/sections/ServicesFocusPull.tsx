@@ -2,12 +2,12 @@ import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent }
 import { useRef, useState } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
-import svcMakeup from "@assets/Макияж_и_визаж_1781298033085.png";
-import svcHair from "../../assets/svc-hair.png";
-import svcNails from "../../assets/svc-nails.png";
-import svcMedicine from "../../assets/svc-medicine.png";
-import svcCosmetology from "../../assets/svc-cosmetology.png";
-import svcSpa from "../../assets/svc-spa.png";
+import svcMakeup from "../../assets/svc-makeup-nobg.png";
+import svcHair from "../../assets/svc-hair-nobg.png";
+import svcNails from "../../assets/svc-nails-nobg.png";
+import svcMedicine from "../../assets/svc-medicine-nobg.png";
+import svcCosmetology from "../../assets/svc-cosmetology-nobg.png";
+import svcSpa from "../../assets/svc-spa-nobg.png";
 
 const allServices = [
   {
@@ -192,11 +192,9 @@ export function Services() {
                     style={{
                       width: "100%",
                       height: "100%",
-                      objectFit: "cover",
-                      objectPosition: "center top",
-                      borderRadius: 4,
-                      boxShadow: "0 18px 48px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.08)",
+                      objectFit: "contain",
                       display: "block",
+                      filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.18))",
                     }}
                   />
                 </div>
