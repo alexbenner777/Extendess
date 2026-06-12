@@ -24,6 +24,7 @@ import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
+import { ZoomThrough } from "@/components/sections/ZoomThrough";
 import {
   CrescinaLogo,
   LorealLogo,
@@ -763,6 +764,9 @@ export default function Home() {
 
       {/* STICKY SERVICES */}
       <StickyServices />
+
+      {/* ZOOM-THROUGH SLIDES */}
+      <ZoomThrough />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
