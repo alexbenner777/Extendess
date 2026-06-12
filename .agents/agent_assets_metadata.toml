@@ -1,0 +1,122 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "Il4FKjHribaWYCnrOZ8yr"
+uri = "file://artifacts/extendess/src/assets/images/hero.png"
+type = "image"
+title = "Hero luxury beauty portrait"
+
+[[generated]]
+id = "SNg8e57GBr_cLf9RmhBhA"
+uri = "file://artifacts/extendess/src/assets/images/highlight.png"
+type = "image"
+title = "Marble texture highlight"
+
+[[generated]]
+id = "2-7ime6nlBBNF1WmxJCYS"
+uri = "file://artifacts/extendess/src/assets/images/service-1.png"
+type = "image"
+title = "Clear skin close up"
+
+[[generated]]
+id = "Dt31sPaegOKS9KAf0rOuK"
+uri = "file://artifacts/extendess/src/assets/images/service-2.png"
+type = "image"
+title = "Skincare bottles on marble"
+
+[[generated]]
+id = "l3_Um8YdCLw10gI9r2Jis"
+uri = "file://artifacts/extendess/src/assets/images/service-3.png"
+type = "image"
+title = "Shiny healthy hair"
+
+[[generated]]
+id = "2sLqJJ-m6Rdu3r8xl78xG"
+uri = "file://artifacts/extendess/src/assets/images/service-4.png"
+type = "image"
+title = "Manicured hands on silk"
+
+[[generated]]
+id = "lyJypDik--ElZ6r_NcYDn"
+uri = "file://artifacts/extendess/src/assets/images/team-1.png"
+type = "image"
+title = "Male stylist portrait"
+
+[[generated]]
+id = "n_JipAjXuez28yFuvfczS"
+uri = "file://artifacts/extendess/src/assets/images/team-2.png"
+type = "image"
+title = "Female stylist portrait"
+
+[[generated]]
+id = "VbK6GFwUqV5M-BWBMJJXo"
+uri = "file://artifacts/extendess/src/assets/images/team-3.png"
+type = "image"
+title = "Female stylist portrait"
+
+[[generated]]
+id = "spTgXoIf6Gil4LjWAI2fm"
+uri = "file://artifacts/extendess/src/assets/images/gallery-1.png"
+type = "image"
+title = "Luxury salon interior"
+
+[[generated]]
+id = "8_QArbWF9PBdDTmYSm6wz"
+uri = "file://attached_assets/generated_images/generated_image_0.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "OSz4_Ipk0QveObosH0J3G"
+uri = "file://attached_assets/generated_images/generated_image_1.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "AIbK_VEQTY9L1w6oan9FY"
+uri = "file://attached_assets/generated_images/generated_image_2.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "JWfGXxBeJsaDh9oOTrRBI"
+uri = "file://attached_assets/generated_images/generated_image_3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "jN3i73caEdre6epmRrfrM"
+uri = "file://attached_assets/generated_images/generated_image_4.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ge11v6R7gPS6lTGaLC7qt"
+uri = "file://attached_assets/generated_images/generated_image_5.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ANO5uxaL-eitIZ1kKkDhv"
+uri = "file://attached_assets/generated_images/generated_image_6.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "ieERgrlb6KbegcEV24IbJ"
+uri = "file://attached_assets/generated_images/generated_image_7.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "iV2VFNj6aGYI1CJgGQAZx"
+uri = "file://attached_assets/generated_images/generated_image_8.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "3-ButbGkTXewPcplpccwH"
+uri = "file://attached_assets/generated_images/generated_image_9.png"
+type = "image"
+title = "generated_image"

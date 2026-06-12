@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-card-border: hsl(var(--card-border));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-popover-border: hsl(var(--popover-border));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-primary-border: var(--primary-border);
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-secondary-border: var(--secondary-border);
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-muted-border: var(--muted-border);
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-accent-border: var(--accent-border);
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-destructive-border: var(--destructive-border);
+
+  --font-sans: var(--app-font-sans);
+  --font-serif: var(--app-font-sans);
+  --font-mono: var(--app-font-sans);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  /* Brand palette tokens */
+  --color-brand-beige: #F1EBE3;
+  --color-brand-taupe: #C9B7A2;
+  --color-brand-brown: #5E4B3A;
+  --color-brand-noir: #1A1A1A;
+  --color-brand-stone: #7A766F;
+}
+
+/* STRICT B&W MODE */
+:root {
+  --button-outline: rgba(0,0,0, .10);
+  --badge-outline: rgba(0,0,0, .05);
+
+  --opaque-button-border-intensity: -8;
+
+  --elevate-1: rgba(0,0,0, .03);
+  --elevate-2: rgba(0,0,0, .08);
+
+  --background: 0 0% 100%;
+  --foreground: 0 0% 0%;
+
+  --border: 0 0% 90%;
+
+  --card: 0 0% 98%;
+  --card-foreground: 0 0% 0%;
+  --card-border: 0 0% 90%;
+
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --popover-border: 0 0% 90%;
+
+  --primary: 0 0% 0%;
+  --primary-foreground: 0 0% 100%;
+
+  --secondary: 0 0% 96%;
+  --secondary-foreground: 0 0% 0%;
+
+  --muted: 0 0% 96%;
+  --muted-foreground: 0 0% 40%;
+
+  --accent: 0 0% 96%;
+  --accent-foreground: 0 0% 0%;
+
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+
+  --input: 0 0% 90%;
+  --ring: 0 0% 0%;
+
+  --app-font-sans: 'Manrope', sans-serif;
+  --radius: 0rem; 
+  
+  --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.02);
+  --shadow-xs: 0px 2px 0px 0px rgba(0,0,0,0.03);
+  --shadow-sm: 0px 2px 0px 0px rgba(0,0,0,0.03), 0px 1px 2px -1px rgba(0,0,0,0.02);
+  --shadow: 0px 2px 0px 0px rgba(0,0,0,0.03), 0px 1px 2px -1px rgba(0,0,0,0.02);
+  --shadow-md: 0px 2px 0px 0px rgba(0,0,0,0.03), 0px 4px 8px -2px rgba(0,0,0,0.05);
+  --shadow-lg: 0px 2px 0px 0px rgba(0,0,0,0.03), 0px 8px 16px -4px rgba(0,0,0,0.05);
+  --shadow-xl: 0px 2px 0px 0px rgba(0,0,0,0.03), 0px 16px 24px -6px rgba(0,0,0,0.05);
+  --shadow-2xl: 0px 2px 0px 0px rgba(0,0,0,0.03);
+  --tracking-normal: 0em;
+  --spacing: 0.25rem;
+
+  --primary-border: hsl(from hsl(var(--primary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --secondary-border: hsl(from hsl(var(--secondary)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --muted-border: hsl(from hsl(var(--muted)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --accent-border: hsl(from hsl(var(--accent)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+  --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
+
+  /* Brand palette – Extendess brandbook */
+  --brand-beige: #F1EBE3;
+  --brand-taupe: #C9B7A2;
+  --brand-brown: #5E4B3A;
+  --brand-noir: #1A1A1A;
+  --brand-stone: #7A766F;
+}
+
+.dark {
+  --button-outline: rgba(255,255,255, .10);
+  --badge-outline: rgba(255,255,255, .05);
+  --opaque-button-border-intensity: 9;
+  --elevate-1: rgba(255,255,255, .04);
+  --elevate-2: rgba(255,255,255, .09);
+
+  --background: 0 0% 0%;
+  --foreground: 0 0% 100%;
+  
+  --border: 0 0% 15%;
+  
+  --card: 0 0% 4%;
+  --card-foreground: 0 0% 100%;
+  --card-border: 0 0% 15%;
+  
+  --popover: 0 0% 4%;
+  --popover-foreground: 0 0% 100%;
+  --popover-border: 0 0% 15%;
+
+  --primary: 0 0% 100%;
+  --primary-foreground: 0 0% 0%;
+  
+  --secondary: 0 0% 10%;
+  --secondary-foreground: 0 0% 100%;
+
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 60%;
+  
+  --accent: 0 0% 10%;
+  --accent-foreground: 0 0% 100%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+
+  --input: 0 0% 20%;
+  --ring: 0 0% 100%;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply font-sans antialiased bg-background text-foreground selection:bg-primary selection:text-primary-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-sans font-medium tracking-tight;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Utilities for magnetic cursor and smooth hover effects */
+.hide-cursor {
+  cursor: none !important;
+}
+
+.clip-reveal {
+  clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+}
+
+.clip-reveal-active {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+}
+
+/* ── Glass glare: static diagonal highlight on dark backgrounds ── */
+.glass-glare {
+  position: relative;
+}
+
+.glass-glare::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  /* primary streak — wide diagonal band top-left to bottom-right */
+  background:
+    linear-gradient(
+      138deg,
+      transparent 0%,
+      transparent 28%,
+      rgba(255,255,255,0.028) 34%,
+      rgba(255,255,255,0.055) 39%,
+      rgba(255,255,255,0.028) 44%,
+      transparent 50%,
+      transparent 100%
+    ),
+    /* secondary thin highlight near the top edge */
+    linear-gradient(
+      138deg,
+      transparent 0%,
+      transparent 16%,
+      rgba(255,255,255,0.018) 19%,
+      rgba(255,255,255,0.035) 21%,
+      rgba(255,255,255,0.018) 23%,
+      transparent 27%,
+      transparent 100%
+    );
+}
+
+/* Keep inner content above the pseudo-element */
+.glass-glare > * {
+  position: relative;
+  z-index: 1;
+}

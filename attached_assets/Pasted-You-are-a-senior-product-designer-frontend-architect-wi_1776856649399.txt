@@ -1,0 +1,126 @@
+You are a senior product designer + frontend architect with 10+ years of experience working in a top-tier digital agency.
+
+Your task is to completely redesign and rebuild a premium beauty salon website based on the existing project.
+
+REFERENCE WEBSITE:
+https://extendess.ru/
+
+GOAL:
+Create a modern, high-end, visually impressive website with strong branding, smooth animations, and interactive scrolling effects.
+
+IMPORTANT:
+- Use ALL content, structure, and meaning from the original website
+- Improve UX/UI drastically
+- Do NOT simplify — elevate to premium studio level
+- Follow modern trends (Apple-level design, Awwwards style)
+
+---
+
+### 🔥 DESIGN DIRECTION
+
+Style:
+- Minimalistic but bold
+- Premium beauty aesthetic
+- Clean typography + large spacing
+- Soft gradients + glassmorphism elements
+- Elegant micro-interactions
+
+Visual inspiration:
+- Apple.com
+- Awwwards-winning websites
+- High-end beauty бренды
+
+---
+
+### 🎬 ANIMATIONS (VERY IMPORTANT)
+
+Implement advanced animations:
+
+- Parallax scrolling
+- Elements moving at different speeds on scroll
+- Floating UI blocks
+- Smooth fade-in + slide-in sections
+- Hover animations (buttons, cards, images)
+- Cursor-based interactions (subtle)
+- Sticky sections with transformation effects
+- Scroll-triggered transitions between sections
+
+Use:
+- Framer Motion OR GSAP
+
+---
+
+### 🧠 UX STRUCTURE (IMPROVED)
+
+1. HERO SECTION
+- Fullscreen
+- Strong headline
+- Background video or animated gradient
+- CTA: "Записаться"
+- Floating elements (beauty visuals)
+
+2. SERVICES
+- Cards with hover animation
+- Categories (волосы, косметология и т.д.)
+- Smooth transitions
+
+3. ABOUT / TRUST BLOCK
+- Why choose us
+- Licenses, experience, premium quality
+- Animated counters / stats
+
+4. WORKS / PORTFOLIO
+- Image gallery with hover zoom
+- Masonry or grid layout
+- Smooth transitions
+
+5. LOYALTY / OFFERS
+- Highlight discounts and programs
+- Animated badges
+
+6. FAQ
+- Accordion with smooth open/close animation
+
+7. CONTACT / BOOKING
+- Clean form
+- Sticky booking button
+- Map integration
+
+---
+
+### ⚙️ TECH STACK
+
+- React (Next.js preferred)
+- Tailwind CSS
+- Framer Motion or GSAP
+- Responsive design (mobile-first)
+- Fast loading (optimize images)
+
+---
+
+### 🎨 BRANDING
+
+Use provided brandbook:
+- Colors
+- Typography
+- Style rules
+
+Make everything consistent and premium.
+
+---
+
+### 🚀 EXTRA (IMPORTANT)
+
+- Add smooth page transitions
+- Add loading animation (luxury feel)
+- Add subtle soundless UI feedback (visual only)
+- Make it feel like a product, not just a website
+
+---
+
+### OUTPUT
+
+- Full working frontend code
+- Clean component structure
+- Reusable UI components
+- Comments explaining key animation logic
