@@ -259,7 +259,7 @@ function StickyServices() {
         className="sticky top-0 h-screen overflow-hidden bg-black"
         style={{ perspective: "250vh", perspectiveOrigin: "50% 50%" }}
       >
-        {/* Rotating cube wrapper */}
+        {/* Rotating cube wrapper — images only, no text inside */}
         <motion.div
           className="absolute inset-0 w-full h-full"
           style={{
@@ -285,14 +285,30 @@ function StickyServices() {
               />
               <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/40 to-transparent" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            </div>
+          ))}
+        </motion.div>
 
-              <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36">
-                <div className="max-w-xl">
+        {/* Text content — outside cube to avoid 3D perspective clipping */}
+        <div className="absolute inset-0 flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36 z-10">
+          <AnimatePresence mode="wait">
+            {allServices.map((s, i) =>
+              i === activeIdx ? (
+                <motion.div
+                  key={i}
+                  className="max-w-xl"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+                >
                   <span className="text-[10px] uppercase tracking-[0.5em] text-white/50 mb-6 block font-light">
                     {s.num} / 04
                   </span>
-                  <h3 className="font-extralight tracking-[-0.02em] leading-[0.95] text-white mb-8"
-                    style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}>
+                  <h3
+                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-white mb-8"
+                    style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
+                  >
                     {s.title}
                   </h3>
                   <p className="text-sm md:text-base text-white/60 font-light leading-relaxed mb-10 max-w-sm">
@@ -305,11 +321,11 @@ function StickyServices() {
                     Подробнее
                     <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
                   </Link>
-                </div>
-              </div>
-            </div>
-          ))}
-        </motion.div>
+                </motion.div>
+              ) : null
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* Service nav buttons */}
         <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
