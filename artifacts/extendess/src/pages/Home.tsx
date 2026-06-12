@@ -24,7 +24,7 @@ import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
-import { LiquidMorph } from "@/components/sections/LiquidMorph";
+import { CameraDolly } from "@/components/sections/CameraDolly";
 import {
   CrescinaLogo,
   LorealLogo,
@@ -762,8 +762,8 @@ export default function Home() {
       {/* INNOVATIONS CAROUSEL */}
       <InnovationsCarousel />
 
-      {/* LIQUID MORPH SLIDES (services) */}
-      <LiquidMorph slides={allServices} label="— Услуги" />
+      {/* CAMERA DOLLY — 3D services flythrough */}
+      <CameraDolly label="— Услуги" />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
