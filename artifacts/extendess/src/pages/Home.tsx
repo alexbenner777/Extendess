@@ -465,10 +465,10 @@ function InnovationsCarousel() {
             {/* Left arrow */}
             <button
               onClick={prev}
-              className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+              className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
               aria-label="Предыдущий"
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.2"/></svg>
+              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
 
             {/* Text side */}
@@ -500,10 +500,10 @@ function InnovationsCarousel() {
             {/* Right arrow */}
             <button
               onClick={next}
-              className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+              className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
               aria-label="Следующий"
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2"/></svg>
+              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </motion.div>
         </AnimatePresence>
