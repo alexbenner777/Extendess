@@ -255,17 +255,31 @@ export function Services() {
         </div>
 
         {/* Service buttons below cube */}
-        <div className="absolute bottom-20 flex flex-wrap justify-center gap-2 px-6 max-w-2xl">
+        <div style={{
+          position: "absolute",
+          bottom: 48,
+          left: 0,
+          right: 0,
+          overflowX: "auto",
+          overflowY: "hidden",
+          display: "flex",
+          justifyContent: "center",
+          gap: 6,
+          padding: "0 24px",
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}>
           {allServices.map((svc, i) => (
             <button
               key={i}
               onClick={() => setActiveIdx(i)}
               style={{
-                padding: "6px 14px",
+                flexShrink: 0,
+                padding: "5px 12px",
                 border: `1px solid ${activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)"}`,
                 borderRadius: 2,
-                fontSize: 8,
-                letterSpacing: "0.38em",
+                fontSize: 7,
+                letterSpacing: "0.35em",
                 textTransform: "uppercase",
                 color: activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)",
                 fontWeight: activeIdx === i ? 400 : 300,
