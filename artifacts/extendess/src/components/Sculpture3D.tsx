@@ -102,7 +102,7 @@ export function Sculpture3D() {
     <WebGLErrorBoundary fallback={<FallbackImage />}>
       <div className="w-full" style={{ height: "65vh" }}>
         <Canvas
-          camera={{ position: [0, 0.5, 3.2], fov: 38 }}
+          camera={{ position: [0, 0.2, 3.2], fov: 38 }}
           gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
           style={{ background: "transparent" }}
           onCreated={({ gl }) => {
@@ -122,7 +122,7 @@ export function Sculpture3D() {
             <CoralModel />
 
             <ContactShadows
-              position={[0, -1.4, 0]}
+              position={[0, -1.1, 0]}
               opacity={0.22}
               scale={4}
               blur={3}
