@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
@@ -20,6 +20,7 @@ import service4 from "@assets/images/service-4.png";
 import dessangeLogo from "@assets/logo_1781078340581.svg";
 import extendessLogo from "@assets/logo-big_1776857562328.png";
 import philosophyImg from "@assets/112_1781267429252.png";
+import sculpturePng from "@assets/578b80ac-297d-4c46-b7ee-22955185bcd2_1781290151582.png";
 import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
@@ -540,6 +541,22 @@ export default function Home() {
   const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0.3]);
   const titleY = useTransform(heroProgress, [0, 1], ["0%", "-50%"]);
 
+  // Mouse parallax for sculpture
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const sculptureX = useSpring(useTransform(mouseX, [-1, 1], [-22, 22]), { stiffness: 60, damping: 20 });
+  const sculptureY = useSpring(useTransform(mouseY, [-1, 1], [-14, 14]), { stiffness: 60, damping: 20 });
+  const sculptureRotate = useSpring(useTransform(mouseX, [-1, 1], [-4, 4]), { stiffness: 50, damping: 18 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      mouseX.set((e.clientX / window.innerWidth) * 2 - 1);
+      mouseY.set((e.clientY / window.innerHeight) * 2 - 1);
+    };
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [mouseX, mouseY]);
+
   const [showVideo, setShowVideo] = useState(false);
 
   useEffect(() => {
@@ -626,6 +643,34 @@ export default function Home() {
               </Link>
             </motion.div>
           </div>
+        </motion.div>
+
+        {/* Floating sculpture — right side, mouse parallax + levitation */}
+        <motion.div
+          className="absolute right-[-4%] md:right-[2%] top-0 h-full w-[55%] md:w-[46%] flex items-center justify-end pointer-events-none select-none"
+          style={{ x: sculptureX, rotate: sculptureRotate }}
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.6, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <motion.img
+            src={sculpturePng}
+            alt=""
+            className="w-full h-auto object-contain"
+            style={{
+              y: sculptureY,
+              filter: "drop-shadow(0 60px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(255,245,235,0.12))",
+              maxHeight: "92vh",
+            }}
+            animate={{
+              y: [0, -28, 0],
+              rotate: [-1.5, 1.5, -1.5],
+            }}
+            transition={{
+              y: { repeat: Infinity, duration: 5.5, ease: "easeInOut" },
+              rotate: { repeat: Infinity, duration: 7, ease: "easeInOut" },
+            }}
+          />
         </motion.div>
 
         <motion.div
