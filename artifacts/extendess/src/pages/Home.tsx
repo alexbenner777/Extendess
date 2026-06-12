@@ -240,152 +240,130 @@ function StickyServices() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const activeIdxRef = useRef(0);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [dir, setDir] = useState(1);
   const isTransitioning = useRef(false);
   const lastFlipTime = useRef(0);
   const accDelta = useRef(0);
 
-  const goTo = useCallback((next: number) => {
+  const goTo = useCallback((next: number, direction = 1) => {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
     accDelta.current = 0;
+    setDir(direction);
     setActiveIdx(next);
     activeIdxRef.current = next;
-    setTimeout(() => { isTransitioning.current = false; }, 700);
+    setTimeout(() => { isTransitioning.current = false; }, 600);
   }, []);
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
       const wrapper = wrapperRef.current;
       if (!wrapper) return;
-
-      // Section is "active" when it has been scrolled into and not yet out of:
-      // outer section top <= 0 (we've entered it) AND bottom still in viewport (not exited yet)
       const rect = wrapper.getBoundingClientRect();
       const pinned = rect.top <= 0 && rect.bottom >= window.innerHeight - 8;
       if (!pinned) return;
 
       const idx = activeIdxRef.current;
       const goingDown = e.deltaY > 0;
-
-      // Prevent page scroll while we're inside the barrel (except when exiting last/first slide)
       const atEnd = goingDown && idx >= allServices.length - 1;
       const atStart = !goingDown && idx <= 0;
-      if (!atEnd && !atStart) {
-        e.preventDefault();
-      }
+      if (!atEnd && !atStart) e.preventDefault();
 
-      // Accumulate delta — works for both mouse wheel (large steps) and trackpad (small steps)
       accDelta.current += e.deltaY;
-      const threshold = 40;
-
-      if (Math.abs(accDelta.current) < threshold) return;
-      if (Date.now() - lastFlipTime.current < 650) return;
+      if (Math.abs(accDelta.current) < 40) return;
+      if (Date.now() - lastFlipTime.current < 600) return;
 
       if (accDelta.current > 0 && idx < allServices.length - 1) {
         lastFlipTime.current = Date.now();
-        goTo(idx + 1);
+        goTo(idx + 1, 1);
       } else if (accDelta.current < 0 && idx > 0) {
         lastFlipTime.current = Date.now();
-        goTo(idx - 1);
+        goTo(idx - 1, -1);
       } else {
         accDelta.current = 0;
       }
     };
-
     window.addEventListener("wheel", onWheel, { passive: false });
     return () => window.removeEventListener("wheel", onWheel);
   }, [goTo]);
 
-  // 6-face barrel: 360° / 6 = 60° per slide
-  const cubeRotateX = activeIdx * 60;
+  const s = allServices[activeIdx];
 
-  // Bottom-edge shadow intensity during the flip
-  const [edgeShadow, setEdgeShadow] = useState(0.18);
-  useEffect(() => {
-    setEdgeShadow(0.65);
-    const t = setTimeout(() => setEdgeShadow(0.18), 430);
-    return () => clearTimeout(t);
-  }, [activeIdx]);
+  const slideVariants = {
+    enter: (d: number) => ({ opacity: 0, y: d > 0 ? 30 : -30 }),
+    center: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+    exit: (d: number) => ({ opacity: 0, y: d > 0 ? -30 : 30, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+  };
 
   return (
     <section ref={wrapperRef} className="relative h-[500vh]">
-      {/* sticky shell — overflow-hidden clips the hidden faces vertically */}
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]">
-        {/* perspective wrapper — separate from overflow-hidden so 3D content isn't clipped horizontally */}
-        <div
-          className="absolute inset-0 w-full h-full"
-          style={{ perspective: "140vh", perspectiveOrigin: "50% 50%" }}
-        >
-          {/* 6-face barrel */}
+      <div className="sticky top-0 h-screen bg-[#F1EBE3] overflow-hidden">
+
+        {/* Progress line */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/8 z-10">
           <motion.div
-            className="absolute inset-0 w-full h-full"
-            animate={{ rotateX: cubeRotateX }}
-            transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1] }}
-            style={{ transformStyle: "preserve-3d", transformOrigin: "50% 50%" }}
-          >
-            {allServices.map((s, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
-                style={{
-                  transform: `rotateX(${i * -60}deg) translateZ(86.6vh)`,
-                  backfaceVisibility: "hidden",
-                }}
-              >
-                {/* Service image — right side */}
-                <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-center pointer-events-none select-none pr-8">
-                  <img
-                    src={s.img}
-                    alt={s.title}
-                    className="h-[70vh] w-auto object-contain"
-                    style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.15))" }}
-                  />
-                </div>
-
-                {/* Text — left side */}
-                <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-10 md:px-20 pb-16">
-                  <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
-                    {s.num} / 06
-                  </span>
-                  <h3
-                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8 whitespace-pre-line"
-                    style={{ fontSize: "clamp(2rem, 5vw, 5rem)" }}
-                  >
-                    {s.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
-                    {s.desc}
-                  </p>
-                  <Link
-                    href={s.href}
-                    className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500 self-start"
-                  >
-                    Подробнее
-                    <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
-                  </Link>
-                </div>
-
-                {/* Bottom edge shadow */}
-                <motion.div
-                  className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-                  animate={{ opacity: edgeShadow }}
-                  transition={{ duration: 0.43 }}
-                  style={{
-                    background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.10) 40%, transparent 100%)",
-                  }}
-                />
-              </div>
-            ))}
-          </motion.div>
+            className="h-full bg-black/30 origin-left"
+            animate={{ scaleX: (activeIdx + 1) / allServices.length }}
+            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+          />
         </div>
 
-        {/* Nav buttons — outside cube, above perspective layer */}
-        <div className="absolute bottom-6 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-10">
+        <AnimatePresence mode="wait" custom={dir}>
+          <motion.div
+            key={activeIdx}
+            custom={dir}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="absolute inset-0 flex items-center"
+          >
+            {/* Layout: text left, image right */}
+            <div className="w-full h-full grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
+
+              {/* Left — text */}
+              <div className="flex flex-col justify-center pr-0 md:pr-16">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-black/35 mb-8 block font-light">
+                  {s.num} / 06
+                </span>
+                <h3
+                  className="font-extralight tracking-[-0.02em] leading-[1] text-black mb-8 whitespace-pre-line"
+                  style={{ fontSize: "clamp(2.2rem, 4vw, 4.5rem)" }}
+                >
+                  {s.title}
+                </h3>
+                <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-md">
+                  {s.desc}
+                </p>
+                <Link
+                  href={s.href}
+                  className="group inline-flex items-center gap-3 border-b border-black/30 pb-2 text-xs uppercase tracking-[0.3em] text-black hover:gap-5 transition-all duration-300 self-start"
+                >
+                  Подробнее
+                  <ArrowUpRight size={13} className="transition-transform group-hover:rotate-45" />
+                </Link>
+              </div>
+
+              {/* Right — image */}
+              <div className="hidden md:flex items-center justify-center h-full">
+                <img
+                  src={s.img}
+                  alt={s.title}
+                  className="max-h-[65vh] w-auto max-w-full object-contain"
+                  style={{ filter: "drop-shadow(0 32px 56px rgba(0,0,0,0.12))" }}
+                />
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Nav pills — bottom */}
+        <div className="absolute bottom-7 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-10">
           {allServices.map((sv, i) => (
             <button
               key={i}
-              onClick={() => goTo(i)}
-              className={`inline-flex items-center gap-1.5 border px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-500 whitespace-nowrap ${
+              onClick={() => goTo(i, i > activeIdx ? 1 : -1)}
+              className={`inline-flex items-center gap-1.5 px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-400 whitespace-nowrap border ${
                 activeIdx === i
                   ? "border-black bg-black text-white"
                   : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
