@@ -364,7 +364,7 @@ function StickyServices() {
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    padding: "18px 28px 24px",
+                    padding: "12px 22px 16px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
@@ -373,11 +373,11 @@ function StickyServices() {
                   <span
                     style={{
                       display: "block",
-                      fontSize: 9,
-                      letterSpacing: "0.5em",
+                      fontSize: 8,
+                      letterSpacing: "0.45em",
                       color: "rgba(0,0,0,0.35)",
                       textTransform: "uppercase",
-                      marginBottom: 8,
+                      marginBottom: 6,
                       fontWeight: 300,
                     }}
                   >
@@ -385,22 +385,22 @@ function StickyServices() {
                   </span>
                   <h3
                     style={{
-                      fontSize: 24,
+                      fontSize: 19,
                       fontWeight: 200,
                       lineHeight: 1.1,
                       letterSpacing: "-0.01em",
                       color: "rgba(0,0,0,0.88)",
                       whiteSpace: "pre-line",
-                      marginBottom: 8,
+                      marginBottom: 6,
                     }}
                   >
                     {svc.title}
                   </h3>
                   <p
                     style={{
-                      fontSize: 11,
+                      fontSize: 10,
                       color: "rgba(0,0,0,0.45)",
-                      lineHeight: 1.6,
+                      lineHeight: 1.55,
                       fontWeight: 300,
                     }}
                   >
