@@ -4,53 +4,26 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const slides = [
-  {
-    num: "01",
-    title: "Слайд 1",
-    text: "Контент появится позже",
-    accent: "#C9A96E",
-    bg: "linear-gradient(135deg, #1a1208 0%, #2e1f0e 50%, #1a1208 100%)",
-  },
-  {
-    num: "02",
-    title: "Слайд 2",
-    text: "Контент появится позже",
-    accent: "#A89070",
-    bg: "linear-gradient(135deg, #0e1a18 0%, #0e2420 50%, #0e1a18 100%)",
-  },
-  {
-    num: "03",
-    title: "Слайд 3",
-    text: "Контент появится позже",
-    accent: "#B8A898",
-    bg: "linear-gradient(135deg, #100e1a 0%, #1a0e28 50%, #100e1a 100%)",
-  },
-  {
-    num: "04",
-    title: "Слайд 4",
-    text: "Контент появится позже",
-    accent: "#C8A080",
-    bg: "linear-gradient(135deg, #1a0e10 0%, #280e14 50%, #1a0e10 100%)",
-  },
-  {
-    num: "05",
-    title: "Слайд 5",
-    text: "Контент появится позже",
-    accent: "#D4B896",
-    bg: "linear-gradient(135deg, #121a0e 0%, #1e280e 50%, #121a0e 100%)",
-  },
-];
+export interface ZoomSlide {
+  num: string;
+  title: string;
+  desc: string;
+  img: string;
+  href?: string;
+}
 
-export function ZoomThrough() {
+interface Props {
+  slides: ZoomSlide[];
+  label?: string;
+}
+
+export function ZoomThrough({ slides = [], label = "— Услуги" }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
   const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   useEffect(() => {
     const section = sectionRef.current;
-    const inner = innerRef.current;
-    if (!section || !inner) return;
+    if (!section) return;
 
     const els = slideRefs.current.filter(Boolean) as HTMLDivElement[];
     const N = els.length;
@@ -77,29 +50,25 @@ export function ZoomThrough() {
         const tIdx = Math.min(Math.floor(raw), transitions - 1);
         const t = Math.max(0, Math.min(1, raw - tIdx));
 
-        // Ease in/out for smoother feel
+        // Ease in-out
         const eased = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
 
         els.forEach((el, i) => {
           if (i === tIdx) {
-            // Current slide zooms through
             gsap.set(el, {
               scale: 1 + eased * 1.2,
               opacity: 1 - eased,
               filter: `blur(${eased * 16}px)`,
             });
           } else if (i === tIdx + 1) {
-            // Next slide emerges from depth
             gsap.set(el, {
               scale: 0.55 + eased * 0.45,
               opacity: eased,
               filter: `blur(${(1 - eased) * 18}px)`,
             });
           } else if (i < tIdx) {
-            // Past slides — hidden, zoomed out
             gsap.set(el, { scale: 2.2, opacity: 0, filter: "blur(20px)" });
           } else {
-            // Future slides — hidden, small
             gsap.set(el, { scale: 0.55, opacity: 0, filter: "blur(18px)" });
           }
         });
@@ -109,16 +78,14 @@ export function ZoomThrough() {
     return () => {
       st.kill();
     };
-  }, []);
+  }, [slides]);
 
   return (
     <div
       ref={sectionRef}
       style={{ height: `${slides.length * 100}vh`, background: "#EFE9E1" }}
     >
-      {/* Sticky viewport */}
       <div
-        ref={innerRef}
         style={{
           position: "sticky",
           top: 0,
@@ -147,7 +114,7 @@ export function ZoomThrough() {
             pointerEvents: "none",
           }}
         >
-          — О нас
+          {label}
         </p>
 
         {slides.map((slide, i) => (
@@ -159,101 +126,122 @@ export function ZoomThrough() {
               width: "min(700px, 88vw)",
               height: "min(520px, 80vh)",
               borderRadius: 16,
-              background: slide.bg,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: "clamp(32px, 5vw, 64px)",
-              boxShadow: "0 60px 120px rgba(0,0,0,0.22), 0 4px 24px rgba(0,0,0,0.1)",
+              overflow: "hidden",
+              boxShadow: "0 60px 120px rgba(0,0,0,0.28), 0 4px 24px rgba(0,0,0,0.12)",
               transformOrigin: "center center",
               willChange: "transform, opacity, filter",
-              overflow: "hidden",
+              background: "#1a1208",
             }}
           >
-            {/* Subtle noise texture overlay */}
+            {/* Photo fills top ~58% */}
             <div
               style={{
                 position: "absolute",
-                inset: 0,
-                backgroundImage:
-                  "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E\")",
-                backgroundSize: "180px 180px",
-                borderRadius: 16,
-                pointerEvents: "none",
+                top: 0,
+                left: 0,
+                right: 0,
+                height: "62%",
+                backgroundImage: `url(${slide.img})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center top",
               }}
             />
 
-            {/* Corner accent line */}
+            {/* Fade transition image → dark area */}
             <div
               style={{
                 position: "absolute",
-                top: 28,
-                left: 32,
-                width: 32,
-                height: 1,
-                background: slide.accent,
-                opacity: 0.6,
+                top: "49%",
+                left: 0,
+                right: 0,
+                height: "13%",
+                background: "linear-gradient(to bottom, transparent, #1a1208)",
               }}
             />
 
-            {/* Slide number */}
+            {/* Dark bottom panel */}
+            <div
+              style={{
+                position: "absolute",
+                top: "62%",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                background: "#1a1208",
+              }}
+            />
+
+            {/* Slide number — top right */}
             <span
               style={{
                 position: "absolute",
-                top: 28,
-                right: 32,
+                top: 24,
+                right: 28,
                 fontSize: 9,
                 letterSpacing: "0.5em",
-                color: "rgba(255,255,255,0.25)",
+                color: "rgba(255,255,255,0.4)",
                 textTransform: "uppercase",
                 fontWeight: 300,
+                zIndex: 2,
               }}
             >
-              {slide.num} / 05
+              {slide.num} / {String(slides.length).padStart(2, "0")}
             </span>
 
-            {/* Title */}
-            <h2
-              style={{
-                fontSize: "clamp(2.4rem, 6vw, 5rem)",
-                fontWeight: 100,
-                letterSpacing: "-0.03em",
-                lineHeight: 1,
-                color: "rgba(255,255,255,0.92)",
-                textAlign: "center",
-                marginBottom: 20,
-                fontFamily: "inherit",
-              }}
-            >
-              {slide.title}
-            </h2>
-
-            {/* Divider */}
+            {/* Gold accent line top left */}
             <div
               style={{
-                width: 40,
+                position: "absolute",
+                top: 28,
+                left: 28,
+                width: 28,
                 height: 1,
-                background: slide.accent,
-                marginBottom: 20,
+                background: "#C9A96E",
                 opacity: 0.7,
+                zIndex: 2,
               }}
             />
 
-            {/* Text */}
-            <p
+            {/* Text content */}
+            <div
               style={{
-                fontSize: "clamp(11px, 1.5vw, 14px)",
-                fontWeight: 300,
-                color: "rgba(255,255,255,0.42)",
-                textAlign: "center",
-                lineHeight: 1.75,
-                maxWidth: 380,
-                letterSpacing: "0.02em",
+                position: "absolute",
+                top: "62%",
+                left: 0,
+                right: 0,
+                bottom: 0,
+                padding: "16px 28px 24px",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
             >
-              {slide.text}
-            </p>
+              <h2
+                style={{
+                  fontSize: "clamp(1.4rem, 4vw, 2.2rem)",
+                  fontWeight: 100,
+                  letterSpacing: "-0.02em",
+                  lineHeight: 1.05,
+                  color: "rgba(255,255,255,0.92)",
+                  whiteSpace: "pre-line",
+                  marginBottom: 10,
+                  fontFamily: "inherit",
+                }}
+              >
+                {slide.title}
+              </h2>
+              <p
+                style={{
+                  fontSize: "clamp(10px, 1.3vw, 12px)",
+                  fontWeight: 300,
+                  color: "rgba(255,255,255,0.42)",
+                  lineHeight: 1.7,
+                  letterSpacing: "0.01em",
+                }}
+              >
+                {slide.desc}
+              </p>
+            </div>
           </div>
         ))}
       </div>

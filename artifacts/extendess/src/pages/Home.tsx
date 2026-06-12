@@ -762,11 +762,8 @@ export default function Home() {
       {/* INNOVATIONS CAROUSEL */}
       <InnovationsCarousel />
 
-      {/* STICKY SERVICES */}
-      <StickyServices />
-
-      {/* ZOOM-THROUGH SLIDES */}
-      <ZoomThrough />
+      {/* ZOOM-THROUGH SLIDES (services) */}
+      <ZoomThrough slides={allServices} label="— Услуги" />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
