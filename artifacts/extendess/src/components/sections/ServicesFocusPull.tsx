@@ -27,38 +27,53 @@ const SERVICES = [
   },
 ];
 
-// Card positions in CSS 3D space
-// translateX, translateY, translateZ, rotateY
-const CARD_LAYOUT = [
-  { x: -280, y: 0, z: 120, ry: 6 },
-  { x: 260, y: 40, z: 40, ry: -5 },
-  { x: -200, y: -20, z: -100, ry: 4 },
-  { x: 280, y: -40, z: -240, ry: -6 },
-  { x: -260, y: 30, z: -380, ry: 5 },
+// Subtle card palette variations — warm neutrals
+const CARD_TONES = [
+  ["#F0EAE1", "#DDD3C7"],
+  ["#EDE6DC", "#DAD0C3"],
+  ["#EBE4D9", "#D8CDBE"],
+  ["#E8E0D4", "#D5CABB"],
+  ["#E6DDD1", "#D2C6B7"],
 ];
 
-// Blur level for each card when a given card is active
-// blur in px, indexed by [activeCard][cardIndex]
-function getBlur(activeIdx: number, cardIdx: number): number {
-  const dist = Math.abs(activeIdx - cardIdx);
-  if (dist === 0) return 0;
-  if (dist === 1) return 3;
-  if (dist === 2) return 7;
-  return 11;
-}
+/**
+ * Given camera progress (0 → N-1) and card index,
+ * returns { scale, opacity } for that card.
+ *
+ * relPos = cameraPos - cardIndex
+ *   < -1.5  → far away, invisible
+ *   -1.5→ 0 → approaching: tiny → fills screen
+ *    0→ 0.35 → passing through: screen-fill → zoom-past, fade out
+ *   > 0.35  → passed, invisible
+ */
+function getCardState(cameraPos: number, cardIdx: number) {
+  const relPos = cameraPos - cardIdx;
 
-function getOpacity(activeIdx: number, cardIdx: number): number {
-  const dist = Math.abs(activeIdx - cardIdx);
-  if (dist === 0) return 1;
-  if (dist === 1) return 0.65;
-  if (dist === 2) return 0.42;
-  return 0.22;
-}
+  if (relPos < -1.8) {
+    return { scale: 0.04, opacity: 0 };
+  }
 
-function getScale(activeIdx: number, cardIdx: number): number {
-  const dist = Math.abs(activeIdx - cardIdx);
-  if (dist === 0) return 1.04;
-  return 1;
+  if (relPos < 0) {
+    // Approaching phase: relPos from -1.8 to 0
+    const t = (relPos + 1.8) / 1.8; // 0 → 1
+    const tEased = t * t * (3 - 2 * t); // smoothstep
+    const scale = 0.04 + tEased * 0.97; // 0.04 → 1.01
+    // Fade in during last 60% of approach
+    const fadeT = Math.max(0, (t - 0.4) / 0.6);
+    const opacity = fadeT;
+    return { scale, opacity };
+  }
+
+  if (relPos < 0.35) {
+    // Pass-through phase: relPos from 0 to 0.35
+    const t = relPos / 0.35; // 0 → 1
+    const tEased = t * t * t; // cubic ease in (fast fade)
+    const scale = 1.01 + t * 1.6; // 1.0 → 2.6 (zoom past)
+    const opacity = 1 - tEased; // 1 → 0
+    return { scale, opacity };
+  }
+
+  return { scale: 2.6, opacity: 0 };
 }
 
 export function Services() {
@@ -69,6 +84,7 @@ export function Services() {
   const dotsRef = useRef<(HTMLDivElement | null)[]>([]);
   const counterRef = useRef<HTMLSpanElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const camPosRef = useRef(0);
   const activeIdxRef = useRef(0);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -81,11 +97,11 @@ export function Services() {
     return () => window.removeEventListener("resize", check);
   }, []);
 
-  // Apply visual state to all cards & UI imperatively (no re-render)
-  function applyState(idx: number) {
-    const prev = activeIdxRef.current;
-    if (idx === prev && idx !== 0) return;
-    activeIdxRef.current = idx;
+  function applyCamera(cameraPos: number) {
+    const activeIdx = Math.min(
+      SERVICES.length - 1,
+      Math.max(0, Math.round(cameraPos))
+    );
 
     SERVICES.forEach((_, i) => {
       const card = cardRefs.current[i];
@@ -93,110 +109,73 @@ export function Services() {
       const dot = dotsRef.current[i];
       if (!card) return;
 
-      const blur = getBlur(idx, i);
-      const opacity = getOpacity(idx, i);
-      const scale = getScale(idx, i);
-      const { x, y, z, ry } = CARD_LAYOUT[i];
+      const { scale, opacity } = getCardState(cameraPos, i);
 
-      gsap.to(card, {
-        filter: `blur(${blur}px)`,
-        opacity,
-        x,
-        y,
-        z,
-        rotateY: ry,
-        scale,
-        duration: 0.75,
-        ease: "power2.out",
-      });
+      gsap.set(card, { scale, opacity });
 
       if (text) {
-        gsap.to(text, {
-          opacity: i === idx ? 1 : 0,
-          y: i === idx ? 0 : 14,
-          duration: 0.55,
-          ease: "power2.out",
-        });
+        // Text visible when card is close to filling screen
+        const relPos = cameraPos - i;
+        const textOpacity =
+          relPos >= -0.3 && relPos <= 0.15
+            ? Math.max(0, 1 - Math.abs(relPos) / 0.25)
+            : 0;
+        gsap.set(text, { opacity: textOpacity });
       }
 
       if (dot) {
-        gsap.to(dot, {
-          width: i === idx ? 26 : 6,
-          backgroundColor: i === idx ? "#8B7355" : "rgba(139,115,85,0.22)",
-          duration: 0.4,
-          ease: "power2.out",
+        gsap.set(dot, {
+          width: i === activeIdx ? 24 : 6,
+          backgroundColor:
+            i === activeIdx ? "#8B7355" : "rgba(139,115,85,0.22)",
         });
       }
     });
 
     if (counterRef.current) {
-      gsap.to(counterRef.current, {
-        opacity: 0,
-        y: -6,
-        duration: 0.2,
-        ease: "power2.in",
-        onComplete: () => {
-          if (counterRef.current) {
-            counterRef.current.textContent = String(idx + 1).padStart(2, "0");
-          }
-          gsap.to(counterRef.current, {
-            opacity: 1,
-            y: 0,
-            duration: 0.25,
-            ease: "power2.out",
-          });
-        },
-      });
+      counterRef.current.textContent = String(activeIdx + 1).padStart(2, "0");
     }
-
     if (scrollHintRef.current) {
-      gsap.to(scrollHintRef.current, {
-        opacity: idx === 0 ? 1 : 0,
-        duration: 0.4,
-      });
+      gsap.set(scrollHintRef.current, { opacity: cameraPos < 0.2 ? 1 : 0 });
     }
   }
 
   useEffect(() => {
     if (isMobile || !sectionRef.current || !stickyRef.current) return;
 
-    // Set initial 3D positions via GSAP (avoids inline style conflict)
+    // Initial state: cards pre-positioned
     SERVICES.forEach((_, i) => {
       const card = cardRefs.current[i];
       if (!card) return;
-      const { x, y, z, ry } = CARD_LAYOUT[i];
-      gsap.set(card, {
-        x, y, z,
-        rotateY: ry,
-        filter: `blur(${getBlur(0, i)}px)`,
-        opacity: getOpacity(0, i),
-        scale: getScale(0, i),
-      });
+      const { scale, opacity } = getCardState(0, i);
+      gsap.set(card, { scale, opacity });
     });
-
-    // Show first card text
-    if (textRefs.current[0]) gsap.set(textRefs.current[0], { opacity: 1, y: 0 });
+    if (textRefs.current[0]) gsap.set(textRefs.current[0], { opacity: 0 });
     SERVICES.forEach((_, i) => {
-      if (i > 0 && textRefs.current[i]) gsap.set(textRefs.current[i], { opacity: 0, y: 14 });
+      if (textRefs.current[i]) gsap.set(textRefs.current[i], { opacity: 0 });
     });
 
     const ctx = gsap.context(() => {
+      const proxy = { cam: 0 };
+
       ScrollTrigger.create({
         trigger: sectionRef.current,
         start: "top top",
         end: "bottom bottom",
-        scrub: 1.0,
+        scrub: 1.2,
         onUpdate: (self) => {
-          const total = SERVICES.length - 1;
-          const raw = self.progress * total;
-          const idx = Math.min(total, Math.round(raw));
-          applyState(idx);
+          const targetCam = self.progress * (SERVICES.length - 1 + 0.3);
+          camPosRef.current = targetCam;
+          applyCamera(targetCam);
         },
       });
     }, sectionRef);
 
+    // Kick off first frame
+    applyCamera(0);
+
     return () => ctx.revert();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isMobile]);
 
   if (isMobile) {
@@ -221,7 +200,6 @@ export function Services() {
                   background: i === mobileActive ? "#E4D9CC" : "#EAE4DC",
                   border: `1px solid ${i === mobileActive ? "rgba(139,115,85,0.4)" : "rgba(139,115,85,0.12)"}`,
                   opacity: i === mobileActive ? 1 : 0.55,
-                  filter: i === mobileActive ? "none" : "blur(0.5px)",
                   cursor: "pointer",
                   transition: "all 0.45s ease",
                 }}
@@ -265,14 +243,26 @@ export function Services() {
           background: "#EFE9E1",
         }}
       >
-        {/* Top bar */}
+        {/* Radial vignette for depth */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background:
+              "radial-gradient(ellipse 70% 70% at 50% 50%, transparent 55%, rgba(239,233,225,0.55) 100%)",
+            zIndex: 5,
+            pointerEvents: "none",
+          }}
+        />
+
+        {/* Top UI bar */}
         <div
           style={{
             position: "absolute",
             top: 0,
             left: 0,
             right: 0,
-            zIndex: 10,
+            zIndex: 30,
             padding: "36px 56px 0",
             display: "flex",
             justifyContent: "space-between",
@@ -289,7 +279,6 @@ export function Services() {
               <em style={{ color: "#8B7355", fontStyle: "italic" }}>преображения</em>
             </h2>
           </div>
-
           <div style={{ textAlign: "right" }}>
             <div style={{ fontSize: "52px", fontFamily: "serif", fontWeight: 200, color: "rgba(139,115,85,0.2)", lineHeight: 1, display: "flex", alignItems: "baseline", gap: "2px" }}>
               <span ref={counterRef} style={{ display: "inline-block" }}>01</span>
@@ -298,115 +287,109 @@ export function Services() {
           </div>
         </div>
 
-        {/* 3D Card Stage */}
+        {/* Card stage — all cards centered, zoom driven by scale */}
         <div
           style={{
             position: "absolute",
             inset: 0,
-            perspective: "1200px",
-            perspectiveOrigin: "50% 50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <div style={{ position: "relative", width: 0, height: 0, transformStyle: "preserve-3d" }}>
-            {SERVICES.map((_, i) => (
+          {SERVICES.map((_, i) => {
+            const [from, to] = CARD_TONES[i];
+            return (
+              <div
+                key={i}
+                ref={(el) => { cardRefs.current[i] = el; }}
+                style={{
+                  position: "absolute",
+                  width: "100vw",
+                  height: "100vh",
+                  willChange: "transform, opacity",
+                  transformOrigin: "center center",
+                }}
+              >
+                {/* Card fill */}
                 <div
-                  key={i}
-                  ref={(el) => { cardRefs.current[i] = el; }}
                   style={{
-                    position: "absolute",
-                    width: "380px",
-                    height: "240px",
-                    marginLeft: "-190px",
-                    marginTop: "-120px",
-                    willChange: "transform, filter, opacity",
-                    cursor: "default",
-                    borderRadius: "2px",
-                    overflow: "hidden",
+                    width: "100%",
+                    height: "100%",
+                    background: `linear-gradient(160deg, ${from} 0%, ${to} 100%)`,
+                    position: "relative",
                   }}
                 >
-                  {/* Card body */}
-                  <div
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      background: "linear-gradient(135deg, #F2EBE2 0%, #E8DDD0 100%)",
-                      border: "1px solid rgba(120,95,70,0.25)",
-                      position: "relative",
-                      boxShadow: "0 24px 60px rgba(60,40,20,0.18), 0 4px 16px rgba(60,40,20,0.08)",
-                    }}
-                  >
-                    {/* Decorative corner lines */}
-                    {([
-                      { top: 10, left: 10 },
-                      { top: 10, right: 10 },
-                      { bottom: 10, left: 10 },
-                      { bottom: 10, right: 10 },
-                    ] as React.CSSProperties[]).map((pos, ci) => (
-                      <div
-                        key={ci}
-                        style={{
-                          position: "absolute",
-                          width: 18,
-                          height: 18,
-                          borderTop: ci < 2 ? "1px solid rgba(100,78,55,0.4)" : "none",
-                          borderBottom: ci >= 2 ? "1px solid rgba(100,78,55,0.4)" : "none",
-                          borderLeft: ci === 0 || ci === 2 ? "1px solid rgba(100,78,55,0.4)" : "none",
-                          borderRight: ci === 1 || ci === 3 ? "1px solid rgba(100,78,55,0.4)" : "none",
-                          ...pos,
-                        }}
-                      />
-                    ))}
-
-                    {/* Horizontal texture lines */}
-                    {Array.from({ length: 6 }).map((_, li) => (
-                      <div
-                        key={li}
-                        style={{
-                          position: "absolute",
-                          left: 22,
-                          right: 22,
-                          top: 38 + li * 28,
-                          height: "1px",
-                          background: "rgba(140,115,88,0.08)",
-                        }}
-                      />
-                    ))}
-
-                    {/* Card number */}
+                  {/* Subtle horizontal stripe texture */}
+                  {Array.from({ length: 16 }).map((_, li) => (
                     <div
+                      key={li}
                       style={{
                         position: "absolute",
-                        top: 18,
-                        left: 22,
-                        fontSize: "9px",
-                        letterSpacing: "0.42em",
-                        color: "rgba(100,78,55,0.35)",
-                        textTransform: "uppercase",
-                        fontWeight: 300,
-                      }}
-                    >
-                      {String(i + 1).padStart(2, "0")}
-                    </div>
-
-                    {/* Border inset */}
-                    <div
-                      style={{
-                        position: "absolute",
-                        inset: "8px",
-                        border: "1px solid rgba(139,115,85,0.12)",
-                        pointerEvents: "none",
+                        left: 0,
+                        right: 0,
+                        top: `${6.25 * li}%`,
+                        height: "1px",
+                        background: "rgba(100,80,60,0.05)",
                       }}
                     />
+                  ))}
+
+                  {/* Frame border */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      inset: "clamp(20px, 3vw, 48px)",
+                      border: "1px solid rgba(120,95,70,0.2)",
+                      pointerEvents: "none",
+                    }}
+                  />
+
+                  {/* Corner accents */}
+                  {[
+                    { top: "clamp(20px,3vw,48px)", left: "clamp(20px,3vw,48px)" },
+                    { top: "clamp(20px,3vw,48px)", right: "clamp(20px,3vw,48px)" },
+                    { bottom: "clamp(20px,3vw,48px)", left: "clamp(20px,3vw,48px)" },
+                    { bottom: "clamp(20px,3vw,48px)", right: "clamp(20px,3vw,48px)" },
+                  ].map((pos, ci) => (
+                    <div
+                      key={ci}
+                      style={{
+                        position: "absolute",
+                        width: 28,
+                        height: 28,
+                        borderTop: ci < 2 ? "1.5px solid rgba(100,78,55,0.4)" : "none",
+                        borderBottom: ci >= 2 ? "1.5px solid rgba(100,78,55,0.4)" : "none",
+                        borderLeft: ci === 0 || ci === 2 ? "1.5px solid rgba(100,78,55,0.4)" : "none",
+                        borderRight: ci === 1 || ci === 3 ? "1.5px solid rgba(100,78,55,0.4)" : "none",
+                        ...pos,
+                      }}
+                    />
+                  ))}
+
+                  {/* Card index number (faint, large) */}
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "clamp(28px,4vw,60px)",
+                      right: "clamp(28px,4vw,60px)",
+                      fontSize: "clamp(80px, 12vw, 180px)",
+                      fontFamily: "serif",
+                      fontWeight: 200,
+                      color: "rgba(120,95,70,0.08)",
+                      lineHeight: 1,
+                      userSelect: "none",
+                    }}
+                  >
+                    {String(i + 1).padStart(2, "0")}
                   </div>
                 </div>
-            ))}
-          </div>
+              </div>
+            );
+          })}
         </div>
 
-        {/* HTML Text overlay — active service info */}
+        {/* HTML Text overlay — centered, appears at card arrival */}
         <div
           style={{
             position: "absolute",
@@ -414,8 +397,8 @@ export function Services() {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            pointerEvents: "none",
             zIndex: 20,
+            pointerEvents: "none",
           }}
         >
           {SERVICES.map((s, i) => (
@@ -425,19 +408,19 @@ export function Services() {
               style={{
                 position: "absolute",
                 textAlign: "center",
-                maxWidth: "400px",
-                padding: "0 24px",
-                opacity: i === 0 ? 1 : 0,
-                transform: i === 0 ? "translateY(0)" : "translateY(14px)",
+                maxWidth: "540px",
+                padding: "0 32px",
+                opacity: 0,
               }}
             >
-              <p style={{ fontSize: "9px", letterSpacing: "0.42em", textTransform: "uppercase", color: "#9C8670", marginBottom: "14px" }}>
-                {String(i + 1).padStart(2, "0")} из {String(SERVICES.length).padStart(2, "0")}
+              <p style={{ fontSize: "9px", letterSpacing: "0.45em", textTransform: "uppercase", color: "#9C8670", marginBottom: "20px" }}>
+                {String(i + 1).padStart(2, "0")} / {String(SERVICES.length).padStart(2, "0")}
               </p>
-              <h3 style={{ fontFamily: "serif", fontSize: "clamp(22px, 2.6vw, 38px)", color: "#3D2E20", fontWeight: 300, lineHeight: 1.15, marginBottom: "16px" }}>
+              <h3 style={{ fontFamily: "serif", fontSize: "clamp(28px, 4vw, 58px)", color: "#2E2118", fontWeight: 300, lineHeight: 1.1, marginBottom: "20px", letterSpacing: "-0.01em" }}>
                 {s.title}
               </h3>
-              <p style={{ fontSize: "14px", color: "#7A6A5A", lineHeight: 1.72, fontWeight: 300, whiteSpace: "pre-line" }}>
+              <div style={{ width: "40px", height: "1px", background: "rgba(139,115,85,0.4)", margin: "0 auto 20px" }} />
+              <p style={{ fontSize: "15px", color: "#7A6A5A", lineHeight: 1.75, fontWeight: 300, whiteSpace: "pre-line" }}>
                 {s.desc}
               </p>
             </div>
@@ -454,7 +437,7 @@ export function Services() {
             display: "flex",
             flexDirection: "column",
             gap: "10px",
-            zIndex: 20,
+            zIndex: 30,
             pointerEvents: "none",
           }}
         >
@@ -463,7 +446,7 @@ export function Services() {
               key={i}
               ref={(el) => { dotsRef.current[i] = el; }}
               style={{
-                width: i === 0 ? "26px" : "6px",
+                width: i === 0 ? "24px" : "6px",
                 height: "6px",
                 borderRadius: "3px",
                 background: i === 0 ? "#8B7355" : "rgba(139,115,85,0.22)",
@@ -477,15 +460,14 @@ export function Services() {
           ref={scrollHintRef}
           style={{
             position: "absolute",
-            bottom: "28px",
+            bottom: "32px",
             left: "50%",
             transform: "translateX(-50%)",
-            zIndex: 20,
+            zIndex: 30,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
-            gap: "6px",
-            opacity: 1,
+            gap: "8px",
             pointerEvents: "none",
           }}
         >
