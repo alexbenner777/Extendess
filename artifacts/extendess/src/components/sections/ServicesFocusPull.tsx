@@ -138,48 +138,84 @@ export function Services() {
                   boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
                 }}
               >
-                <div style={{ position: "absolute", inset: 0, background: "#faf8f5" }} />
+                {/* Card background */}
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, #fdfaf7 0%, #f4ede4 100%)" }} />
 
-                {/* Photo */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0, left: 0, right: 0,
-                    height: "52%",
-                    backgroundImage: `url(${svc.img})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center top",
-                  }}
-                />
+                {/* Number — top left */}
+                <span style={{
+                  position: "absolute", top: 18, left: 22,
+                  fontSize: 8, letterSpacing: "0.5em", color: "rgba(0,0,0,0.28)",
+                  textTransform: "uppercase", fontWeight: 300,
+                }}>
+                  {svc.num}
+                </span>
 
-                {/* Fade gradient image → white */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "39%", left: 0, right: 0,
-                    height: "13%",
-                    background: "linear-gradient(to bottom, transparent 0%, #faf8f5 100%)",
-                  }}
-                />
+                {/* Floating image — centered */}
+                <div style={{
+                  position: "absolute",
+                  top: "8%", left: "50%",
+                  transform: "translateX(-50%)",
+                  width: 220, height: 230,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                }}>
+                  {/* Drop shadow that follows the float */}
+                  <motion.div
+                    animate={{ scaleX: [1, 0.82, 1], opacity: [0.18, 0.09, 0.18] }}
+                    transition={{
+                      duration: 3.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.55,
+                    }}
+                    style={{
+                      position: "absolute",
+                      bottom: -14,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 130,
+                      height: 18,
+                      background: "radial-gradient(ellipse, rgba(0,0,0,0.45) 0%, transparent 70%)",
+                      borderRadius: "50%",
+                      filter: "blur(6px)",
+                    }}
+                  />
+                  <motion.img
+                    src={svc.img}
+                    alt={svc.title}
+                    animate={{ y: [-9, 9, -9] }}
+                    transition={{
+                      duration: 3.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.55,
+                    }}
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: "center top",
+                      borderRadius: 4,
+                      boxShadow: "0 18px 48px rgba(0,0,0,0.16), 0 4px 12px rgba(0,0,0,0.08)",
+                      display: "block",
+                    }}
+                  />
+                </div>
 
-                {/* Text */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "52%", left: 0, right: 0, bottom: 0,
-                    padding: "12px 22px 16px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span style={{ display: "block", fontSize: 8, letterSpacing: "0.45em", color: "rgba(0,0,0,0.35)", textTransform: "uppercase", marginBottom: 6, fontWeight: 300 }}>
-                    {svc.num}
-                  </span>
-                  <h3 style={{ fontSize: 19, fontWeight: 200, lineHeight: 1.1, letterSpacing: "-0.01em", color: "rgba(0,0,0,0.88)", whiteSpace: "pre-line", marginBottom: 6 }}>
+                {/* Text — bottom */}
+                <div style={{
+                  position: "absolute",
+                  bottom: 0, left: 0, right: 0,
+                  padding: "14px 22px 20px",
+                }}>
+                  <div style={{ width: 24, height: 1, background: "rgba(0,0,0,0.2)", marginBottom: 10 }} />
+                  <h3 style={{
+                    fontSize: 18, fontWeight: 200, lineHeight: 1.15,
+                    letterSpacing: "-0.01em", color: "rgba(0,0,0,0.85)",
+                    whiteSpace: "pre-line", marginBottom: 6,
+                  }}>
                     {svc.title}
                   </h3>
-                  <p style={{ fontSize: 10, color: "rgba(0,0,0,0.45)", lineHeight: 1.55, fontWeight: 300 }}>
+                  <p style={{ fontSize: 9.5, color: "rgba(0,0,0,0.42)", lineHeight: 1.6, fontWeight: 300 }}>
                     {svc.desc}
                   </p>
                 </div>
