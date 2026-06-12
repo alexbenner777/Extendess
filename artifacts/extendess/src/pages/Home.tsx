@@ -24,14 +24,13 @@ import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
 import {
+  CrescinaLogo,
   LorealLogo,
-  KerastaseLogo,
-  WellaLogo,
-  SchwarzLogo,
-  RedkenLogo,
-  DavinesLogo,
-  OlaplexLogo,
-  LaBiosthetiqueLogo,
+  PhytomerLogo,
+  NoadadaLogo,
+  SisleyLogo,
+  EnhelLogo,
+  NescensLogo,
 } from "@/components/sections/BrandLogos";
 
 function BrandEvolution() {
@@ -681,19 +680,18 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-black/8">
             {([
               { Logo: LorealLogo, tag: "Coloration" },
-              { Logo: KerastaseLogo, tag: "Hair Care" },
-              { Logo: WellaLogo, tag: "Styling" },
-              { Logo: SchwarzLogo, tag: "Treatment" },
-              { Logo: RedkenLogo, tag: "Color & Care" },
-              { Logo: DavinesLogo, tag: "Eco Beauty" },
-              { Logo: OlaplexLogo, tag: "Bond Repair" },
-              { Logo: LaBiosthetiqueLogo, tag: "Luxury Care" },
-            ] as const).map(({ Logo, tag }, i) => (
+              { Logo: SisleyLogo, tag: "Luxury Care" },
+              { Logo: PhytomerLogo, tag: "Marine Care" },
+              { Logo: CrescinaLogo, tag: "Hair Growth" },
+              { Logo: NescensLogo, tag: "Anti-Aging" },
+              { Logo: NoadadaLogo, tag: "Cosmeric Series" },
+              { Logo: EnhelLogo, tag: "Aesthetics" },
+            ]).map(({ Logo, tag }, i) => (
               <div
                 key={i}
                 className="bg-[#F1EBE3] px-8 py-10 flex flex-col items-center justify-center gap-6 group hover:bg-[#5E4B3A]/5 transition-colors duration-300 min-h-[140px]"
               >
-                <Logo className="w-40 h-14 text-black/70 group-hover:text-black transition-colors duration-300" />
+                <Logo className="w-40 h-14 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="text-[9px] uppercase tracking-[0.35em] text-black/25">{tag}</span>
               </div>
             ))}
