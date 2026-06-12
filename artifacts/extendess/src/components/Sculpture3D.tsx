@@ -5,7 +5,7 @@ import * as THREE from "three";
 import sculptureFallback from "@assets/578b80ac-297d-4c46-b7ee-22955185bcd2_1781290151582.png";
 
 const DARK_BEIGE  = new THREE.Color("#9a7d5e");
-const LIGHT_BEIGE = new THREE.Color("#f2e8d9");
+const LIGHT_BEIGE = new THREE.Color("#c8dff0");
 
 function CoralModel() {
   const { scene } = useGLTF("/coral.glb");
