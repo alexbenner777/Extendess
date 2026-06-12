@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring, useAnimate } from "framer-motion";
 import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
@@ -239,24 +239,39 @@ const allServices = [
 function StickyServices() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const activeIdxRef = useRef(0);
-  const [activeIdx, setActiveIdx] = useState(0);
-  const [dir, setDir] = useState(1);
-  const [flipKey, setFlipKey] = useState(0);
+
+  // displayIdx = content on front face (what user sees)
+  // incomingIdx = content pre-loaded on the incoming face
+  const [displayIdx, setDisplayIdx] = useState(0);
+  const [incomingIdx, setIncomingIdx] = useState(0);
+  const [flipDir, setFlipDir] = useState<1 | -1>(1);
+
+  const [cubeScope, animateCube] = useAnimate();
   const isTransitioning = useRef(false);
-  const lastFlipTime = useRef(0);
   const accDelta = useRef(0);
 
-  const goTo = useCallback((next: number, direction = 1) => {
+  const goTo = useCallback(async (next: number, direction: 1 | -1 = 1) => {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
     accDelta.current = 0;
-    lastFlipTime.current = Date.now();
-    setDir(direction);
-    setFlipKey(k => k + 1);
-    setActiveIdx(next);
+    setFlipDir(direction);
+    setIncomingIdx(next);
     activeIdxRef.current = next;
-    setTimeout(() => { isTransitioning.current = false; }, 850);
-  }, []);
+
+    // Rotate the cube: down → rotateX(-90), up → rotateX(+90)
+    await animateCube(
+      cubeScope.current,
+      { rotateX: direction > 0 ? -90 : 90 },
+      { duration: 0.75, ease: [0.22, 1, 0.36, 1] }
+    );
+
+    // Swap content onto front face and instantly reset cube rotation
+    setDisplayIdx(next);
+    setIncomingIdx(next);
+    animateCube(cubeScope.current, { rotateX: 0 }, { duration: 0 });
+
+    setTimeout(() => { isTransitioning.current = false; }, 60);
+  }, [animateCube, cubeScope]);
 
   useEffect(() => {
     const onWheel = (e: WheelEvent) => {
@@ -272,11 +287,8 @@ function StickyServices() {
       const atStart = !goingDown && idx <= 0;
       if (!atEnd && !atStart) e.preventDefault();
 
-      // Hard lock: ignore all events for 850ms after a slide change
       if (isTransitioning.current) return;
-
       accDelta.current += e.deltaY;
-      // Require meaningful intent before advancing
       if (Math.abs(accDelta.current) < 80) return;
 
       if (accDelta.current > 0 && idx < allServices.length - 1) {
@@ -291,19 +303,19 @@ function StickyServices() {
     return () => window.removeEventListener("wheel", onWheel);
   }, [goTo]);
 
-  const s = allServices[activeIdx];
+  const front = allServices[displayIdx];
+  const incoming = allServices[incomingIdx];
 
-  // Scale + fade animation: image zooms in slightly, text fades with tiny lift
+  // Content animations: scale+fade (unchanged)
   const textVariants = {
     enter: { opacity: 0, y: 18 },
-    center: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
-    exit:  { opacity: 0, y: -12, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    exit:   { opacity: 0, y: -10, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
   };
-
   const imgVariants = {
     enter: { opacity: 0, scale: 1.07 },
-    center: { opacity: 1, scale: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
-    exit:  { opacity: 0, scale: 0.96, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+    center: { opacity: 1, scale: 1, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
+    exit:   { opacity: 0, scale: 0.95, transition: { duration: 0.28, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (
@@ -314,47 +326,79 @@ function StickyServices() {
         <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/8 z-20">
           <motion.div
             className="h-full bg-black/30 origin-left"
-            animate={{ scaleX: (activeIdx + 1) / allServices.length }}
+            animate={{ scaleX: (displayIdx + 1) / allServices.length }}
             transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
 
-        {/* ── Cube-flip background layer ── */}
+        {/* ── 3D Cube background ── */}
+        {/*
+          Scene: perspective on this wrapper
+          Cube: ref=cubeScope, transformStyle preserve-3d, animates rotateX
+          Face A (front):  local rotateX(0deg)   → always at front when cube=0
+          Face B (below):  local rotateX(90deg)  → below front, comes in when cube→-90
+          Face C (above):  local rotateX(-90deg) → above front, comes in when cube→+90
+        */}
         <div
-          className="absolute inset-0 z-[1] overflow-hidden"
-          style={{ perspective: "1400px", perspectiveOrigin: "50% 50%" }}
+          className="absolute inset-0 z-[1]"
+          style={{ perspective: "1800px", perspectiveOrigin: "50% 50%" }}
         >
-          <motion.div
-            key={flipKey}
-            className="absolute inset-0 bg-[#F1EBE3]"
-            initial={{ rotateX: dir > 0 ? 88 : -88 }}
-            animate={{ rotateX: 0 }}
-            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
-            style={{
-              transformOrigin: dir > 0 ? "50% 100%" : "50% 0%",
-              transformStyle: "preserve-3d",
-            }}
+          <div
+            ref={cubeScope}
+            className="absolute inset-0"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            {/* Shadow at the fold edge — simulates cube edge lighting */}
+            {/* Face A — front (current content bg) */}
             <div
-              className="absolute inset-x-0 pointer-events-none"
+              className="absolute inset-0 bg-[#F1EBE3]"
+              style={{ backfaceVisibility: "hidden" }}
+            >
+              {/* Subtle bottom shadow — always visible for depth */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.08), transparent)" }}
+              />
+            </div>
+
+            {/* Face B — bottom (incoming when scrolling DOWN) */}
+            <div
+              className="absolute inset-0 bg-[#F1EBE3]"
               style={{
-                ...(dir > 0
-                  ? { top: 0, height: 120, background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 50%, transparent 100%)" }
-                  : { bottom: 0, height: 120, background: "linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 50%, transparent 100%)" }
-                ),
+                transform: "rotateX(90deg)",
+                backfaceVisibility: "hidden",
               }}
-            />
-          </motion.div>
+            >
+              {/* Shadow at top edge = the fold line when unfolding from below */}
+              <div
+                className="absolute inset-x-0 top-0 h-24 pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 60%, transparent 100%)" }}
+              />
+            </div>
+
+            {/* Face C — top (incoming when scrolling UP) */}
+            <div
+              className="absolute inset-0 bg-[#F1EBE3]"
+              style={{
+                transform: "rotateX(-90deg)",
+                backfaceVisibility: "hidden",
+              }}
+            >
+              {/* Shadow at bottom edge = fold line when unfolding from above */}
+              <div
+                className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 60%, transparent 100%)" }}
+              />
+            </div>
+          </div>
         </div>
 
-        {/* Slide layout — text and image animate independently, above the flip */}
+        {/* ── Content layer — above the cube ── */}
         <div className="absolute inset-0 z-[2] grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
 
           {/* Left — text */}
           <AnimatePresence mode="wait">
             <motion.div
-              key={`text-${activeIdx}`}
+              key={`text-${displayIdx}`}
               variants={textVariants}
               initial="enter"
               animate="center"
@@ -362,19 +406,19 @@ function StickyServices() {
               className="flex flex-col justify-center pr-0 md:pr-16"
             >
               <span className="text-[10px] uppercase tracking-[0.5em] text-black/35 mb-8 block font-light">
-                {s.num} / 06
+                {front.num} / 06
               </span>
               <h3
                 className="font-extralight tracking-[-0.02em] leading-[1] text-black mb-8 whitespace-pre-line"
                 style={{ fontSize: "clamp(2.2rem, 4vw, 4.5rem)" }}
               >
-                {s.title}
+                {front.title}
               </h3>
               <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-md">
-                {s.desc}
+                {front.desc}
               </p>
               <Link
-                href={s.href}
+                href={front.href}
                 className="group inline-flex items-center gap-3 border-b border-black/30 pb-2 text-xs uppercase tracking-[0.3em] text-black hover:gap-5 transition-all duration-300 self-start"
               >
                 Подробнее
@@ -383,13 +427,13 @@ function StickyServices() {
             </motion.div>
           </AnimatePresence>
 
-          {/* Right — image with scale+fade */}
+          {/* Right — image */}
           <div className="hidden md:flex items-center justify-center h-full overflow-hidden">
             <AnimatePresence mode="wait">
               <motion.img
-                key={`img-${activeIdx}`}
-                src={s.img}
-                alt={s.title}
+                key={`img-${displayIdx}`}
+                src={front.img}
+                alt={front.title}
                 variants={imgVariants}
                 initial="enter"
                 animate="center"
@@ -401,14 +445,14 @@ function StickyServices() {
           </div>
         </div>
 
-        {/* Nav pills — bottom */}
-        <div className="absolute bottom-7 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-10">
+        {/* ── Nav pills ── */}
+        <div className="absolute bottom-7 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-[3]">
           {allServices.map((sv, i) => (
             <button
               key={i}
-              onClick={() => goTo(i, i > activeIdx ? 1 : -1)}
-              className={`inline-flex items-center gap-1.5 px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-400 whitespace-nowrap border ${
-                activeIdx === i
+              onClick={() => goTo(i, (i > displayIdx ? 1 : -1) as 1 | -1)}
+              className={`inline-flex items-center gap-1.5 px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-300 whitespace-nowrap border ${
+                displayIdx === i
                   ? "border-black bg-black text-white"
                   : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
               }`}
