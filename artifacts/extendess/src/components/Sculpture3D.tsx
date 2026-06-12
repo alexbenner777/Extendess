@@ -97,7 +97,22 @@ class WebGLErrorBoundary extends Component<
   }
 }
 
+function isWebGLAvailable(): boolean {
+  try {
+    const canvas = document.createElement("canvas");
+    return !!(
+      window.WebGLRenderingContext &&
+      (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+    );
+  } catch {
+    return false;
+  }
+}
+
 export function Sculpture3D() {
+  if (!isWebGLAvailable()) {
+    return <FallbackImage />;
+  }
   return (
     <WebGLErrorBoundary fallback={<FallbackImage />}>
       <div className="w-full" style={{ height: "60vh" }}>
