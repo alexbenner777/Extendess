@@ -680,9 +680,8 @@ export default function Home() {
           {/* Right: text column — sticky so it stays centered while image scrolls */}
           <div className="md:col-span-7 md:pt-16">
             <h2 className="font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2rem,5vw,5rem)]">
-              <SplitText text="Каждое прикосновение —" />
-              <SplitText text="ритуал. Каждая деталь —" delay={0.1} />
-              <SplitText text="произведение." delay={0.2} />
+              <SplitText text="EXTENDESS: новая философия." />
+              <SplitText text="Та же любовь к деталям." delay={0.1} />
             </h2>
             <FadeIn delay={0.6}>
               <p className="mt-12 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
