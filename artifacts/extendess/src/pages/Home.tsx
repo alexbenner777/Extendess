@@ -248,16 +248,10 @@ function StickyServices() {
     [0,    0,   90,   90,  180,  180,  270, 270],
   );
 
-  // Darkening overlay: sin wave peaks at 45°/135°/225°/315° (mid-flip), 0 at face-on positions
-  const flipDarken = useTransform(cubeRotateX, (v) => {
+  // Bottom-edge shadow opacity — peaks mid-flip to simulate cube depth at the bottom edge
+  const edgeShadow = useTransform(cubeRotateX, (v) => {
     const phase = (((v % 90) + 90) % 90) / 90;
-    return Math.sin(phase * Math.PI) * 0.38;
-  });
-
-  // Top crease shadow — simulates the fold line casting shadow downward
-  const creaseOpacity = useTransform(cubeRotateX, (v) => {
-    const phase = (((v % 90) + 90) % 90) / 90;
-    return Math.sin(phase * Math.PI) * 0.6;
+    return 0.18 + Math.sin(phase * Math.PI) * 0.55;
   });
 
   return (
@@ -290,18 +284,18 @@ function StickyServices() {
                 backfaceVisibility: "hidden",
               }}
             >
-              {/* Stones — right side of each face */}
-              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-end justify-end pointer-events-none select-none">
+              {/* Stones — right side, vertically centred */}
+              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-end pointer-events-none select-none pr-0">
                 <img
                   src={stonesImg}
                   alt="Zen stones"
-                  className="h-[90vh] w-auto object-contain object-bottom"
+                  className="h-[75vh] w-auto object-contain"
                   style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
                 />
               </div>
 
-              {/* Text — left side of each face */}
-              <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36">
+              {/* Text — left side, vertically centred */}
+              <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-8 md:px-20 pb-16">
                 <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
                   {s.num} / 04
                 </span>
@@ -322,32 +316,18 @@ function StickyServices() {
                   <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
                 </Link>
               </div>
+
+              {/* Bottom-edge cube shadow — visible always, intensifies during flip */}
+              <motion.div
+                className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
+                style={{
+                  opacity: edgeShadow,
+                  background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 100%)",
+                }}
+              />
             </div>
           ))}
         </motion.div>
-
-        {/* Flip darkening overlay — peaks at 45°/135° mid-transition, invisible when face-on */}
-        <motion.div
-          className="absolute inset-0 pointer-events-none z-[5]"
-          style={{ opacity: flipDarken, background: "rgba(20,15,10,1)" }}
-        />
-
-        {/* Crease shadow from top — fold line effect */}
-        <motion.div
-          className="absolute inset-x-0 top-0 h-40 pointer-events-none z-[6]"
-          style={{
-            opacity: creaseOpacity,
-            background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 100%)",
-          }}
-        />
-        {/* Crease shadow from bottom */}
-        <motion.div
-          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none z-[6]"
-          style={{
-            opacity: creaseOpacity,
-            background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%)",
-          }}
-        />
 
         {/* Nav buttons — outside cube so they stay readable during rotation */}
         <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
