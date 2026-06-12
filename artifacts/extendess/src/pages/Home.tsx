@@ -396,28 +396,30 @@ function InnovationsCarousel() {
 
   return (
     <section className="py-32 md:py-48 overflow-hidden">
-      <div className="max-w-7xl mx-auto flex items-center gap-6 md:gap-10 px-4 md:px-8">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
 
-        {/* Left arrow */}
-        <button
-          onClick={prev}
-          className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
-          aria-label="Предыдущий"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.2"/></svg>
-        </button>
-
-        {/* Text side */}
-        <div className="flex-1 min-w-0">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
+        {/* Single AnimatePresence wraps both text and image — no duplication */}
+        <AnimatePresence mode="wait" custom={direction}>
+          <motion.div
+            key={current}
+            custom={direction}
+            variants={variants}
+            initial="enter"
+            animate="center"
+            exit="exit"
+            className="flex items-center gap-6 md:gap-10"
+          >
+            {/* Left arrow */}
+            <button
+              onClick={prev}
+              className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+              aria-label="Предыдущий"
             >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.2"/></svg>
+            </button>
+
+            {/* Text side */}
+            <div className="flex-1 min-w-0">
               <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
               <h3 className="mt-6 font-extralight tracking-[-0.02em] leading-[1] text-4xl md:text-5xl lg:text-6xl whitespace-pre-line">
                 {item.title}
@@ -431,54 +433,43 @@ function InnovationsCarousel() {
               >
                 Подробнее <ArrowUpRight size={14} />
               </Link>
-            </motion.div>
-          </AnimatePresence>
-
-          {/* Dots */}
-          <div className="mt-10 flex items-center gap-4">
-            <span className="text-[10px] uppercase tracking-[0.35em] text-black/30">
-              {String(current + 1).padStart(2, "0")} / {String(innovations.length).padStart(2, "0")}
-            </span>
-            <div className="flex gap-2 ml-4">
-              {innovations.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => go(i)}
-                  className={`h-px transition-all duration-500 ${i === current ? "w-10 bg-black" : "w-4 bg-black/20"}`}
-                />
-              ))}
             </div>
-          </div>
-        </div>
 
-        {/* Image side */}
-        <div className="flex-1 min-w-0 overflow-hidden">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
+            {/* Image side */}
+            <div className="flex-1 min-w-0 overflow-hidden">
               <img
                 src={item.img}
                 alt={item.title}
                 style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
               />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+            </div>
 
-        {/* Right arrow */}
-        <button
-          onClick={next}
-          className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
-          aria-label="Следующий"
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2"/></svg>
-        </button>
+            {/* Right arrow */}
+            <button
+              onClick={next}
+              className="shrink-0 w-11 h-11 border border-black/20 flex items-center justify-center hover:bg-black hover:text-white transition-colors"
+              aria-label="Следующий"
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2"/></svg>
+            </button>
+          </motion.div>
+        </AnimatePresence>
+
+        {/* Dots — outside AnimatePresence so they don't duplicate */}
+        <div className="mt-10 flex items-center gap-4 px-16 md:px-20">
+          <span className="text-[10px] uppercase tracking-[0.35em] text-black/30">
+            {String(current + 1).padStart(2, "0")} / {String(innovations.length).padStart(2, "0")}
+          </span>
+          <div className="flex gap-2 ml-4">
+            {innovations.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => go(i)}
+                className={`h-px transition-all duration-500 ${i === current ? "w-10 bg-black" : "w-4 bg-black/20"}`}
+              />
+            ))}
+          </div>
+        </div>
 
       </div>
     </section>
@@ -691,7 +682,7 @@ export default function Home() {
                 key={i}
                 className="bg-[#F1EBE3] px-8 py-10 flex flex-col items-center justify-center gap-6 group hover:bg-[#5E4B3A]/5 transition-colors duration-300 min-h-[140px]"
               >
-                <Logo className="w-40 h-14 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
+                <Logo className="w-full max-w-[220px] h-20 object-contain opacity-70 group-hover:opacity-100 transition-opacity duration-300" />
                 <span className="text-[9px] uppercase tracking-[0.35em] text-black/25">{tag}</span>
               </div>
             ))}
