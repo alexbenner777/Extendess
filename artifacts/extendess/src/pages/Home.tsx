@@ -645,34 +645,6 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Floating sculpture — right side, mouse parallax + levitation */}
-        <motion.div
-          className="absolute right-[-4%] md:right-[2%] top-0 h-full w-[55%] md:w-[46%] flex items-center justify-end pointer-events-none select-none"
-          style={{ x: sculptureX, rotate: sculptureRotate }}
-          initial={{ opacity: 0, x: 60 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.6, duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <motion.img
-            src={sculpturePng}
-            alt=""
-            className="w-full h-auto object-contain"
-            style={{
-              y: sculptureY,
-              filter: "drop-shadow(0 60px 80px rgba(0,0,0,0.55)) drop-shadow(0 0 40px rgba(255,245,235,0.12))",
-              maxHeight: "92vh",
-            }}
-            animate={{
-              y: [0, -28, 0],
-              rotate: [-1.5, 1.5, -1.5],
-            }}
-            transition={{
-              y: { repeat: Infinity, duration: 5.5, ease: "easeInOut" },
-              rotate: { repeat: Infinity, duration: 7, ease: "easeInOut" },
-            }}
-          />
-        </motion.div>
-
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -707,16 +679,36 @@ export default function Home() {
       <section className="py-32 md:py-48 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
-          {/* Left: image column */}
-          <div className="md:col-span-5 flex flex-col gap-6">
+          {/* Left: animated sculpture */}
+          <div className="md:col-span-5 flex flex-col gap-6 items-start">
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Философия</span>
-            <ImageReveal
-              src={philosophyImg}
-              alt="Organic form"
-              className="aspect-[2/3] w-full"
-              imgClassName="object-top"
-              direction="bottom"
-            />
+            <motion.div
+              className="relative w-full flex items-center justify-center"
+              style={{ x: sculptureX, rotate: sculptureRotate }}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <motion.img
+                src={sculpturePng}
+                alt="Organic sculpture"
+                className="w-full h-auto object-contain"
+                style={{
+                  y: sculptureY,
+                  filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12)) drop-shadow(0 10px 20px rgba(0,0,0,0.08))",
+                  maxHeight: "70vh",
+                }}
+                animate={{
+                  y: [0, -24, 0],
+                  rotate: [-1.2, 1.2, -1.2],
+                }}
+                transition={{
+                  y: { repeat: Infinity, duration: 6, ease: "easeInOut" },
+                  rotate: { repeat: Infinity, duration: 8, ease: "easeInOut" },
+                }}
+              />
+            </motion.div>
           </div>
 
           {/* Right: text column — sticky so it stays centered while image scrolls */}
