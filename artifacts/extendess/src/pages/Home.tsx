@@ -241,63 +241,80 @@ function StickyServices() {
     window.scrollTo({ top: top + targets[i] * totalHeight, behavior: "smooth" });
   };
 
+  // Cube rotates 0→90→180→270 across scroll, each face holds ~20%, transitions ~10%
+  const cubeRotateX = useTransform(
+    scrollYProgress,
+    [0, 0.20, 0.30, 0.45, 0.55, 0.70, 0.80, 1],
+    [0,    0,   90,   90,  180,  180,  270, 270],
+  );
+
   return (
     <section ref={containerRef} className="relative h-[800vh]">
-      <div className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]">
-
-        {/* Right side: stones image — static, decorative */}
-        <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-end justify-end pointer-events-none select-none">
-          <img
-            src={stonesImg}
-            alt="Zen stones"
-            className="h-[90vh] w-auto object-contain object-bottom"
-            style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
-          />
-        </div>
-
-        {/* Left side: text with 3D cube-flip animation */}
-        <div
-          className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36 z-10"
-          style={{ perspective: "1000px" }}
+      {/*
+        perspective: 1500vh → scale factor at translateZ(50vh) = 1500/1450 ≈ 1.034
+        Only ~3.4% overhang per side → on 1280px that's ~44px.
+        With px-20 (80px) padding, content is safe from clipping.
+        bg-[#F1EBE3] on the container so any edge overhang is invisible.
+      */}
+      <div
+        className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]"
+        style={{ perspective: "1500vh", perspectiveOrigin: "50% 50%" }}
+      >
+        {/* Rotating cube — each face is a full beige panel */}
+        <motion.div
+          className="absolute inset-0 w-full h-full"
+          style={{
+            transformStyle: "preserve-3d",
+            rotateX: cubeRotateX,
+            transformOrigin: "50% 50%",
+          }}
         >
-          <AnimatePresence mode="wait">
-            {allServices.map((s, i) =>
-              i === activeIdx ? (
-                <motion.div
-                  key={i}
-                  className="max-w-xl"
-                  initial={{ rotateX: 70, opacity: 0, y: 40 }}
-                  animate={{ rotateX: 0, opacity: 1, y: 0 }}
-                  exit={{ rotateX: -70, opacity: 0, y: -40 }}
-                  transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
-                  style={{ transformOrigin: "center 80%" }}
-                >
-                  <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
-                    {s.num} / 04
-                  </span>
-                  <h3
-                    className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8"
-                    style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
-                  >
-                    {s.title}
-                  </h3>
-                  <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
-                    {s.desc}
-                  </p>
-                  <Link
-                    href={s.href}
-                    className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500"
-                  >
-                    Подробнее
-                    <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
-                  </Link>
-                </motion.div>
-              ) : null
-            )}
-          </AnimatePresence>
-        </div>
+          {allServices.map((s, i) => (
+            <div
+              key={i}
+              className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
+              style={{
+                transform: `rotateX(${i * -90}deg) translateZ(50vh)`,
+                backfaceVisibility: "hidden",
+              }}
+            >
+              {/* Stones — right side of each face */}
+              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-end justify-end pointer-events-none select-none">
+                <img
+                  src={stonesImg}
+                  alt="Zen stones"
+                  className="h-[90vh] w-auto object-contain object-bottom"
+                  style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
+                />
+              </div>
 
-        {/* Service nav buttons — dark style on beige */}
+              {/* Text — left side of each face */}
+              <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-end px-8 md:px-20 pb-28 md:pb-36">
+                <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
+                  {s.num} / 04
+                </span>
+                <h3
+                  className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8"
+                  style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
+                >
+                  {s.title}
+                </h3>
+                <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
+                  {s.desc}
+                </p>
+                <Link
+                  href={s.href}
+                  className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500 self-start"
+                >
+                  Подробнее
+                  <ArrowUpRight size={14} className="transition-transform group-hover:rotate-45" />
+                </Link>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+
+        {/* Nav buttons — outside cube so they stay readable during rotation */}
         <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
           {allServices.map((s, i) => (
             <button
