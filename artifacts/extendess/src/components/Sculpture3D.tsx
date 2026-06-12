@@ -29,7 +29,7 @@ function CoralModel() {
       const tmp = new THREE.Color();
       for (let i = 0; i < pos.count; i++) {
         const norm = (pos.getY(i) - yMin) / yRange; // 0 bottom → 1 top
-        const t = 1 - Math.abs(2 * norm - 1);        // 0 at edges → 1 at center
+        const t = Math.pow(1 - Math.abs(2 * norm - 1), 3); // sharp: beige dominates, blue only at centre
         tmp.copy(DARK_BEIGE).lerp(LIGHT_BEIGE, t);
         colArr[i * 3]     = tmp.r;
         colArr[i * 3 + 1] = tmp.g;
