@@ -241,6 +241,7 @@ function StickyServices() {
   const activeIdxRef = useRef(0);
   const [activeIdx, setActiveIdx] = useState(0);
   const [dir, setDir] = useState(1);
+  const [flipKey, setFlipKey] = useState(0);
   const isTransitioning = useRef(false);
   const lastFlipTime = useRef(0);
   const accDelta = useRef(0);
@@ -251,6 +252,7 @@ function StickyServices() {
     accDelta.current = 0;
     lastFlipTime.current = Date.now();
     setDir(direction);
+    setFlipKey(k => k + 1);
     setActiveIdx(next);
     activeIdxRef.current = next;
     setTimeout(() => { isTransitioning.current = false; }, 850);
@@ -309,7 +311,7 @@ function StickyServices() {
       <div className="sticky top-0 h-screen bg-[#F1EBE3] overflow-hidden">
 
         {/* Progress line */}
-        <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/8 z-10">
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-black/8 z-20">
           <motion.div
             className="h-full bg-black/30 origin-left"
             animate={{ scaleX: (activeIdx + 1) / allServices.length }}
@@ -317,8 +319,37 @@ function StickyServices() {
           />
         </div>
 
-        {/* Slide layout — text and image animate independently */}
-        <div className="absolute inset-0 grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
+        {/* ── Cube-flip background layer ── */}
+        <div
+          className="absolute inset-0 z-[1] overflow-hidden"
+          style={{ perspective: "1400px", perspectiveOrigin: "50% 50%" }}
+        >
+          <motion.div
+            key={flipKey}
+            className="absolute inset-0 bg-[#F1EBE3]"
+            initial={{ rotateX: dir > 0 ? 88 : -88 }}
+            animate={{ rotateX: 0 }}
+            transition={{ duration: 0.72, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              transformOrigin: dir > 0 ? "50% 100%" : "50% 0%",
+              transformStyle: "preserve-3d",
+            }}
+          >
+            {/* Shadow at the fold edge — simulates cube edge lighting */}
+            <div
+              className="absolute inset-x-0 pointer-events-none"
+              style={{
+                ...(dir > 0
+                  ? { top: 0, height: 120, background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 50%, transparent 100%)" }
+                  : { bottom: 0, height: 120, background: "linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 50%, transparent 100%)" }
+                ),
+              }}
+            />
+          </motion.div>
+        </div>
+
+        {/* Slide layout — text and image animate independently, above the flip */}
+        <div className="absolute inset-0 z-[2] grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
 
           {/* Left — text */}
           <AnimatePresence mode="wait">
