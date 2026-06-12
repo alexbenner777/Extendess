@@ -222,40 +222,52 @@ function StickyServices() {
   const [activeIdx, setActiveIdx] = useState(0);
   const isTransitioning = useRef(false);
   const lastWheelTime = useRef(0);
+  // Tracks whether the sticky panel is currently pinned to the viewport top
+  const isPinned = useRef(false);
 
   const goTo = useCallback((next: number) => {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
     setActiveIdx(next);
     activeIdxRef.current = next;
-    setTimeout(() => { isTransitioning.current = false; }, 850);
+    setTimeout(() => { isTransitioning.current = false; }, 750);
   }, []);
 
   useEffect(() => {
-    const onWheel = (e: WheelEvent) => {
+    // Update isPinned on every scroll frame (passive, cheap)
+    const onScroll = () => {
       const wrapper = wrapperRef.current;
       if (!wrapper) return;
       const rect = wrapper.getBoundingClientRect();
-      // Capture only when sticky panel is fully pinned
-      if (rect.top > 1 || rect.bottom < window.innerHeight - 1) return;
+      isPinned.current = rect.top <= 4 && rect.bottom > window.innerHeight - 4;
+    };
+
+    // Wheel handler — captures events only while pinned
+    const onWheel = (e: WheelEvent) => {
+      if (!isPinned.current) return;
 
       const idx = activeIdxRef.current;
       const goingDown = e.deltaY > 0;
 
+      // At edges — release scroll so page can move
       if (goingDown && idx >= allServices.length - 1) return;
       if (!goingDown && idx <= 0) return;
 
       e.preventDefault();
 
       const now = Date.now();
-      if (now - lastWheelTime.current < 850) return;
+      if (now - lastWheelTime.current < 700) return;
       lastWheelTime.current = now;
 
       goTo(idx + (goingDown ? 1 : -1));
     };
 
+    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("wheel", onWheel);
+    };
   }, [goTo]);
 
   // Cube rotates 90deg per slide, driven by activeIdx
