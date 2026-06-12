@@ -257,7 +257,7 @@ export function Services() {
         {/* Service buttons below cube */}
         <div style={{
           position: "absolute",
-          bottom: 48,
+          bottom: 8,
           left: 0,
           right: 0,
           overflowX: "auto",
@@ -303,21 +303,6 @@ export function Services() {
             >
               {svc.title.replace("\n", " ")}
             </button>
-          ))}
-        </div>
-
-        {/* Dot indicators */}
-        <div className="absolute bottom-8 flex items-center gap-2">
-          {allServices.map((_, i) => (
-            <div
-              key={i}
-              className="rounded-full transition-all duration-500"
-              style={{
-                width: activeIdx === i ? 22 : 6,
-                height: 6,
-                background: activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)",
-              }}
-            />
           ))}
         </div>
 
