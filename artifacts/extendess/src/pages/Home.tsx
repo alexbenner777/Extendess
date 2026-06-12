@@ -759,11 +759,11 @@ export default function Home() {
       </section>
 
 
-      {/* INNOVATIONS CAROUSEL */}
-      <InnovationsCarousel />
-
       {/* FOCUS PULL — 3D cinematic services section */}
       <ServicesFocusPull />
+
+      {/* INNOVATIONS CAROUSEL */}
+      <InnovationsCarousel />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
