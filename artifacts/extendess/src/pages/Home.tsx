@@ -240,53 +240,57 @@ function StickyServices() {
   const activeIdxRef = useRef(0);
   const [activeIdx, setActiveIdx] = useState(0);
   const isTransitioning = useRef(false);
-  const lastWheelTime = useRef(0);
-  // Tracks whether the sticky panel is currently pinned to the viewport top
-  const isPinned = useRef(false);
+  const lastFlipTime = useRef(0);
+  const accDelta = useRef(0);
 
   const goTo = useCallback((next: number) => {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
+    accDelta.current = 0;
     setActiveIdx(next);
     activeIdxRef.current = next;
-    setTimeout(() => { isTransitioning.current = false; }, 750);
+    setTimeout(() => { isTransitioning.current = false; }, 700);
   }, []);
 
   useEffect(() => {
-    // Update isPinned on every scroll frame (passive, cheap)
-    const onScroll = () => {
+    const onWheel = (e: WheelEvent) => {
       const wrapper = wrapperRef.current;
       if (!wrapper) return;
-      const rect = wrapper.getBoundingClientRect();
-      isPinned.current = rect.top <= 4 && rect.bottom > window.innerHeight - 4;
-    };
 
-    // Wheel handler — captures events only while pinned
-    const onWheel = (e: WheelEvent) => {
-      if (!isPinned.current) return;
+      // Direct rect check — most reliable, no stale state
+      const rect = wrapper.getBoundingClientRect();
+      const pinned = rect.top > -8 && rect.top <= 8 && rect.bottom >= window.innerHeight - 8;
+      if (!pinned) return;
 
       const idx = activeIdxRef.current;
       const goingDown = e.deltaY > 0;
 
-      // At edges — release scroll so page can move
-      if (goingDown && idx >= allServices.length - 1) return;
-      if (!goingDown && idx <= 0) return;
+      // Always prevent default while pinned (stops page scroll during cooldown too)
+      if (!(goingDown && idx >= allServices.length - 1) &&
+          !(!goingDown && idx <= 0)) {
+        e.preventDefault();
+      }
 
-      e.preventDefault();
+      // Accumulate delta — works for both mouse wheel (large steps) and trackpad (small steps)
+      accDelta.current += e.deltaY;
+      const threshold = 40;
 
-      const now = Date.now();
-      if (now - lastWheelTime.current < 700) return;
-      lastWheelTime.current = now;
+      if (Math.abs(accDelta.current) < threshold) return;
+      if (Date.now() - lastFlipTime.current < 650) return;
 
-      goTo(idx + (goingDown ? 1 : -1));
+      if (accDelta.current > 0 && idx < allServices.length - 1) {
+        lastFlipTime.current = Date.now();
+        goTo(idx + 1);
+      } else if (accDelta.current < 0 && idx > 0) {
+        lastFlipTime.current = Date.now();
+        goTo(idx - 1);
+      } else {
+        accDelta.current = 0;
+      }
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("wheel", onWheel, { passive: false });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("wheel", onWheel);
-    };
+    return () => window.removeEventListener("wheel", onWheel);
   }, [goTo]);
 
   // 6-face barrel: 360° / 6 = 60° per slide
@@ -304,7 +308,7 @@ function StickyServices() {
     <section ref={wrapperRef} className="relative h-[500vh]">
       <div
         className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]"
-        style={{ perspective: "1500vh", perspectiveOrigin: "50% 50%" }}
+        style={{ perspective: "140vh", perspectiveOrigin: "50% 50%" }}
       >
         {/* 6-face barrel */}
         <motion.div
