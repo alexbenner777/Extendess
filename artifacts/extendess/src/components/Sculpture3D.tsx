@@ -28,7 +28,8 @@ function CoralModel() {
       const colArr = new Float32Array(pos.count * 3);
       const tmp = new THREE.Color();
       for (let i = 0; i < pos.count; i++) {
-        const t = (pos.getY(i) - yMin) / yRange;
+        const norm = (pos.getY(i) - yMin) / yRange; // 0 bottom → 1 top
+        const t = 1 - Math.abs(2 * norm - 1);        // 0 at edges → 1 at center
         tmp.copy(DARK_BEIGE).lerp(LIGHT_BEIGE, t);
         colArr[i * 3]     = tmp.r;
         colArr[i * 3 + 1] = tmp.g;
