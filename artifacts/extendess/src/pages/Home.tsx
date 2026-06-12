@@ -248,6 +248,18 @@ function StickyServices() {
     [0,    0,   90,   90,  180,  180,  270, 270],
   );
 
+  // Darkening overlay: sin wave peaks at 45°/135°/225°/315° (mid-flip), 0 at face-on positions
+  const flipDarken = useTransform(cubeRotateX, (v) => {
+    const phase = (((v % 90) + 90) % 90) / 90;
+    return Math.sin(phase * Math.PI) * 0.38;
+  });
+
+  // Top crease shadow — simulates the fold line casting shadow downward
+  const creaseOpacity = useTransform(cubeRotateX, (v) => {
+    const phase = (((v % 90) + 90) % 90) / 90;
+    return Math.sin(phase * Math.PI) * 0.6;
+  });
+
   return (
     <section ref={containerRef} className="relative h-[800vh]">
       {/*
@@ -313,6 +325,29 @@ function StickyServices() {
             </div>
           ))}
         </motion.div>
+
+        {/* Flip darkening overlay — peaks at 45°/135° mid-transition, invisible when face-on */}
+        <motion.div
+          className="absolute inset-0 pointer-events-none z-[5]"
+          style={{ opacity: flipDarken, background: "rgba(20,15,10,1)" }}
+        />
+
+        {/* Crease shadow from top — fold line effect */}
+        <motion.div
+          className="absolute inset-x-0 top-0 h-40 pointer-events-none z-[6]"
+          style={{
+            opacity: creaseOpacity,
+            background: "linear-gradient(to bottom, rgba(0,0,0,0.45) 0%, transparent 100%)",
+          }}
+        />
+        {/* Crease shadow from bottom */}
+        <motion.div
+          className="absolute inset-x-0 bottom-0 h-40 pointer-events-none z-[6]"
+          style={{
+            opacity: creaseOpacity,
+            background: "linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 100%)",
+          }}
+        />
 
         {/* Nav buttons — outside cube so they stay readable during rotation */}
         <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
