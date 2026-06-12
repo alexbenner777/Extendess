@@ -254,26 +254,6 @@ export function Services() {
           </motion.div>
         </div>
 
-        {/* CTA */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIdx}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-9 flex items-center justify-center"
-          >
-            <Link
-              href={s.href}
-              className="group inline-flex items-center gap-2.5 border-b border-black/25 pb-1.5 text-[10px] uppercase tracking-[0.38em] text-black/50 hover:text-black/80 transition-colors duration-300"
-            >
-              Подробнее
-              <ArrowUpRight size={11} className="transition-transform duration-300 group-hover:rotate-45" />
-            </Link>
-          </motion.div>
-        </AnimatePresence>
-
         {/* Dot indicators */}
         <div className="absolute bottom-8 flex items-center gap-2">
           {allServices.map((_, i) => (
