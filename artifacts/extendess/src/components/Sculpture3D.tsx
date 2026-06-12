@@ -100,9 +100,9 @@ class WebGLErrorBoundary extends Component<
 export function Sculpture3D() {
   return (
     <WebGLErrorBoundary fallback={<FallbackImage />}>
-      <div className="w-full" style={{ height: "65vh" }}>
+      <div className="w-full" style={{ height: "78vh" }}>
         <Canvas
-          camera={{ position: [0, 0.2, 3.2], fov: 38 }}
+          camera={{ position: [0, 0.2, 3.8], fov: 44 }}
           gl={{ antialias: true, alpha: true, toneMapping: THREE.ACESFilmicToneMapping, toneMappingExposure: 1.1 }}
           style={{ background: "transparent" }}
           onCreated={({ gl }) => {
