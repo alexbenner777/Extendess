@@ -255,7 +255,7 @@ export function Services() {
         </div>
 
         {/* Service buttons below cube */}
-        <div className="flex flex-wrap justify-center gap-2 mt-8 px-6 max-w-2xl">
+        <div className="absolute bottom-20 flex flex-wrap justify-center gap-2 px-6 max-w-2xl">
           {allServices.map((svc, i) => (
             <button
               key={i}
