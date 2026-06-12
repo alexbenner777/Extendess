@@ -141,17 +141,17 @@ export function Reviews() {
         <div className="mt-12 flex items-center gap-4 border-t border-white/10 pt-8">
           <button
             onClick={() => paginate(-1)}
-            className="w-10 h-10 border border-white/15 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
+            className="flex items-center justify-center hover:opacity-60 transition-all duration-300"
             aria-label="Предыдущий"
           >
-            <ChevronLeft size={14} />
+            <ChevronLeft size={32} strokeWidth={1.2} />
           </button>
           <button
             onClick={() => paginate(1)}
-            className="w-10 h-10 border border-white/15 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300"
+            className="flex items-center justify-center hover:opacity-60 transition-all duration-300"
             aria-label="Следующий"
           >
-            <ChevronRight size={14} />
+            <ChevronRight size={32} strokeWidth={1.2} />
           </button>
           <div className="flex gap-1.5 ml-3">
             {reviews.map((_, i) => (
