@@ -703,11 +703,11 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* FOCUS PULL — 3D cinematic services section */}
-      <ServicesFocusPull />
-
       {/* BRAND EVOLUTION */}
       <BrandEvolution />
+
+      {/* FOCUS PULL — 3D cinematic services section */}
+      <ServicesFocusPull />
 
       {/* MARQUEE */}
       <div className="bg-black text-white py-8 border-y border-white/10">
@@ -764,9 +764,6 @@ export default function Home() {
 
       {/* INNOVATIONS CAROUSEL */}
       <InnovationsCarousel />
-
-      {/* FOCUS PULL — 3D cinematic services section */}
-      <ServicesFocusPull />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
