@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import {
@@ -217,97 +217,130 @@ const allServices = [
 ];
 
 function StickyServices() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const activeIdxRef = useRef(0);
   const [activeIdx, setActiveIdx] = useState(0);
+  const [direction, setDirection] = useState(0);
+  const isTransitioning = useRef(false);
+  const lastWheelTime = useRef(0);
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    if (v < 0.30) setActiveIdx(0);
-    else if (v < 0.55) setActiveIdx(1);
-    else if (v < 0.80) setActiveIdx(2);
-    else setActiveIdx(3);
-  });
+  const goTo = useCallback((next: number, dir: number) => {
+    if (isTransitioning.current) return;
+    isTransitioning.current = true;
+    setDirection(dir);
+    setActiveIdx(next);
+    activeIdxRef.current = next;
+    setTimeout(() => { isTransitioning.current = false; }, 750);
+  }, []);
 
-  const scrollToService = (i: number) => {
-    const el = containerRef.current;
+  useEffect(() => {
+    const el = sectionRef.current;
     if (!el) return;
-    const top = el.getBoundingClientRect().top + window.scrollY;
-    const totalHeight = el.scrollHeight - window.innerHeight;
-    const targets = [0.05, 0.37, 0.62, 0.87];
-    window.scrollTo({ top: top + targets[i] * totalHeight, behavior: "smooth" });
+
+    const onWheel = (e: WheelEvent) => {
+      const wrapper = wrapperRef.current;
+      if (!wrapper) return;
+
+      const rect = wrapper.getBoundingClientRect();
+      const isSticky = rect.top <= 1 && rect.bottom >= window.innerHeight - 1;
+      if (!isSticky) return;
+
+      const idx = activeIdxRef.current;
+      const goingDown = e.deltaY > 0;
+
+      if (goingDown && idx >= allServices.length - 1) return;
+      if (!goingDown && idx <= 0) return;
+
+      e.preventDefault();
+
+      const now = Date.now();
+      if (now - lastWheelTime.current < 750) return;
+      lastWheelTime.current = now;
+
+      goTo(idx + (goingDown ? 1 : -1), goingDown ? 1 : -1);
+    };
+
+    window.addEventListener("wheel", onWheel, { passive: false });
+    return () => window.removeEventListener("wheel", onWheel);
+  }, [goTo]);
+
+  const slideVariants = {
+    enter: (d: number) => ({
+      opacity: 0,
+      y: d > 0 ? 60 : -60,
+      filter: "blur(4px)",
+    }),
+    center: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
+    },
+    exit: (d: number) => ({
+      opacity: 0,
+      y: d > 0 ? -40 : 40,
+      filter: "blur(4px)",
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
+    }),
   };
 
-  // Cube rotates 0→90→180→270 across scroll, each face holds ~20%, transitions ~10%
-  const cubeRotateX = useTransform(
-    scrollYProgress,
-    [0, 0.20, 0.30, 0.45, 0.55, 0.70, 0.80, 1],
-    [0,    0,   90,   90,  180,  180,  270, 270],
-  );
+  const imgVariants = {
+    enter: (d: number) => ({ opacity: 0, x: d > 0 ? 40 : -40, scale: 0.96 }),
+    center: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
+    },
+    exit: (d: number) => ({
+      opacity: 0,
+      x: d > 0 ? -30 : 30,
+      scale: 0.96,
+      transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] },
+    }),
+  };
 
-  // Bottom-edge shadow opacity — peaks mid-flip to simulate cube depth at the bottom edge
-  const edgeShadow = useTransform(cubeRotateX, (v) => {
-    const phase = (((v % 90) + 90) % 90) / 90;
-    return 0.18 + Math.sin(phase * Math.PI) * 0.55;
-  });
+  const s = allServices[activeIdx];
 
   return (
-    <section ref={containerRef} className="relative h-[800vh]">
-      {/*
-        perspective: 1500vh → scale factor at translateZ(50vh) = 1500/1450 ≈ 1.034
-        Only ~3.4% overhang per side → on 1280px that's ~44px.
-        With px-20 (80px) padding, content is safe from clipping.
-        bg-[#F1EBE3] on the container so any edge overhang is invisible.
-      */}
-      <div
-        className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]"
-        style={{ perspective: "1500vh", perspectiveOrigin: "50% 50%" }}
-      >
-        {/* Rotating cube — each face is a full beige panel */}
-        <motion.div
-          className="absolute inset-0 w-full h-full"
-          style={{
-            transformStyle: "preserve-3d",
-            rotateX: cubeRotateX,
-            transformOrigin: "50% 50%",
-          }}
-        >
-          {allServices.map((s, i) => (
-            <div
-              key={i}
-              className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
-              style={{
-                transform: `rotateX(${i * -90}deg) translateZ(50vh)`,
-                backfaceVisibility: "hidden",
-              }}
-            >
-              {/* Stones — right side, vertically centred */}
-              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-end pointer-events-none select-none pr-0">
-                <img
-                  src={stonesImg}
-                  alt="Zen stones"
-                  className="h-[75vh] w-auto object-contain"
-                  style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
-                />
-              </div>
+    <section ref={wrapperRef} className="relative h-[500vh]">
+      <div ref={sectionRef} className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3] flex flex-col">
 
-              {/* Text — left side, vertically centred */}
-              <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-8 md:px-20 pb-16">
-                <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
+        {/* Main content area */}
+        <div className="flex-1 relative">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={activeIdx}
+              custom={direction}
+              variants={slideVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="absolute inset-0 flex items-center"
+            >
+              {/* Left — text */}
+              <div className="w-full md:w-[55%] flex flex-col justify-center px-8 md:px-20 h-full">
+                <motion.span
+                  className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.15, duration: 0.5 }}
+                >
                   {s.num} / 04
-                </span>
+                </motion.span>
+
                 <h3
                   className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8"
                   style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
                 >
                   {s.title}
                 </h3>
+
                 <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-sm">
                   {s.desc}
                 </p>
+
                 <Link
                   href={s.href}
                   className="group inline-flex items-center gap-3 border border-black/30 px-8 py-4 text-xs uppercase tracking-[0.3em] text-black hover:bg-black hover:text-white transition-all duration-500 self-start"
@@ -317,32 +350,56 @@ function StickyServices() {
                 </Link>
               </div>
 
-              {/* Bottom-edge cube shadow — visible always, intensifies during flip */}
-              <motion.div
-                className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
-                style={{
-                  opacity: edgeShadow,
-                  background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 100%)",
-                }}
-              />
-            </div>
-          ))}
-        </motion.div>
+              {/* Right — image */}
+              <div className="hidden md:flex w-[45%] h-full items-center justify-end pointer-events-none select-none pr-0 overflow-hidden">
+                <AnimatePresence mode="wait" custom={direction}>
+                  <motion.img
+                    key={activeIdx + "-img"}
+                    custom={direction}
+                    variants={imgVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    src={s.img}
+                    alt={s.title}
+                    className="h-[80vh] w-auto object-contain"
+                    style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.10))" }}
+                  />
+                </AnimatePresence>
+              </div>
+            </motion.div>
+          </AnimatePresence>
 
-        {/* Nav buttons — outside cube so they stay readable during rotation */}
-        <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
-          {allServices.map((s, i) => (
+          {/* Thin progress line — left edge */}
+          <div className="absolute left-8 md:left-20 top-1/2 -translate-y-1/2 flex flex-col gap-2 z-10">
+            {allServices.map((_, i) => (
+              <motion.div
+                key={i}
+                animate={{
+                  height: i === activeIdx ? 32 : 8,
+                  opacity: i === activeIdx ? 1 : 0.25,
+                }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+                className="w-[1px] bg-black rounded-full origin-top"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom nav tabs */}
+        <div className="shrink-0 px-8 md:px-20 pb-8 flex flex-wrap items-center gap-3 z-10">
+          {allServices.map((sv, i) => (
             <button
               key={i}
-              onClick={() => scrollToService(i)}
+              onClick={() => goTo(i, i > activeIdx ? 1 : -1)}
               className={`inline-flex items-center gap-2 border px-5 py-2.5 text-[10px] uppercase tracking-[0.3em] transition-all duration-500 ${
                 activeIdx === i
                   ? "border-black bg-black text-white"
                   : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
               }`}
             >
-              <span className="opacity-50 text-[9px]">{s.num}</span>
-              {s.title}
+              <span className="opacity-50 text-[9px]">{sv.num}</span>
+              {sv.title}
             </button>
           ))}
         </div>
