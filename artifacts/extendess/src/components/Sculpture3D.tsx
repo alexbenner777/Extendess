@@ -4,7 +4,7 @@ import { useGLTF, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import sculptureFallback from "@assets/578b80ac-297d-4c46-b7ee-22955185bcd2_1781290151582.png";
 
-const CERAMIC_COLOR = new THREE.Color("#f0ebe2");
+const CERAMIC_COLOR = new THREE.Color("#c9b99a");
 
 function CoralModel() {
   const { scene } = useGLTF("/coral.glb");
