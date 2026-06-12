@@ -703,6 +703,9 @@ export default function Home() {
         </motion.div>
       </section>
 
+      {/* FOCUS PULL — 3D cinematic services section */}
+      <ServicesFocusPull />
+
       {/* BRAND EVOLUTION */}
       <BrandEvolution />
 
