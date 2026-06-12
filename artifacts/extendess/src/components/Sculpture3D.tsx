@@ -123,10 +123,10 @@ export function Sculpture3D() {
 
             <ContactShadows
               position={[0, -1.1, 0]}
-              opacity={0.22}
-              scale={4}
-              blur={3}
-              far={2}
+              opacity={0.18}
+              scale={2}
+              blur={2.5}
+              far={1.2}
               color="#7a6a5a"
             />
 
