@@ -33,7 +33,12 @@ import {
   NescensLogo,
   KerastaseLogo,
 } from "@/components/sections/BrandLogos";
-import stonesImg from "../assets/brands/stones.png";
+import svcMakeup from "../assets/svc-makeup.png";
+import svcHair from "../assets/svc-hair.png";
+import svcNails from "../assets/svc-nails.png";
+import svcMedicine from "../assets/svc-medicine.png";
+import svcCosmetology from "../assets/svc-cosmetology.png";
+import svcSpa from "../assets/svc-spa.png";
 
 function BrandEvolution() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -188,30 +193,44 @@ function BrandEvolution() {
 const allServices = [
   {
     num: "01",
-    title: "Эстетическая медицина",
-    desc: "Современные инъекционные и аппаратные методики для молодости и сияния кожи. Botox, филлеры, биоревитализация.",
-    img: service1,
+    title: "Макияж\nи визаж",
+    desc: "Профессиональный макияж и визаж для любого события. Дневной, вечерний, свадебный — мастера создадут ваш идеальный образ.",
+    img: svcMakeup,
     href: "/services",
   },
   {
     num: "02",
-    title: "Косметология",
-    desc: "Профессиональный уход, чистки, пилинги и маски от ведущих мировых брендов для безупречной кожи.",
-    img: service2,
+    title: "Парикмахерский\nсервис",
+    desc: "Авторские стрижки, окрашивание, укладки и уходовые процедуры от мастеров французской школы.",
+    img: svcHair,
     href: "/services",
   },
   {
     num: "03",
-    title: "Волосы и стилистика",
-    desc: "Авторские стрижки, окрашивание, кератиновые выпрямления и уходовые процедуры от мастеров высшей категории.",
-    img: service3,
+    title: "Ногтевой\nсервис",
+    desc: "Маникюр, педикюр, дизайн и наращивание ногтей. Безупречный результат с использованием премиальных материалов.",
+    img: svcNails,
     href: "/services",
   },
   {
     num: "04",
-    title: "Ногтевой сервис",
-    desc: "Маникюр, педикюр, дизайн и наращивание ногтей. Ваши руки — ваша визитная карточка.",
-    img: service4,
+    title: "Эстетическая\nи превентивная медицина",
+    desc: "Комплексные программы молодости и долголетия. Индивидуальные протоколы, разработанные врачами высшей категории.",
+    img: svcMedicine,
+    href: "/services",
+  },
+  {
+    num: "05",
+    title: "Инъекционная\nи аппаратная косметология",
+    desc: "Botox, филлеры, биоревитализация и аппаратные методики для сияния и молодости кожи без длительной реабилитации.",
+    img: svcCosmetology,
+    href: "/services",
+  },
+  {
+    num: "06",
+    title: "СПА",
+    desc: "Ритуалы восстановления и релаксации. Массажи, обёртывания и SPA-программы для гармонии тела и духа.",
+    img: svcSpa,
     href: "/services",
   },
 ];
@@ -270,8 +289,8 @@ function StickyServices() {
     };
   }, [goTo]);
 
-  // Cube rotates 90deg per slide, driven by activeIdx
-  const cubeRotateX = activeIdx * 90;
+  // 6-face barrel: 360° / 6 = 60° per slide
+  const cubeRotateX = activeIdx * 60;
 
   // Bottom-edge shadow intensity during the flip
   const [edgeShadow, setEdgeShadow] = useState(0.18);
@@ -287,7 +306,7 @@ function StickyServices() {
         className="sticky top-0 h-screen overflow-hidden bg-[#F1EBE3]"
         style={{ perspective: "1500vh", perspectiveOrigin: "50% 50%" }}
       >
-        {/* 3-D cube */}
+        {/* 6-face barrel */}
         <motion.div
           className="absolute inset-0 w-full h-full"
           animate={{ rotateX: cubeRotateX }}
@@ -299,28 +318,28 @@ function StickyServices() {
               key={i}
               className="absolute inset-0 w-full h-full bg-[#F1EBE3]"
               style={{
-                transform: `rotateX(${i * -90}deg) translateZ(50vh)`,
+                transform: `rotateX(${i * -60}deg) translateZ(86.6vh)`,
                 backfaceVisibility: "hidden",
               }}
             >
-              {/* Stones — right side */}
-              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-end pointer-events-none select-none">
+              {/* Service image — right side */}
+              <div className="absolute right-0 top-0 w-[45%] h-full hidden md:flex items-center justify-center pointer-events-none select-none pr-8">
                 <img
-                  src={stonesImg}
-                  alt="Zen stones"
-                  className="h-[75vh] w-auto object-contain"
-                  style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.12))" }}
+                  src={s.img}
+                  alt={s.title}
+                  className="h-[70vh] w-auto object-contain"
+                  style={{ filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.15))" }}
                 />
               </div>
 
               {/* Text — left side */}
               <div className="absolute left-0 top-0 w-full md:w-[58%] h-full flex flex-col justify-center px-8 md:px-20 pb-16">
                 <span className="text-[10px] uppercase tracking-[0.5em] text-black/40 mb-6 block font-light">
-                  {s.num} / 04
+                  {s.num} / 06
                 </span>
                 <h3
-                  className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8"
-                  style={{ fontSize: "clamp(2.5rem, 6vw, 6rem)" }}
+                  className="font-extralight tracking-[-0.02em] leading-[0.95] text-black mb-8 whitespace-pre-line"
+                  style={{ fontSize: "clamp(2rem, 5.5vw, 5.5rem)" }}
                 >
                   {s.title}
                 </h3>
@@ -336,33 +355,33 @@ function StickyServices() {
                 </Link>
               </div>
 
-              {/* Bottom edge shadow — intensifies during flip */}
+              {/* Bottom edge shadow */}
               <motion.div
                 className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
                 animate={{ opacity: edgeShadow }}
                 transition={{ duration: 0.43 }}
                 style={{
-                  background: "linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 40%, transparent 100%)",
+                  background: "linear-gradient(to top, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0.10) 40%, transparent 100%)",
                 }}
               />
             </div>
           ))}
         </motion.div>
 
-        {/* Nav buttons — outside cube */}
-        <div className="absolute bottom-8 left-8 md:left-20 right-8 md:right-20 flex flex-wrap items-center gap-3 z-10">
+        {/* Nav buttons — outside cube, compact for 6 items */}
+        <div className="absolute bottom-6 left-8 md:left-20 right-8 md:right-8 flex flex-wrap items-center gap-2 z-10">
           {allServices.map((sv, i) => (
             <button
               key={i}
               onClick={() => goTo(i)}
-              className={`inline-flex items-center gap-2 border px-5 py-2.5 text-[10px] uppercase tracking-[0.3em] transition-all duration-500 ${
+              className={`inline-flex items-center gap-1.5 border px-3 py-2 text-[9px] uppercase tracking-[0.2em] transition-all duration-500 whitespace-nowrap ${
                 activeIdx === i
                   ? "border-black bg-black text-white"
                   : "border-black/20 bg-transparent text-black/40 hover:border-black/50 hover:text-black/70"
               }`}
             >
-              <span className="opacity-50 text-[9px]">{sv.num}</span>
-              {sv.title}
+              <span className="opacity-50 text-[8px]">{sv.num}</span>
+              {sv.title.replace("\n", " ")}
             </button>
           ))}
         </div>
