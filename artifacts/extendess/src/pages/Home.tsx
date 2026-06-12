@@ -24,7 +24,7 @@ import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
 import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
-import { CameraDolly } from "@/components/sections/CameraDolly";
+import { Services as ServicesFocusPull } from "@/components/sections/ServicesFocusPull";
 import {
   CrescinaLogo,
   LorealLogo,
@@ -762,8 +762,8 @@ export default function Home() {
       {/* INNOVATIONS CAROUSEL */}
       <InnovationsCarousel />
 
-      {/* CAMERA DOLLY — 3D services flythrough */}
-      <CameraDolly label="— Услуги" />
+      {/* FOCUS PULL — 3D cinematic services section */}
+      <ServicesFocusPull />
 
       {/* BRANDS */}
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
