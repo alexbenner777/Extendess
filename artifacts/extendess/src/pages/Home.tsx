@@ -327,43 +327,47 @@ function StickyServices() {
                   boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
                 }}
               >
-                {/* Card background */}
-                <div style={{ position: "absolute", inset: 0, background: "#0f0a08" }} />
+                {/* White card background */}
+                <div style={{ position: "absolute", inset: 0, background: "#faf8f5" }} />
 
-                {/* Service photo — top element, ~58% of card height */}
+                {/* Service photo — top element, 52% of card height */}
                 <div
                   style={{
                     position: "absolute",
                     top: 0,
                     left: 0,
                     right: 0,
-                    height: "58%",
+                    height: "52%",
                     backgroundImage: `url(${svc.img})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center top",
                   }}
                 />
 
-                {/* Shadow at bottom of image — 2× smaller (was ~55%, now ~27%) */}
+                {/* Soft shadow at bottom of image — fades into white */}
                 <div
                   style={{
                     position: "absolute",
-                    top: "31%",
+                    top: "39%",
                     left: 0,
                     right: 0,
-                    height: "27%",
-                    background: "linear-gradient(to bottom, transparent 0%, rgba(15,10,8,0.95) 100%)",
+                    height: "13%",
+                    background: "linear-gradient(to bottom, transparent 0%, #faf8f5 100%)",
                   }}
                 />
 
-                {/* Text content pinned to bottom */}
+                {/* Text content — positioned below image */}
                 <div
                   style={{
                     position: "absolute",
-                    bottom: 0,
+                    top: "52%",
                     left: 0,
                     right: 0,
-                    padding: "0 32px 32px",
+                    bottom: 0,
+                    padding: "18px 28px 24px",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
                 >
                   <span
@@ -371,9 +375,9 @@ function StickyServices() {
                       display: "block",
                       fontSize: 9,
                       letterSpacing: "0.5em",
-                      color: "rgba(255,255,255,0.45)",
+                      color: "rgba(0,0,0,0.35)",
                       textTransform: "uppercase",
-                      marginBottom: 10,
+                      marginBottom: 8,
                       fontWeight: 300,
                     }}
                   >
@@ -381,22 +385,22 @@ function StickyServices() {
                   </span>
                   <h3
                     style={{
-                      fontSize: 28,
+                      fontSize: 24,
                       fontWeight: 200,
-                      lineHeight: 1.05,
+                      lineHeight: 1.1,
                       letterSpacing: "-0.01em",
-                      color: "rgba(255,255,255,0.92)",
+                      color: "rgba(0,0,0,0.88)",
                       whiteSpace: "pre-line",
-                      marginBottom: 10,
+                      marginBottom: 8,
                     }}
                   >
                     {svc.title}
                   </h3>
                   <p
                     style={{
-                      fontSize: 11.5,
-                      color: "rgba(255,255,255,0.52)",
-                      lineHeight: 1.65,
+                      fontSize: 11,
+                      color: "rgba(0,0,0,0.45)",
+                      lineHeight: 1.6,
                       fontWeight: 300,
                     }}
                   >
