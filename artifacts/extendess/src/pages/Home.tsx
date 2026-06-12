@@ -327,30 +327,32 @@ function StickyServices() {
                   boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
                 }}
               >
-                {/* Service photo as full background */}
+                {/* Card background */}
+                <div style={{ position: "absolute", inset: 0, background: "#0f0a08" }} />
+
+                {/* Service photo — top element, ~58% of card height */}
                 <div
                   style={{
                     position: "absolute",
-                    inset: 0,
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    height: "58%",
                     backgroundImage: `url(${svc.img})`,
                     backgroundSize: "cover",
-                    backgroundPosition: "center",
+                    backgroundPosition: "center top",
                   }}
                 />
-                {/* Gradient overlay — bottom-heavy so text is readable */}
+
+                {/* Shadow at bottom of image — 2× smaller (was ~55%, now ~27%) */}
                 <div
                   style={{
                     position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(to top, rgba(15,10,8,0.78) 0%, rgba(15,10,8,0.28) 55%, rgba(15,10,8,0.05) 100%)",
-                  }}
-                />
-                {/* Top-left warm tint */}
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "linear-gradient(135deg, rgba(239,233,225,0.12) 0%, transparent 60%)",
+                    top: "31%",
+                    left: 0,
+                    right: 0,
+                    height: "27%",
+                    background: "linear-gradient(to bottom, transparent 0%, rgba(15,10,8,0.95) 100%)",
                   }}
                 />
 
