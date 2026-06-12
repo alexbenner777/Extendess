@@ -56,9 +56,9 @@ const allServices = [
 
 const FACE_COUNT = 6;
 const FACE_ANGLE = 360 / FACE_COUNT; // 60° per face
-const FACE_W = 360;
-const FACE_H = 490;
-const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT)); // ≈312px
+const FACE_W = 380;
+const FACE_H = 540;
+const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT)); // ≈330px
 
 export function Services() {
   const wrapperRef = useRef<HTMLDivElement>(null);
@@ -153,9 +153,9 @@ export function Services() {
                 {/* Floating image — centered */}
                 <div style={{
                   position: "absolute",
-                  top: "8%", left: "50%",
+                  top: "7%", left: "50%",
                   transform: "translateX(-50%)",
-                  width: 220, height: 230,
+                  width: 300, height: 290,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {/* Drop shadow that follows the float */}
@@ -199,23 +199,55 @@ export function Services() {
                   />
                 </div>
 
-                {/* Text — bottom */}
+                {/* Text + button — bottom */}
                 <div style={{
                   position: "absolute",
                   bottom: 0, left: 0, right: 0,
-                  padding: "14px 22px 20px",
+                  padding: "12px 22px 22px",
                 }}>
-                  <div style={{ width: 24, height: 1, background: "rgba(0,0,0,0.2)", marginBottom: 10 }} />
+                  <div style={{ width: 24, height: 1, background: "rgba(0,0,0,0.18)", marginBottom: 9 }} />
                   <h3 style={{
-                    fontSize: 18, fontWeight: 200, lineHeight: 1.15,
+                    fontSize: 17, fontWeight: 200, lineHeight: 1.15,
                     letterSpacing: "-0.01em", color: "rgba(0,0,0,0.85)",
-                    whiteSpace: "pre-line", marginBottom: 6,
+                    whiteSpace: "pre-line", marginBottom: 5,
                   }}>
                     {svc.title}
                   </h3>
-                  <p style={{ fontSize: 9.5, color: "rgba(0,0,0,0.42)", lineHeight: 1.6, fontWeight: 300 }}>
+                  <p style={{ fontSize: 9, color: "rgba(0,0,0,0.4)", lineHeight: 1.55, fontWeight: 300, marginBottom: 14 }}>
                     {svc.desc}
                   </p>
+                  <Link
+                    href={svc.href}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: 7,
+                      padding: "9px 18px",
+                      border: "1px solid rgba(0,0,0,0.22)",
+                      borderRadius: 2,
+                      fontSize: 9,
+                      letterSpacing: "0.38em",
+                      textTransform: "uppercase",
+                      color: "rgba(0,0,0,0.6)",
+                      fontWeight: 300,
+                      background: "transparent",
+                      textDecoration: "none",
+                      transition: "all 0.25s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.06)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.45)";
+                      (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.85)";
+                    }}
+                    onMouseLeave={(e) => {
+                      (e.currentTarget as HTMLElement).style.background = "transparent";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.22)";
+                      (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.6)";
+                    }}
+                  >
+                    Подробнее
+                    <ArrowUpRight size={10} />
+                  </Link>
                 </div>
               </div>
             ))}
