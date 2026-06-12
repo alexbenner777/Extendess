@@ -54,7 +54,7 @@ function CoralModel() {
   useFrame((_, delta) => {
     if (ref.current) {
       ref.current.rotation.y += delta * 0.4;
-      ref.current.position.y = Math.sin(Date.now() * 0.001) * 0.08;
+      ref.current.position.y = 0.35 + Math.sin(Date.now() * 0.001) * 0.08;
     }
   });
 
