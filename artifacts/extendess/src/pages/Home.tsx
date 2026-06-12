@@ -341,52 +341,50 @@ function StickyServices() {
         */}
         <div
           className="absolute inset-0 z-[1]"
-          style={{ perspective: "1800px", perspectiveOrigin: "50% 50%" }}
+          style={{ perspective: "1800px", perspectiveOrigin: "50% 100%" }}
         >
           <div
             ref={cubeScope}
             className="absolute inset-0"
-            style={{ transformStyle: "preserve-3d" }}
+            style={{ transformStyle: "preserve-3d", transformOrigin: "50% 100%" }}
           >
-            {/* Face A — front (current content bg) */}
+            {/* Face A — front face (current, faces viewer at rest) */}
             <div
               className="absolute inset-0 bg-[#F1EBE3]"
-              style={{ backfaceVisibility: "hidden" }}
-            >
-              {/* Subtle bottom shadow — always visible for depth */}
-              <div
-                className="absolute inset-x-0 bottom-0 h-20 pointer-events-none"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.08), transparent)" }}
-              />
-            </div>
+              style={{ backfaceVisibility: "hidden", transformOrigin: "50% 100%" }}
+            />
 
-            {/* Face B — bottom (incoming when scrolling DOWN) */}
+            {/* Face B — bottom face: starts perpendicular (extending forward from bottom edge)
+                        comes to front when cube rotates −90° (scroll down) */}
             <div
               className="absolute inset-0 bg-[#F1EBE3]"
               style={{
                 transform: "rotateX(90deg)",
                 backfaceVisibility: "hidden",
+                transformOrigin: "50% 100%",
               }}
             >
-              {/* Shadow at top edge = the fold line when unfolding from below */}
+              {/* Shadow at the top (entering edge) as the face unfolds from below */}
               <div
-                className="absolute inset-x-0 top-0 h-24 pointer-events-none"
-                style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 60%, transparent 100%)" }}
+                className="absolute inset-x-0 top-0 h-28 pointer-events-none"
+                style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)" }}
               />
             </div>
 
-            {/* Face C — top (incoming when scrolling UP) */}
+            {/* Face C — top face: starts perpendicular (extending back from bottom edge)
+                        comes to front when cube rotates +90° (scroll up) */}
             <div
               className="absolute inset-0 bg-[#F1EBE3]"
               style={{
                 transform: "rotateX(-90deg)",
                 backfaceVisibility: "hidden",
+                transformOrigin: "50% 100%",
               }}
             >
-              {/* Shadow at bottom edge = fold line when unfolding from above */}
+              {/* Shadow at the bottom (entering edge) as the face unfolds from above */}
               <div
-                className="absolute inset-x-0 bottom-0 h-24 pointer-events-none"
-                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.05) 60%, transparent 100%)" }}
+                className="absolute inset-x-0 bottom-0 h-28 pointer-events-none"
+                style={{ background: "linear-gradient(to top, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.06) 55%, transparent 100%)" }}
               />
             </div>
           </div>
