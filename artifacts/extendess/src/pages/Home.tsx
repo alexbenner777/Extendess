@@ -249,10 +249,11 @@ function StickyServices() {
     if (isTransitioning.current) return;
     isTransitioning.current = true;
     accDelta.current = 0;
+    lastFlipTime.current = Date.now();
     setDir(direction);
     setActiveIdx(next);
     activeIdxRef.current = next;
-    setTimeout(() => { isTransitioning.current = false; }, 600);
+    setTimeout(() => { isTransitioning.current = false; }, 850);
   }, []);
 
   useEffect(() => {
@@ -269,15 +270,16 @@ function StickyServices() {
       const atStart = !goingDown && idx <= 0;
       if (!atEnd && !atStart) e.preventDefault();
 
+      // Hard lock: ignore all events for 850ms after a slide change
+      if (isTransitioning.current) return;
+
       accDelta.current += e.deltaY;
-      if (Math.abs(accDelta.current) < 40) return;
-      if (Date.now() - lastFlipTime.current < 600) return;
+      // Require meaningful intent before advancing
+      if (Math.abs(accDelta.current) < 80) return;
 
       if (accDelta.current > 0 && idx < allServices.length - 1) {
-        lastFlipTime.current = Date.now();
         goTo(idx + 1, 1);
       } else if (accDelta.current < 0 && idx > 0) {
-        lastFlipTime.current = Date.now();
         goTo(idx - 1, -1);
       } else {
         accDelta.current = 0;
@@ -289,10 +291,17 @@ function StickyServices() {
 
   const s = allServices[activeIdx];
 
-  const slideVariants = {
-    enter: (d: number) => ({ opacity: 0, y: d > 0 ? 30 : -30 }),
-    center: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-    exit: (d: number) => ({ opacity: 0, y: d > 0 ? -30 : 30, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+  // Scale + fade animation: image zooms in slightly, text fades with tiny lift
+  const textVariants = {
+    enter: { opacity: 0, y: 18 },
+    center: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+    exit:  { opacity: 0, y: -12, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
+  };
+
+  const imgVariants = {
+    enter: { opacity: 0, scale: 1.07 },
+    center: { opacity: 1, scale: 1, transition: { duration: 0.75, ease: [0.22, 1, 0.36, 1] } },
+    exit:  { opacity: 0, scale: 0.96, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } },
   };
 
   return (
@@ -304,58 +313,62 @@ function StickyServices() {
           <motion.div
             className="h-full bg-black/30 origin-left"
             animate={{ scaleX: (activeIdx + 1) / allServices.length }}
-            transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
           />
         </div>
 
-        <AnimatePresence mode="wait" custom={dir}>
-          <motion.div
-            key={activeIdx}
-            custom={dir}
-            variants={slideVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="absolute inset-0 flex items-center"
-          >
-            {/* Layout: text left, image right */}
-            <div className="w-full h-full grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
+        {/* Slide layout — text and image animate independently */}
+        <div className="absolute inset-0 grid md:grid-cols-2 items-center px-10 md:px-20 pb-24">
 
-              {/* Left — text */}
-              <div className="flex flex-col justify-center pr-0 md:pr-16">
-                <span className="text-[10px] uppercase tracking-[0.5em] text-black/35 mb-8 block font-light">
-                  {s.num} / 06
-                </span>
-                <h3
-                  className="font-extralight tracking-[-0.02em] leading-[1] text-black mb-8 whitespace-pre-line"
-                  style={{ fontSize: "clamp(2.2rem, 4vw, 4.5rem)" }}
-                >
-                  {s.title}
-                </h3>
-                <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-md">
-                  {s.desc}
-                </p>
-                <Link
-                  href={s.href}
-                  className="group inline-flex items-center gap-3 border-b border-black/30 pb-2 text-xs uppercase tracking-[0.3em] text-black hover:gap-5 transition-all duration-300 self-start"
-                >
-                  Подробнее
-                  <ArrowUpRight size={13} className="transition-transform group-hover:rotate-45" />
-                </Link>
-              </div>
+          {/* Left — text */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={`text-${activeIdx}`}
+              variants={textVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="flex flex-col justify-center pr-0 md:pr-16"
+            >
+              <span className="text-[10px] uppercase tracking-[0.5em] text-black/35 mb-8 block font-light">
+                {s.num} / 06
+              </span>
+              <h3
+                className="font-extralight tracking-[-0.02em] leading-[1] text-black mb-8 whitespace-pre-line"
+                style={{ fontSize: "clamp(2.2rem, 4vw, 4.5rem)" }}
+              >
+                {s.title}
+              </h3>
+              <p className="text-sm md:text-base text-black/55 font-light leading-relaxed mb-10 max-w-md">
+                {s.desc}
+              </p>
+              <Link
+                href={s.href}
+                className="group inline-flex items-center gap-3 border-b border-black/30 pb-2 text-xs uppercase tracking-[0.3em] text-black hover:gap-5 transition-all duration-300 self-start"
+              >
+                Подробнее
+                <ArrowUpRight size={13} className="transition-transform group-hover:rotate-45" />
+              </Link>
+            </motion.div>
+          </AnimatePresence>
 
-              {/* Right — image */}
-              <div className="hidden md:flex items-center justify-center h-full">
-                <img
-                  src={s.img}
-                  alt={s.title}
-                  className="max-h-[65vh] w-auto max-w-full object-contain"
-                  style={{ filter: "drop-shadow(0 32px 56px rgba(0,0,0,0.12))" }}
-                />
-              </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+          {/* Right — image with scale+fade */}
+          <div className="hidden md:flex items-center justify-center h-full overflow-hidden">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={`img-${activeIdx}`}
+                src={s.img}
+                alt={s.title}
+                variants={imgVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="max-h-[65vh] w-auto max-w-full object-contain"
+                style={{ filter: "drop-shadow(0 32px 56px rgba(0,0,0,0.12))" }}
+              />
+            </AnimatePresence>
+          </div>
+        </div>
 
         {/* Nav pills — bottom */}
         <div className="absolute bottom-7 left-10 md:left-20 right-4 md:right-8 flex flex-wrap items-center gap-2 z-10">
