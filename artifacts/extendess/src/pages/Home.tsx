@@ -660,7 +660,7 @@ export default function Home() {
       </div>
 
       {/* PHILOSOPHY */}
-      <section className="py-32 md:py-48 px-6 md:px-16">
+      <section className="py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
