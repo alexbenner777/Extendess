@@ -254,6 +254,44 @@ export function Services() {
           </motion.div>
         </div>
 
+        {/* Service buttons below cube */}
+        <div className="flex flex-wrap justify-center gap-2 mt-8 px-6 max-w-2xl">
+          {allServices.map((svc, i) => (
+            <button
+              key={i}
+              onClick={() => setActiveIdx(i)}
+              style={{
+                padding: "6px 14px",
+                border: `1px solid ${activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)"}`,
+                borderRadius: 2,
+                fontSize: 8,
+                letterSpacing: "0.38em",
+                textTransform: "uppercase",
+                color: activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)",
+                fontWeight: activeIdx === i ? 400 : 300,
+                background: activeIdx === i ? "rgba(0,0,0,0.05)" : "transparent",
+                cursor: "pointer",
+                transition: "all 0.25s ease",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={(e) => {
+                if (activeIdx !== i) {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.35)";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.65)";
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (activeIdx !== i) {
+                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.18)";
+                  (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.4)";
+                }
+              }}
+            >
+              {svc.title.replace("\n", " ")}
+            </button>
+          ))}
+        </div>
+
         {/* Dot indicators */}
         <div className="absolute bottom-8 flex items-center gap-2">
           {allServices.map((_, i) => (
