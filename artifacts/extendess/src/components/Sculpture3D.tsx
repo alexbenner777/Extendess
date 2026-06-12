@@ -4,7 +4,8 @@ import { useGLTF, Environment, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import sculptureFallback from "@assets/578b80ac-297d-4c46-b7ee-22955185bcd2_1781290151582.png";
 
-const CERAMIC_COLOR = new THREE.Color("#c9b99a");
+const DARK_BEIGE  = new THREE.Color("#9a7d5e");
+const LIGHT_BEIGE = new THREE.Color("#f2e8d9");
 
 function CoralModel() {
   const { scene } = useGLTF("/coral.glb");
@@ -12,19 +13,40 @@ function CoralModel() {
 
   useEffect(() => {
     scene.traverse((child) => {
-      if ((child as THREE.Mesh).isMesh) {
-        const mesh = child as THREE.Mesh;
-        const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
-        mats.forEach((mat) => {
-          const m = mat as THREE.MeshStandardMaterial;
-          m.map = null;
-          m.color.copy(CERAMIC_COLOR);
-          m.roughness = 0.82;
-          m.metalness = 0.0;
-          m.envMapIntensity = 0.6;
-          m.needsUpdate = true;
-        });
+      if (!(child as THREE.Mesh).isMesh) return;
+      const mesh = child as THREE.Mesh;
+      const geo = mesh.geometry;
+
+      // Compute Y-range across all vertices
+      geo.computeBoundingBox();
+      const bbox = geo.boundingBox!;
+      const yMin = bbox.min.y;
+      const yRange = Math.max(bbox.max.y - yMin, 0.0001);
+
+      // Build per-vertex colour array: dark beige (bottom) → light beige (top)
+      const pos = geo.attributes.position;
+      const colArr = new Float32Array(pos.count * 3);
+      const tmp = new THREE.Color();
+      for (let i = 0; i < pos.count; i++) {
+        const t = (pos.getY(i) - yMin) / yRange;
+        tmp.copy(DARK_BEIGE).lerp(LIGHT_BEIGE, t);
+        colArr[i * 3]     = tmp.r;
+        colArr[i * 3 + 1] = tmp.g;
+        colArr[i * 3 + 2] = tmp.b;
       }
+      geo.setAttribute("color", new THREE.BufferAttribute(colArr, 3));
+
+      const mats = Array.isArray(mesh.material) ? mesh.material : [mesh.material];
+      mats.forEach((mat) => {
+        const m = mat as THREE.MeshStandardMaterial;
+        m.map          = null;
+        m.vertexColors = true;
+        m.color.set("#ffffff");          // neutral multiplier
+        m.roughness    = 0.82;
+        m.metalness    = 0.0;
+        m.envMapIntensity = 0.55;
+        m.needsUpdate  = true;
+      });
     });
   }, [scene]);
 
