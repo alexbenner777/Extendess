@@ -7,6 +7,14 @@ import * as THREE from "three";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
+// ── Service images (served from public/, BASE_URL-relative) ───────────────────
+const BASE = import.meta.env.BASE_URL.replace(/\/$/, "");
+const imgHair        = `${BASE}/svc-dolly-hair.png`;
+const imgNails       = `${BASE}/svc-dolly-nails.png`;
+const imgCosmetology = `${BASE}/svc-dolly-cosm.png`;
+const imgMedicine    = `${BASE}/svc-dolly-med.png`;
+const imgSpa         = `${BASE}/svc-dolly-spa.png`;
+
 gsap.registerPlugin(ScrollTrigger);
 
 // ─── Tunable parameters ───────────────────────────────────────────────────────
@@ -20,31 +28,32 @@ const CENTRAL_ROT   = 0.003;  // radians/frame for central object
 // ─────────────────────────────────────────────────────────────────────────────
 
 // ── Service content ───────────────────────────────────────────────────────────
+// Note: img is assigned after imports are resolved (below the import block)
 const SERVICES = [
   {
     title: "Парикмахерское\nискусство",
     desc:  "Авторские стрижки, окрашивание и укладки от мастеров французской школы.",
-    color: 0xc9a96e,
+    img:   imgHair,
   },
   {
     title: "Ногтевой\nсервис",
     desc:  "Маникюр, педикюр и дизайн ногтей с использованием премиальных материалов.",
-    color: 0xb89878,
+    img:   imgNails,
   },
   {
     title: "Косметология",
     desc:  "Инъекционные и аппаратные методики для молодости и сияния кожи.",
-    color: 0xa08868,
+    img:   imgCosmetology,
   },
   {
     title: "Эстетическая и превентивная\nмедицина",
     desc:  "Индивидуальные протоколы здоровья и долголетия от врачей высшей категории.",
-    color: 0x907858,
+    img:   imgMedicine,
   },
   {
     title: "Wellness\nи восстановление",
     desc:  "СПА-ритуалы, массажи и программы восстановления для гармонии тела и духа.",
-    color: 0xd4b896,
+    img:   imgSpa,
   },
 ];
 
@@ -180,31 +189,45 @@ function Scene3D({ label }: { label: string }) {
     centralMesh.position.set(0, 0, 0);
     scene.add(centralMesh);
 
-    // ── Slide planes ─────────────────────────────────────────────────────────
+    // ── Slide planes with photo textures ─────────────────────────────────────
     const slideGeo = new THREE.PlaneGeometry(6, 4);
+    const texLoader = new THREE.TextureLoader();
+    const slideMats: THREE.MeshBasicMaterial[] = [];
+
     SLIDE_TRANSFORMS.forEach((t, i) => {
-      // Backing card (slightly opaque warm panel)
-      const mat = new THREE.MeshStandardMaterial({
-        color: SERVICES[i].color,
-        roughness: 0.88,
-        metalness: 0.0,
-        transparent: true,
-        opacity: 0.55,
+      // Start with neutral material; texture applied on load
+      const mat = new THREE.MeshBasicMaterial({
+        color: 0xd4b896,
         side: THREE.DoubleSide,
       });
+      slideMats.push(mat);
+
       const mesh = new THREE.Mesh(slideGeo, mat);
       mesh.position.set(t.pos[0], t.pos[1], t.pos[2]);
       mesh.rotation.y = t.rotY;
       scene.add(mesh);
 
-      // Thin border ring
+      // Thin gold border
       const border = new THREE.LineSegments(
         new THREE.EdgesGeometry(slideGeo),
-        new THREE.LineBasicMaterial({ color: 0xc9a96e, opacity: 0.5, transparent: true })
+        new THREE.LineBasicMaterial({ color: 0xc9a96e, opacity: 0.45, transparent: true })
       );
       border.position.copy(mesh.position);
       border.rotation.copy(mesh.rotation);
       scene.add(border);
+
+      // Load photo texture async — applies as soon as ready
+      texLoader.load(
+        SERVICES[i].img,
+        (tex) => {
+          tex.minFilter = THREE.LinearFilter;
+          tex.magFilter = THREE.LinearFilter;
+          tex.generateMipmaps = false;
+          mat.map = tex;
+          mat.color.set(0xffffff); // neutral so texture shows full colour
+          mat.needsUpdate = true;
+        }
+      );
     });
 
     // ── Camera curve ─────────────────────────────────────────────────────────
