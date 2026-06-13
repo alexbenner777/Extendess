@@ -115,6 +115,12 @@ export function Services() {
           </motion.p>
         </AnimatePresence>
 
+        {/* Edge fade overlays */}
+        <div style={{
+          position: "absolute", inset: 0, zIndex: 10, pointerEvents: "none",
+          background: "linear-gradient(to right, #EFE9E1 0%, transparent 18%, transparent 82%, #EFE9E1 100%)",
+        }} />
+
         {/* ── 3D PRISM SCENE ── */}
         <div style={{ perspective: "1100px", perspectiveOrigin: "50% 48%" }}>
           <motion.div
