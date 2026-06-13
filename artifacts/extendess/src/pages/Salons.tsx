@@ -397,7 +397,7 @@ export default function SalonsPage() {
             <span className="text-[9px] uppercase tracking-[0.4em] text-black/30">{salons.length} адреса</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-black/10">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {salons.map((salon, i) => (
               <motion.div
                 key={salon.id}
@@ -405,7 +405,7 @@ export default function SalonsPage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: (i % 3) * 0.08, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-                className="bg-[#F1EBE3] group cursor-pointer"
+                className="bg-[#F1EBE3] group cursor-pointer rounded-xl overflow-hidden"
                 onClick={() => { setActive(i); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               >
                 {/* Photo */}
