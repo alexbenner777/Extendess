@@ -113,8 +113,13 @@ export function Salons() {
   return (
     <section id="salons" className="bg-[#F1EBE3]">
 
+      {/* Section label */}
+      <div className="px-6 md:px-16 pt-16 md:pt-20">
+        <span className="text-[9px] uppercase tracking-[0.45em] text-black/30">— Наши адреса</span>
+      </div>
+
       {/* TOP ROW — two halves */}
-      <div className="flex flex-col md:flex-row items-center pt-24 md:pt-36" style={{ minHeight: 500 }}>
+      <div className="flex flex-col md:flex-row items-center pt-6 md:pt-8" style={{ minHeight: 500 }}>
 
         {/* LEFT — photo slider */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
@@ -139,11 +144,6 @@ export function Salons() {
 
           {/* Gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
-
-          {/* Section label */}
-          <div className="absolute top-6 left-8 z-10">
-            <span className="text-[9px] uppercase tracking-[0.4em] text-white/50">— Наши адреса</span>
-          </div>
 
           {/* Counter */}
           <div className="absolute top-6 right-8 z-10">
