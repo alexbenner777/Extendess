@@ -546,33 +546,9 @@ function InnovationsCarousel() {
 
         {/* Right: text column */}
         <div className="md:col-span-7 md:pt-8">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={textVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
-              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
-              <h3 className="mt-8 font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] whitespace-pre-line">
-                {item.title}
-              </h3>
-              <p className="mt-10 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
-                {item.description}
-              </p>
-              <Link
-                href={item.link}
-                className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
-              >
-                Подробнее <ArrowUpRight size={14} />
-              </Link>
-            </motion.div>
-          </AnimatePresence>
 
-          {/* Navigation */}
-          <div className="mt-14 flex items-center gap-5">
+          {/* Navigation — above text */}
+          <div className="mb-10 flex items-center gap-5">
             <button
               onClick={prev}
               className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
@@ -598,6 +574,31 @@ function InnovationsCarousel() {
               <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
+
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={textVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
+              <h3 className="mt-8 font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] whitespace-pre-line">
+                {item.title}
+              </h3>
+              <p className="mt-10 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
+                {item.description}
+              </p>
+              <Link
+                href={item.link}
+                className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
+              >
+                Подробнее <ArrowUpRight size={14} />
+              </Link>
+            </motion.div>
+          </AnimatePresence>
         </div>
 
       </div>
