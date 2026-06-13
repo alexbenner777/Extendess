@@ -125,7 +125,7 @@ export function Salons() {
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
         <div
           className="relative w-full overflow-hidden bg-black"
-          style={{ aspectRatio: "16/9", borderRadius: "16px", boxShadow: "0 16px 48px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10)" }}
+          style={{ aspectRatio: "16/9", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)" }}
         >
           <AnimatePresence mode="wait" custom={dir}>
             <motion.img
