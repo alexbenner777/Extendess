@@ -139,7 +139,7 @@ export function Services() {
                 }}
               >
                 {/* Card background */}
-                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, #f5e9d8 0%, #ead9c2 100%)" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, #eee9e0 0%, #e5ddd3 100%)" }} />
 
                 {/* Number — top left */}
                 <span style={{
