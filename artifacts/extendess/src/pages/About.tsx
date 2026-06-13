@@ -48,7 +48,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="py-32 md:py-48 px-6 md:px-16">
+      <section className="py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-12">
           <div className="md:col-span-5">
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Story</span>
@@ -76,7 +76,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="bg-[#F1EBE3] text-black py-32 md:py-48 px-6 md:px-16">
+      <section className="bg-[#F1EBE3] text-black py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— В цифрах</span>
