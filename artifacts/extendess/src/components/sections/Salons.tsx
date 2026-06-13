@@ -152,14 +152,14 @@ export function Salons() {
           <div className="absolute bottom-6 right-6 z-10 flex gap-2">
             <button
               onClick={() => go(active - 1)}
-              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10"
+              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10 rounded-full"
               aria-label="Предыдущий"
             >
               <ChevronLeft size={14} />
             </button>
             <button
               onClick={() => go(active + 1)}
-              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10"
+              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10 rounded-full"
               aria-label="Следующий"
             >
               <ChevronRight size={14} />
@@ -242,7 +242,7 @@ export function Salons() {
                 <div className="flex items-center gap-3 mt-6">
                   <Link
                     href="/contacts"
-                    className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black/80 transition-colors duration-300"
+                    className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 rounded-full hover:bg-black/80 transition-colors duration-300"
                   >
                     Записаться <ArrowUpRight size={11} />
                   </Link>
