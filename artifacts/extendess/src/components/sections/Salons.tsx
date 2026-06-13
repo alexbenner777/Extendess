@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { MapPin, Clock, Phone, ArrowUpRight } from "lucide-react";
+import { MapPin, Clock, Phone, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
+import { motion, AnimatePresence } from "framer-motion";
 
 const salons = [
   {
@@ -11,6 +12,7 @@ const salons = [
     img: "/images/salons/salon-kozikhinskiy.webp",
     metro: "Маяковская",
     metroColor: "#009A49",
+    metroLine: "Замоскворецкая",
   },
   {
     name: "Садовая-Кудринская",
@@ -20,6 +22,7 @@ const salons = [
     img: "/images/salons/salon-sadovaya.webp",
     metro: "Баррикадная",
     metroColor: "#7F0000",
+    metroLine: "Таганско-Краснопресненская",
   },
   {
     name: "Киевская",
@@ -29,6 +32,7 @@ const salons = [
     img: "/images/salons/salon-dorogomilovskaya.webp",
     metro: "Киевская",
     metroColor: "#009A49",
+    metroLine: "Кольцевая",
   },
   {
     name: "Жуковка",
@@ -38,6 +42,7 @@ const salons = [
     img: "/images/salons/salon-zhukovka.webp",
     metro: "Молодёжная",
     metroColor: "#009A49",
+    metroLine: "Арбатско-Покровская",
   },
   {
     name: "Ленинский проспект",
@@ -47,6 +52,7 @@ const salons = [
     img: "/images/salons/salon-leninskiy.webp",
     metro: "Ленинский просп.",
     metroColor: "#FBAA33",
+    metroLine: "Калужско-Рижская",
   },
   {
     name: "Зубовский бульвар",
@@ -56,6 +62,7 @@ const salons = [
     img: "/images/salons/salon-zubovskiy.webp",
     metro: "Парк культуры",
     metroColor: "#009A49",
+    metroLine: "Сокольническая",
   },
 ];
 
@@ -87,133 +94,173 @@ function SalonMap() {
 }
 
 export function Salons() {
-  const [hovered, setHovered] = useState<number | null>(null);
+  const [active, setActive] = useState(0);
+  const [dir, setDir] = useState(1);
+
+  const go = (next: number) => {
+    setDir(next > active ? 1 : -1);
+    setActive((next + salons.length) % salons.length);
+  };
+
+  const s = salons[active];
+
+  const variants = {
+    enter: (d: number) => ({ opacity: 0, x: d * 60 }),
+    center: { opacity: 1, x: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    exit:  (d: number) => ({ opacity: 0, x: d * -60, transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] } }),
+  };
 
   return (
-    <section id="salons" className="bg-[#F1EBE3] py-20 px-6 md:px-16">
-      <div className="max-w-7xl mx-auto">
+    <section id="salons" className="bg-[#F1EBE3]">
 
-        {/* Header */}
-        <div className="mb-12 flex items-end justify-between border-b border-black/10 pb-8">
-          <div>
-            <span className="text-[9px] uppercase tracking-[0.45em] text-black/30 block mb-4">— Наши адреса</span>
-            <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl text-black">
-              6 салонов<br />в Москве
-            </h2>
-          </div>
-          <p className="hidden md:block max-w-xs text-xs font-light text-black/40 leading-relaxed text-right">
-            Полный спектр услуг — от классических стрижек до эстетической медицины
-          </p>
-        </div>
+      {/* TOP ROW — two halves */}
+      <div className="flex flex-col md:flex-row" style={{ height: "50vh", minHeight: 400 }}>
 
-        {/* Two-column layout: map left, list right */}
-        <div className="flex flex-col md:flex-row gap-6 md:gap-10">
+        {/* LEFT — photo slider */}
+        <div className="relative md:w-1/2 h-full overflow-hidden bg-black">
+          <AnimatePresence mode="wait" custom={dir}>
+            <motion.img
+              key={active}
+              custom={dir}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              src={s.img}
+              alt={s.name}
+              className="absolute inset-0 w-full h-full object-cover"
+              style={{ willChange: "transform, opacity" }}
+            />
+          </AnimatePresence>
 
-          {/* LEFT: sticky map */}
-          <div className="md:w-1/2 relative">
-            <div className="md:sticky md:top-24 overflow-hidden" style={{ height: 560 }}>
-              {/* Hover image overlay */}
-              {hovered !== null && (
-                <div
-                  className="absolute inset-0 z-10 transition-opacity duration-500"
-                  style={{ opacity: 1 }}
-                >
-                  <img
-                    src={salons[hovered].img}
-                    alt={salons[hovered].name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent" />
-                  <div className="absolute bottom-8 left-8 text-white">
-                    <p className="text-[9px] uppercase tracking-[0.4em] opacity-60 mb-2">
-                      м. {salons[hovered].metro}
-                    </p>
-                    <h3 className="text-2xl font-extralight tracking-[-0.02em]">
-                      {salons[hovered].name}
-                    </h3>
-                    <p className="text-xs text-white/60 mt-1">{salons[hovered].address}</p>
-                  </div>
-                </div>
-              )}
-              {/* Map — shown when nothing is hovered */}
-              <div
-                className="absolute inset-0 transition-opacity duration-500"
-                style={{ opacity: hovered !== null ? 0 : 1, zIndex: 5 }}
-              >
-                <SalonMap />
-              </div>
-            </div>
+          {/* Gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
+
+          {/* Section label */}
+          <div className="absolute top-6 left-8 z-10">
+            <span className="text-[9px] uppercase tracking-[0.4em] text-white/50">— Наши адреса</span>
           </div>
 
-          {/* RIGHT: salon list */}
-          <div className="md:w-1/2 flex flex-col">
-            {salons.map((s, i) => (
-              <div
+          {/* Counter */}
+          <div className="absolute top-6 right-8 z-10">
+            <span className="text-[9px] uppercase tracking-[0.4em] text-white/40">
+              {String(active + 1).padStart(2, "0")} / {String(salons.length).padStart(2, "0")}
+            </span>
+          </div>
+
+          {/* Nav arrows */}
+          <div className="absolute bottom-6 right-6 z-10 flex gap-2">
+            <button
+              onClick={() => go(active - 1)}
+              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10"
+              aria-label="Предыдущий"
+            >
+              <ChevronLeft size={14} />
+            </button>
+            <button
+              onClick={() => go(active + 1)}
+              className="w-9 h-9 flex items-center justify-center border border-white/30 text-white/60 hover:border-white hover:text-white transition-all duration-200 backdrop-blur-sm bg-black/10"
+              aria-label="Следующий"
+            >
+              <ChevronRight size={14} />
+            </button>
+          </div>
+
+          {/* Dot indicators */}
+          <div className="absolute bottom-8 left-8 z-10 flex items-center gap-1.5">
+            {salons.map((_, i) => (
+              <button
                 key={i}
-                className="group border-b border-black/8 last:border-b-0 cursor-pointer"
-                onMouseEnter={() => setHovered(i)}
-                onMouseLeave={() => setHovered(null)}
-              >
-                <div className="py-6 flex items-center justify-between gap-4 transition-all duration-300 group-hover:pl-3">
-                  <div className="flex-1 min-w-0">
-                    {/* Metro */}
-                    <div className="flex items-center gap-1.5 mb-2">
-                      <span
-                        className="w-1.5 h-1.5 rounded-full shrink-0"
-                        style={{ backgroundColor: s.metroColor }}
-                      />
-                      <span className="text-[9px] uppercase tracking-[0.3em] text-black/35 font-light">
-                        м. {s.metro}
-                      </span>
-                    </div>
-
-                    {/* Name */}
-                    <h3 className="font-extralight text-xl md:text-2xl tracking-[-0.02em] leading-tight text-black mb-3 group-hover:text-black transition-colors">
-                      {s.name}
-                    </h3>
-
-                    {/* Details — visible on hover */}
-                    <div className="overflow-hidden transition-all duration-500 max-h-0 group-hover:max-h-24 opacity-0 group-hover:opacity-100">
-                      <div className="flex flex-col gap-1.5 pb-1">
-                        <div className="flex items-start gap-2 text-[10px] text-black/40 font-light">
-                          <MapPin size={9} className="mt-0.5 shrink-0" />
-                          <span>{s.address}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[10px] text-black/35 font-light">
-                          <Clock size={9} className="shrink-0" />
-                          <span>{s.hours}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-[10px] text-black/35 font-light">
-                          <Phone size={9} className="shrink-0" />
-                          <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
-                            {s.phone}
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Arrow + book button */}
-                  <div className="flex items-center gap-3 shrink-0">
-                    <Link
-                      href="/contacts"
-                      className="opacity-0 group-hover:opacity-100 transition-all duration-300 inline-flex items-center gap-1.5 border border-black/25 px-4 py-2 text-[9px] uppercase tracking-[0.3em] text-black/60 hover:bg-black hover:text-white hover:border-black"
-                      onClick={e => e.stopPropagation()}
-                    >
-                      Записаться
-                    </Link>
-                    <ArrowUpRight
-                      size={16}
-                      className="text-black/20 group-hover:text-black/60 transition-colors duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transform"
-                    />
-                  </div>
-                </div>
-              </div>
+                onClick={() => go(i)}
+                className="transition-all duration-400"
+                style={{
+                  width: i === active ? 20 : 5,
+                  height: 5,
+                  borderRadius: 9999,
+                  background: i === active ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.3)",
+                }}
+              />
             ))}
           </div>
-
         </div>
+
+        {/* RIGHT — salon info */}
+        <div className="relative md:w-1/2 h-full flex flex-col justify-between px-10 py-10 bg-[#F1EBE3]">
+          <AnimatePresence mode="wait" custom={dir}>
+            <motion.div
+              key={active}
+              custom={dir}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="flex flex-col h-full justify-between"
+            >
+              <div>
+                {/* Metro */}
+                <div className="flex items-center gap-2 mb-6">
+                  <span
+                    className="w-2 h-2 rounded-full shrink-0"
+                    style={{ backgroundColor: s.metroColor }}
+                  />
+                  <span className="text-[10px] uppercase tracking-[0.4em] text-black/40">
+                    м. {s.metro}
+                  </span>
+                  <span className="text-[9px] text-black/25 font-light ml-1">
+                    · {s.metroLine}
+                  </span>
+                </div>
+
+                {/* Name */}
+                <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-3xl md:text-4xl lg:text-5xl text-black mb-8">
+                  {s.name}
+                </h2>
+
+                {/* Details */}
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-start gap-3 text-sm text-black/50 font-light">
+                    <MapPin size={13} className="mt-0.5 shrink-0 text-black/30" />
+                    <span>{s.address}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-black/45 font-light">
+                    <Clock size={13} className="shrink-0 text-black/30" />
+                    <span>{s.hours}</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm text-black/45 font-light">
+                    <Phone size={13} className="shrink-0 text-black/30" />
+                    <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
+                      {s.phone}
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              {/* CTA */}
+              <div className="flex items-center gap-4 mt-8">
+                <Link
+                  href="/contacts"
+                  className="inline-flex items-center gap-2.5 bg-black text-white text-[10px] uppercase tracking-[0.35em] px-7 py-4 hover:bg-black/80 transition-colors duration-300"
+                >
+                  Записаться <ArrowUpRight size={12} />
+                </Link>
+                <Link
+                  href="/salons"
+                  className="text-[10px] uppercase tracking-[0.35em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"
+                >
+                  Все адреса
+                </Link>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
       </div>
+
+      {/* BOTTOM — full-width map */}
+      <div style={{ height: "50vh", minHeight: 360 }}>
+        <SalonMap />
+      </div>
+
     </section>
   );
 }
