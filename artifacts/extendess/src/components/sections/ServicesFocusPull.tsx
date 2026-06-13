@@ -244,54 +244,44 @@ export function Services() {
           </motion.div>
         </div>
 
-        {/* Service buttons below cube */}
-        <div style={{
-          position: "absolute",
-          bottom: 8,
-          left: "50%",
-          transform: "translateX(-50%)",
-          width: "80%",
-          maxWidth: 640,
-          display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "center",
-          gap: 6,
-        }}>
-          {allServices.map((svc, i) => (
-            <Link
-              key={i}
-              href="/services"
-              style={{
-                padding: "8px 18px",
-                border: `1px solid ${activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)"}`,
-                borderRadius: 2,
-                fontSize: 9,
-                letterSpacing: "0.35em",
-                textTransform: "uppercase",
-                color: activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)",
-                fontWeight: activeIdx === i ? 400 : 300,
-                background: activeIdx === i ? "rgba(0,0,0,0.05)" : "transparent",
-                cursor: "pointer",
-                transition: "all 0.25s ease",
-                whiteSpace: "nowrap",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-              onMouseEnter={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.45)";
-                (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.75)";
-                (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.04)";
-              }}
-              onMouseLeave={(e) => {
-                (e.currentTarget as HTMLElement).style.borderColor = activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)";
-                (e.currentTarget as HTMLElement).style.color = activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)";
-                (e.currentTarget as HTMLElement).style.background = activeIdx === i ? "rgba(0,0,0,0.05)" : "transparent";
-              }}
-            >
-              {svc.title.replace("\n", " ")}
-            </Link>
-          ))}
-        </div>
+        {/* Single services button */}
+        <Link
+          href="/services"
+          style={{
+            position: "absolute",
+            bottom: 16,
+            left: "50%",
+            transform: "translateX(-50%)",
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+            padding: "13px 40px",
+            border: "1px solid rgba(0,0,0,0.55)",
+            borderRadius: 2,
+            fontSize: 10,
+            letterSpacing: "0.45em",
+            textTransform: "uppercase",
+            color: "rgba(0,0,0,0.75)",
+            fontWeight: 300,
+            background: "transparent",
+            textDecoration: "none",
+            transition: "all 0.25s ease",
+            whiteSpace: "nowrap",
+          }}
+          onMouseEnter={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.85)";
+            (e.currentTarget as HTMLElement).style.color = "#fff";
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.85)";
+          }}
+          onMouseLeave={(e) => {
+            (e.currentTarget as HTMLElement).style.background = "transparent";
+            (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.75)";
+            (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.55)";
+          }}
+        >
+          Услуги
+          <ArrowUpRight size={13} />
+        </Link>
 
         <p className="absolute bottom-[34px] right-10 md:right-20 text-[9px] uppercase tracking-[0.45em] text-black/[0.18] font-light select-none">
           Скролл ↓
