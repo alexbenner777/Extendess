@@ -98,7 +98,7 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-24 md:py-32">
         <div className={`grid md:grid-cols-12 gap-12 md:gap-16 ${reverse ? "md:[direction:rtl]" : ""}`}>
           <div className="md:col-span-5 md:[direction:ltr]">
-            <ImageReveal src={cat.img} alt={cat.title} className="aspect-[4/5] w-full" imgClassName="object-contain" />
+            <ImageReveal src={cat.img} alt={cat.title} className="aspect-[4/5] w-full" objectFit="contain" />
           </div>
           <div className="md:col-span-7 md:[direction:ltr] flex flex-col justify-center">
             <div className="flex items-center gap-6 mb-8">

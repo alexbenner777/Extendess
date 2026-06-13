@@ -125,12 +125,14 @@ export function ImageReveal({
   alt = "", 
   className = "", 
   imgClassName = "",
+  objectFit = "cover",
   direction = "bottom" 
 }: { 
   src: string; 
   alt?: string;
   className?: string;
   imgClassName?: string;
+  objectFit?: "cover" | "contain";
   direction?: "left" | "right" | "top" | "bottom";
 }) {
   const variants = {
@@ -139,7 +141,7 @@ export function ImageReveal({
                 direction === "right" ? "inset(0 0 0 100%)" :
                 direction === "top" ? "inset(100% 0 0 0)" :
                 "inset(0 0 100% 0)",
-      scale: 1.1
+      scale: objectFit === "contain" ? 1 : 1.1
     },
     visible: {
       clipPath: "inset(0 0 0 0)",
@@ -153,7 +155,8 @@ export function ImageReveal({
       <motion.img
         src={src}
         alt={alt}
-        className={`w-full h-full object-cover ${imgClassName}`}
+        className={`w-full h-full ${imgClassName}`}
+        style={{ objectFit }}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-10%" }}
