@@ -493,75 +493,98 @@ function InnovationsCarousel() {
 
   const item = innovations[current];
 
-  const variants = {
-    enter: (d: number) => ({ opacity: 0, x: d * 40 }),
-    center: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
-    exit: (d: number) => ({ opacity: 0, x: d * -40, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+  const textVariants = {
+    enter: (d: number) => ({ opacity: 0, y: d * 24 }),
+    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+    exit: (d: number) => ({ opacity: 0, y: d * -16, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+  };
+
+  const imgVariants = {
+    enter: (d: number) => ({ opacity: 0, scale: 0.96, x: d * 30 }),
+    center: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
+    exit: (d: number) => ({ opacity: 0, scale: 0.96, x: d * -20, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
   };
 
   return (
-    <section className="py-16 md:py-20 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 md:px-8">
+    <section className="py-16 md:py-24 px-6 md:px-16 overflow-hidden">
+      <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
 
-        {/* Single AnimatePresence wraps both text and image — no duplication */}
-        <AnimatePresence mode="wait" custom={direction}>
-          <motion.div
-            key={current}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="flex flex-col items-center gap-8"
-          >
-            {/* Image top */}
-            <div className="w-full max-w-md mx-auto overflow-hidden">
+        {/* Left: text column */}
+        <div className="md:col-span-7 md:pt-8">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={textVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+            >
+              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
+              <h3 className="mt-8 font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] whitespace-pre-line">
+                {item.title}
+              </h3>
+              <p className="mt-10 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
+                {item.description}
+              </p>
+              <Link
+                href={item.link}
+                className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
+              >
+                Подробнее <ArrowUpRight size={14} />
+              </Link>
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Navigation */}
+          <div className="mt-14 flex items-center gap-6">
+            <button
+              onClick={prev}
+              className="flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+              aria-label="Предыдущий"
+            >
+              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+            <div className="flex gap-2">
+              {innovations.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => go(i)}
+                  className={`h-px transition-all duration-300 ${i === current ? "w-8 bg-black" : "w-4 bg-black/25"}`}
+                  aria-label={`Слайд ${i + 1}`}
+                />
+              ))}
+            </div>
+            <button
+              onClick={next}
+              className="flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+              aria-label="Следующий"
+            >
+              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Right: image */}
+        <div className="md:col-span-5">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={imgVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="w-full overflow-hidden"
+            >
               <img
                 src={item.img}
                 alt={item.title}
-                style={{ width: "100%", height: 420, objectFit: "contain", display: "block" }}
+                style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
               />
-            </div>
-
-            {/* Text bottom with arrows */}
-            <div className="flex items-center gap-6 md:gap-10 w-full">
-              {/* Left arrow */}
-              <button
-                onClick={prev}
-                className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
-                aria-label="Предыдущий"
-              >
-                <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
-
-              <div className="flex-1 min-w-0 text-center">
-                <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
-                <h3 className="mt-6 font-extralight tracking-[-0.02em] leading-[1] text-4xl md:text-5xl lg:text-6xl whitespace-pre-line">
-                  {item.title}
-                </h3>
-                <p className="mt-8 text-sm md:text-base font-light text-black/60 leading-relaxed max-w-sm mx-auto">
-                  {item.description}
-                </p>
-                <Link
-                  href={item.link}
-                  className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
-                >
-                  Подробнее <ArrowUpRight size={14} />
-                </Link>
-              </div>
-
-              {/* Right arrow */}
-              <button
-                onClick={next}
-                className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
-                aria-label="Следующий"
-              >
-                <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-              </button>
-            </div>
-          </motion.div>
-        </AnimatePresence>
-
+            </motion.div>
+          </AnimatePresence>
+        </div>
 
       </div>
     </section>
