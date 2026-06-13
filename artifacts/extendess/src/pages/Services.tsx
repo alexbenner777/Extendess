@@ -1,11 +1,10 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useState, useRef, useCallback } from "react";
 import { Plus } from "lucide-react";
 import {
   SplitText,
   FadeIn,
   Marquee,
-  ImageReveal,
 } from "@/components/ui-extras/animations";
 import svcMakeup from "../assets/svc-makeup-nobg.png";
 import svcHair from "../assets/svc-hair-nobg.png";
@@ -13,6 +12,114 @@ import svcNails from "../assets/svc-nails-nobg.png";
 import svcMedicine from "../assets/svc-medicine-nobg.png";
 import svcCosmetology from "../assets/svc-cosmetology-nobg.png";
 import svcSpa from "../assets/svc-spa-nobg.png";
+
+function TiltImage({ src, alt }: { src: string; alt: string }) {
+  const ref = useRef<HTMLDivElement>(null);
+
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [14, -14]), { stiffness: 200, damping: 28 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-14, 14]), { stiffness: 200, damping: 28 });
+  const scale   = useSpring(1, { stiffness: 250, damping: 28 });
+
+  const shadowX = useTransform(x, [-0.5, 0.5], [-30, 30]);
+  const shadowY = useTransform(y, [-0.5, 0.5], [30, -30]);
+
+  const glowX = useTransform(x, [-0.5, 0.5], [30, 70]);
+  const glowY = useTransform(y, [-0.5, 0.5], [30, 70]);
+  const glare = useTransform(
+    [glowX, glowY] as any,
+    ([gx, gy]: number[]) =>
+      `radial-gradient(ellipse 55% 45% at ${gx}% ${gy}%, rgba(255,255,255,0.13) 0%, transparent 65%)`
+  );
+
+  const onMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = ref.current?.getBoundingClientRect();
+    if (!rect) return;
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top)  / rect.height - 0.5);
+  }, [x, y]);
+
+  const onEnter = () => scale.set(1.04);
+  const onLeave = () => {
+    x.set(0); y.set(0); scale.set(1);
+  };
+
+  return (
+    <motion.div
+      ref={ref}
+      onMouseMove={onMove}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+      style={{
+        perspective: 900,
+        width: "100%",
+        aspectRatio: "4/5",
+        cursor: "grab",
+      }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <motion.div
+        style={{
+          rotateX,
+          rotateY,
+          scale,
+          transformStyle: "preserve-3d",
+          width: "100%",
+          height: "100%",
+          position: "relative",
+          borderRadius: 12,
+        }}
+      >
+        {/* Dynamic drop shadow layer */}
+        <motion.div
+          style={{
+            position: "absolute",
+            inset: "10%",
+            borderRadius: 16,
+            filter: "blur(32px)",
+            background: "radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, transparent 70%)",
+            translateX: shadowX,
+            translateY: shadowY,
+            translateZ: -60,
+            zIndex: 0,
+          }}
+        />
+
+        {/* Image */}
+        <motion.img
+          src={src}
+          alt={alt}
+          style={{
+            width: "100%",
+            height: "100%",
+            objectFit: "contain",
+            position: "relative",
+            zIndex: 1,
+            translateZ: 40,
+            filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.22))",
+          }}
+        />
+
+        {/* Specular glare highlight */}
+        <motion.div
+          style={{
+            position: "absolute",
+            inset: 0,
+            borderRadius: 12,
+            zIndex: 2,
+            backgroundImage: glare,
+            pointerEvents: "none",
+          }}
+        />
+      </motion.div>
+    </motion.div>
+  );
+}
 
 const categories = [
   {
@@ -98,7 +205,7 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-24 md:py-32">
         <div className={`grid md:grid-cols-12 gap-12 md:gap-16 ${reverse ? "md:[direction:rtl]" : ""}`}>
           <div className="md:col-span-5 md:[direction:ltr]">
-            <ImageReveal src={cat.img} alt={cat.title} className="aspect-[4/5] w-full" objectFit="contain" />
+            <TiltImage src={cat.img} alt={cat.title} />
           </div>
           <div className="md:col-span-7 md:[direction:ltr] flex flex-col justify-center">
             <div className="flex items-center gap-6 mb-8">
