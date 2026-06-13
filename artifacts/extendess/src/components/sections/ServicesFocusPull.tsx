@@ -289,6 +289,7 @@ export function Services() {
             bottom: 16,
             left: "50%",
             transform: "translateX(-50%)",
+            zIndex: 30,
             display: "inline-flex",
             alignItems: "center",
             gap: 10,
