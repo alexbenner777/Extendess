@@ -1,7 +1,6 @@
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { FadeIn } from "../ui-extras/animations";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { Star, ArrowUpRight } from "lucide-react";
 
 const reviews = [
   {
@@ -15,7 +14,7 @@ const reviews = [
     name: "Alice Schwarzwald",
     date: "22 июля 2024",
     avatar: "https://lh3.googleusercontent.com/a/ACg8ocJp_3RyG2ITDtABbilUaSbDwkyEYVNWMey9rnflEh06hcKyhtE=w96-h96-c-rp-mo-br100",
-    text: "Недавно посетила салон и осталась в полном восторге от стрижки и окраски волос! Мастер Юля Сахарова — настоящий профессионал своего дела. С первого момента общения я поняла, что попала в надёжные руки. Она внимательно выслушала мои пожелания и предложила отличные идеи. Стрижка получилась просто великолепной, а окраска поразила меня: цвет получился насыщенным и ярким.",
+    text: "Мастер Юля Сахарова — настоящий профессионал. С первого момента я поняла, что попала в надёжные руки. Стрижка получилась просто великолепной, а окраска поразила: цвет получился насыщенным и ярким.",
     rating: 5,
   },
   {
@@ -43,14 +42,14 @@ const reviews = [
     name: "Катерина Супонина",
     date: "30 апреля 2023",
     avatar: "https://lh3.googleusercontent.com/a/ACg8ocLZRTSckJpDS4cE-H92a85KTXnykLFvSRHr80hnXtRLwx2mXg=w96-h96-c-rp-mo-br100",
-    text: "Хожу много лет. Все профессионалы своего дела, быстро, качественно, работают в 4 руки, а иногда и в 6. Люблю приходить к ним, всегда получаю отличный результат.",
+    text: "Хожу много лет. Все профессионалы своего дела, быстро, качественно, работают в 4 руки, а иногда и в 6. Всегда получаю отличный результат.",
     rating: 5,
   },
   {
     name: "Данил Аверин",
     date: "21 сентября 2021",
     avatar: "https://lh3.googleusercontent.com/a/ACg8ocKzX0_0y9MBm6lcl6bpwXlDSdAOPHdOXJoJUFLZjOlJskhJMaU=w96-h96-c-rp-mo-br100",
-    text: "Люкс салон красоты. Находится в хорошем месте, имеет большое количество профессионалов. Считаю, что свою стоимость полностью оправдывает.",
+    text: "Люкс салон красоты. Находится в хорошем месте, имеет большое количество профессионалов. Своей стоимости полностью оправдывает.",
     rating: 5,
   },
 ];
@@ -58,15 +57,13 @@ const reviews = [
 function ReviewAvatar({ src, name }: { src: string; name: string }) {
   const [failed, setFailed] = useState(false);
   const initial = name.charAt(0).toUpperCase();
-
   if (failed) {
     return (
-      <div className="w-10 h-10 rounded-full bg-[#C9B7A2]/40 flex items-center justify-center shrink-0">
-        <span className="text-xs font-light text-[#5E4B3A] tracking-wider">{initial}</span>
+      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+        <span className="text-xs font-light text-white/60">{initial}</span>
       </div>
     );
   }
-
   return (
     <img
       src={src}
@@ -78,91 +75,132 @@ function ReviewAvatar({ src, name }: { src: string; name: string }) {
 }
 
 export function Reviews() {
-  const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
-  const paginate = (dir: number) => {
-    setDirection(dir);
-    setCurrent((prev) => (prev + dir + reviews.length) % reviews.length);
+  const onMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setStartX(e.pageX - (trackRef.current?.offsetLeft ?? 0));
+    setScrollLeft(trackRef.current?.scrollLeft ?? 0);
   };
-
-  const review = reviews[current];
+  const onMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !trackRef.current) return;
+    e.preventDefault();
+    const x = e.pageX - trackRef.current.offsetLeft;
+    trackRef.current.scrollLeft = scrollLeft - (x - startX);
+  };
+  const onMouseUp = () => setIsDragging(false);
 
   return (
-    <section id="reviews" className="py-0 bg-black text-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-16 pt-20 pb-24 md:pt-28 md:pb-32">
+    <section id="reviews" className="bg-black text-white overflow-hidden">
+      <div className="pt-20 pb-8 md:pt-28 md:pb-10">
 
-        {/* Header row */}
-        <div className="flex items-end justify-between mb-16 border-b border-white/10 pb-10">
-          <FadeIn>
+        {/* Header */}
+        <div className="px-6 md:px-16 max-w-7xl mx-auto mb-12 flex items-end justify-between">
+          <div>
             <span className="block text-[9px] uppercase tracking-[0.45em] text-white/30 mb-5">— Google Reviews</span>
-            <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-5xl md:text-6xl lg:text-7xl text-white">
+            <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-5xl md:text-6xl text-white">
               Отзывы
             </h2>
-          </FadeIn>
-          <FadeIn delay={0.15} className="hidden md:flex items-center gap-2 mb-1">
-            {[...Array(5)].map((_, i) => (
-              <Star key={i} size={12} fill="white" strokeWidth={0} className="text-white/80" />
-            ))}
-            <span className="text-xs text-white/30 tracking-widest ml-1">5.0</span>
-          </FadeIn>
-        </div>
-
-        {/* Slide area */}
-        <div className="relative min-h-[220px] md:min-h-[180px]">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              initial={{ opacity: 0, x: direction * 50 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: direction * -50 }}
-              transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
-            >
-              <p className="font-extralight text-xl md:text-2xl lg:text-3xl leading-[1.5] text-white/80 tracking-tight max-w-4xl">
-                «{review.text}»
-              </p>
-
-              <div className="mt-10 flex items-center gap-4">
-                <ReviewAvatar src={review.avatar} name={review.name} />
-                <div>
-                  <div className="text-sm font-light text-white/60">{review.name}</div>
-                  <div className="text-[9px] uppercase tracking-[0.35em] text-white/25 mt-0.5">{review.date}</div>
-                </div>
-                <span className="ml-auto text-[9px] uppercase tracking-[0.3em] text-white/15">
-                  {String(current + 1).padStart(2, "0")} / {String(reviews.length).padStart(2, "0")}
-                </span>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-
-        {/* Controls */}
-        <div className="mt-12 flex items-center gap-4 border-t border-white/10 pt-8">
-          <button
-            onClick={() => paginate(-1)}
-            className="flex items-center justify-center hover:opacity-60 transition-all duration-300"
-            aria-label="Предыдущий"
-          >
-            <ChevronLeft size={32} strokeWidth={1.2} />
-          </button>
-          <button
-            onClick={() => paginate(1)}
-            className="flex items-center justify-center hover:opacity-60 transition-all duration-300"
-            aria-label="Следующий"
-          >
-            <ChevronRight size={32} strokeWidth={1.2} />
-          </button>
-          <div className="flex gap-1.5 ml-3">
-            {reviews.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => { setDirection(i > current ? 1 : -1); setCurrent(i); }}
-                className={`h-px transition-all duration-300 ${i === current ? "w-8 bg-white" : "w-3 bg-white/20"}`}
-              />
-            ))}
+          </div>
+          <div className="hidden md:flex flex-col items-end gap-2">
+            <div className="flex items-center gap-1.5">
+              {[...Array(5)].map((_, i) => (
+                <Star key={i} size={11} fill="white" strokeWidth={0} className="text-white/80" />
+              ))}
+            </div>
+            <span className="text-[9px] uppercase tracking-[0.4em] text-white/25">5.0 · {reviews.length} отзывов</span>
           </div>
         </div>
+
+        {/* Scrollable cards track */}
+        <div
+          ref={trackRef}
+          className="flex gap-4 overflow-x-auto select-none pb-10"
+          style={{
+            cursor: isDragging ? "grabbing" : "grab",
+            scrollbarWidth: "none",
+            msOverflowStyle: "none",
+            paddingLeft: "clamp(24px, 6vw, 128px)",
+            paddingRight: "clamp(24px, 6vw, 128px)",
+          }}
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
+          onMouseLeave={onMouseUp}
+        >
+          {reviews.map((r, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2 }}
+              transition={{ duration: 0.6, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+              className="shrink-0 flex flex-col justify-between"
+              style={{
+                width: "clamp(280px, 28vw, 380px)",
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(255,255,255,0.07)",
+                padding: "32px 28px 28px",
+              }}
+            >
+              {/* Stars */}
+              <div>
+                <div className="flex items-center gap-1 mb-6">
+                  {[...Array(r.rating)].map((_, j) => (
+                    <Star key={j} size={9} fill="rgba(255,255,255,0.5)" strokeWidth={0} />
+                  ))}
+                </div>
+
+                {/* Quote */}
+                <p className="font-extralight text-base leading-relaxed text-white/70 tracking-tight">
+                  «{r.text}»
+                </p>
+              </div>
+
+              {/* Author */}
+              <div className="mt-8 pt-6 border-t border-white/8 flex items-center gap-3">
+                <ReviewAvatar src={r.avatar} name={r.name} />
+                <div className="min-w-0">
+                  <div className="text-sm font-light text-white/80 truncate">{r.name}</div>
+                  <div className="text-[9px] uppercase tracking-[0.3em] text-white/25 mt-0.5">{r.date}</div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+
+          {/* Google CTA card */}
+          <div
+            className="shrink-0 flex flex-col items-start justify-end"
+            style={{
+              width: "clamp(200px, 18vw, 260px)",
+              background: "rgba(255,255,255,0.02)",
+              border: "1px solid rgba(255,255,255,0.06)",
+              padding: "32px 28px 28px",
+            }}
+          >
+            <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-6 leading-relaxed">
+              Читать все<br />отзывы
+            </p>
+            <a
+              href="https://maps.google.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border border-white/20 px-5 py-3 text-[9px] uppercase tracking-[0.35em] text-white/50 hover:border-white/60 hover:text-white transition-all duration-300"
+            >
+              Google <ArrowUpRight size={10} />
+            </a>
+          </div>
+        </div>
+
+        {/* Scroll hint */}
+        <div className="px-6 md:px-16 max-w-7xl mx-auto flex items-center gap-3 opacity-30">
+          <div className="h-px w-8 bg-white/40" />
+          <span className="text-[9px] uppercase tracking-[0.4em] text-white/40">Тяните для просмотра</span>
+        </div>
+
       </div>
     </section>
   );
