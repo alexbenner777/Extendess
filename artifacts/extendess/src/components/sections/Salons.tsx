@@ -188,7 +188,7 @@ export function Salons() {
         <div className="relative md:w-1/2 h-full flex bg-[#F1EBE3]">
 
           {/* Info panel */}
-          <div className="flex-1 flex flex-col justify-between px-10 py-10">
+          <div className="flex-1 flex flex-col justify-between px-7 py-8 min-w-0">
             <AnimatePresence mode="wait" custom={dir}>
               <motion.div
                 key={active}
@@ -201,7 +201,7 @@ export function Salons() {
               >
                 <div>
                   {/* Metro */}
-                  <div className="flex items-center gap-2 mb-6">
+                  <div className="flex items-center gap-2 mb-5">
                     <span
                       className="w-2 h-2 rounded-full shrink-0"
                       style={{ backgroundColor: s.metroColor }}
@@ -209,28 +209,28 @@ export function Salons() {
                     <span className="text-[10px] uppercase tracking-[0.4em] text-black/40">
                       м. {s.metro}
                     </span>
-                    <span className="text-[9px] text-black/25 font-light ml-1">
+                    <span className="text-[9px] text-black/25 font-light ml-1 hidden lg:inline">
                       · {s.metroLine}
                     </span>
                   </div>
 
                   {/* Name */}
-                  <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-3xl md:text-4xl lg:text-5xl text-black mb-8">
+                  <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-2xl md:text-3xl lg:text-4xl text-black mb-6">
                     {s.name}
                   </h2>
 
                   {/* Details */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-start gap-3 text-sm text-black/50 font-light">
-                      <MapPin size={13} className="mt-0.5 shrink-0 text-black/30" />
+                  <div className="flex flex-col gap-2.5">
+                    <div className="flex items-start gap-2.5 text-xs text-black/50 font-light">
+                      <MapPin size={12} className="mt-0.5 shrink-0 text-black/30" />
                       <span>{s.address}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-black/45 font-light">
-                      <Clock size={13} className="shrink-0 text-black/30" />
+                    <div className="flex items-center gap-2.5 text-xs text-black/45 font-light">
+                      <Clock size={12} className="shrink-0 text-black/30" />
                       <span>{s.hours}</span>
                     </div>
-                    <div className="flex items-center gap-3 text-sm text-black/45 font-light">
-                      <Phone size={13} className="shrink-0 text-black/30" />
+                    <div className="flex items-center gap-2.5 text-xs text-black/45 font-light">
+                      <Phone size={12} className="shrink-0 text-black/30" />
                       <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
                         {s.phone}
                       </a>
@@ -239,16 +239,16 @@ export function Salons() {
                 </div>
 
                 {/* CTA */}
-                <div className="flex items-center gap-4 mt-8">
+                <div className="flex items-center gap-3 mt-6">
                   <Link
                     href="/contacts"
-                    className="inline-flex items-center gap-2.5 bg-black text-white text-[10px] uppercase tracking-[0.35em] px-7 py-4 hover:bg-black/80 transition-colors duration-300"
+                    className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black/80 transition-colors duration-300"
                   >
-                    Записаться <ArrowUpRight size={12} />
+                    Записаться <ArrowUpRight size={11} />
                   </Link>
                   <Link
                     href="/salons"
-                    className="text-[10px] uppercase tracking-[0.35em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"
+                    className="text-[9px] uppercase tracking-[0.3em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"
                   >
                     Все адреса
                   </Link>
@@ -258,12 +258,12 @@ export function Salons() {
           </div>
 
           {/* Metro nav — vertical list of stations */}
-          <div className="hidden md:flex flex-col justify-center gap-1 pr-6 pl-4 border-l border-black/8 py-10 min-w-[130px]">
+          <div className="hidden md:flex flex-col justify-center gap-0.5 px-4 border-l border-black/10 py-8 w-[120px] shrink-0">
             {salons.map((salon, i) => (
               <button
                 key={i}
                 onClick={() => go(i)}
-                className="group flex items-center gap-2.5 py-2.5 px-3 text-left transition-all duration-200 rounded-sm hover:bg-black/5"
+                className="flex items-center gap-2 py-2 px-2 text-left transition-all duration-200 rounded-sm hover:bg-black/5"
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"
@@ -274,7 +274,7 @@ export function Salons() {
                   }}
                 />
                 <span
-                  className="text-[9px] uppercase tracking-[0.25em] transition-colors duration-200 leading-tight"
+                  className="text-[8px] uppercase tracking-[0.2em] transition-colors duration-200 leading-tight"
                   style={{ color: i === active ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.3)" }}
                 >
                   {salon.metro}
