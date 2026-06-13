@@ -144,6 +144,8 @@ export function Reviews() {
                 background: "rgba(255,255,255,0.55)",
                 border: "1px solid rgba(0,0,0,0.06)",
                 padding: "32px 28px 28px",
+                borderRadius: "16px",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)",
               }}
             >
               {/* Stars */}
@@ -179,6 +181,8 @@ export function Reviews() {
               background: "rgba(255,255,255,0.3)",
               border: "1px solid rgba(0,0,0,0.05)",
               padding: "32px 28px 28px",
+              borderRadius: "16px",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.06), 0 2px 8px rgba(0,0,0,0.03)",
             }}
           >
             <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-6 leading-relaxed">
