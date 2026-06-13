@@ -613,21 +613,12 @@ export default function Home() {
   const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0.3]);
   const titleY = useTransform(heroProgress, [0, 1], ["0%", "-50%"]);
 
-  const [showVideo, setShowVideo] = useState(false);
+  const showVideo = true;
 
   useEffect(() => {
-    const INTERVAL = 6000;
-    const timer = setInterval(() => {
-      setShowVideo((prev) => {
-        const next = !prev;
-        if (next && videoRef.current) {
-          videoRef.current.currentTime = 0;
-          videoRef.current.play().catch(() => {});
-        }
-        return next;
-      });
-    }, INTERVAL);
-    return () => clearInterval(timer);
+    if (videoRef.current) {
+      videoRef.current.play().catch(() => {});
+    }
   }, []);
 
   return (
@@ -661,6 +652,7 @@ export default function Home() {
             <video
               ref={videoRef}
               src="/images/hero2.mp4"
+              autoPlay
               muted
               loop
               playsInline
