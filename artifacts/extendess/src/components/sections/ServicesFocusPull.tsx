@@ -248,23 +248,20 @@ export function Services() {
         <div style={{
           position: "absolute",
           bottom: 8,
-          left: 0,
-          right: 0,
-          overflowX: "auto",
-          overflowY: "hidden",
+          left: "50%",
+          transform: "translateX(-50%)",
+          width: "80%",
+          maxWidth: 640,
           display: "flex",
+          flexWrap: "wrap",
           justifyContent: "center",
           gap: 6,
-          padding: "0 24px",
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
         }}>
           {allServices.map((svc, i) => (
             <button
               key={i}
               onClick={() => setActiveIdx(i)}
               style={{
-                flexShrink: 0,
                 padding: "5px 12px",
                 border: `1px solid ${activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)"}`,
                 borderRadius: 2,
