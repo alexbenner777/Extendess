@@ -321,7 +321,7 @@ function StickyServices() {
                   backfaceVisibility: "hidden",
                   borderRadius: 6,
                   overflow: "hidden",
-                  boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
+                  boxShadow: "none",
                 }}
               >
                 {/* Card background */}
@@ -459,8 +459,8 @@ function StickyServices() {
         {/* Bottom fade */}
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0,
-          height: 220, pointerEvents: "none", zIndex: 30,
-          background: "linear-gradient(to top, #F1EBE3 0%, transparent 100%)",
+          height: 340, pointerEvents: "none", zIndex: 30,
+          background: "linear-gradient(to top, #F1EBE3 0%, #F1EBE3 20%, transparent 100%)",
         }} />
       </div>
     </section>
