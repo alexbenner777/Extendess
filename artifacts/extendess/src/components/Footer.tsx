@@ -26,9 +26,9 @@ export function Footer() {
             <div>
               <h4 className="text-[9px] uppercase tracking-widest text-white/40 mb-2">Соцсети</h4>
               <div className="flex gap-4 text-xs font-light text-white/70">
-                <a href="#" className="hover:text-white transition-colors">Instagram</a>
-                <a href="#" className="hover:text-white transition-colors">Telegram</a>
-                <a href="#" className="hover:text-white transition-colors">WhatsApp</a>
+                <a href="https://www.instagram.com/extendess/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Instagram</a>
+                <a href="https://t.me/extendess" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">Telegram</a>
+                <a href="https://wa.me/74951234567" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">WhatsApp</a>
               </div>
             </div>
           </div>
@@ -37,8 +37,8 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-3 text-[9px] text-white/30 border-t border-white/10 pt-4 uppercase tracking-widest">
           <p>© {new Date().getFullYear()} Extendess. Все права защищены.</p>
           <div className="flex gap-4">
-            <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-white transition-colors">Лицензии</a>
+            <Link href="/contacts" className="hover:text-white transition-colors">Политика конфиденциальности</Link>
+            <Link href="/contacts" className="hover:text-white transition-colors">Лицензии</Link>
           </div>
         </div>
       </div>

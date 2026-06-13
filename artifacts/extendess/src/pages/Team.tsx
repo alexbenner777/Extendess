@@ -156,7 +156,7 @@ export default function Team() {
       <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3] text-black">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">
+            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">
               — Школа Extendess
             </span>
           </FadeIn>
@@ -167,10 +167,10 @@ export default function Team() {
               { num: "03", t: "Внутренние мастер-классы", d: "Топ-стилисты сети проводят внутренние обучения для всех специалистов салонов." },
             ].map((x) => (
               <StaggerItem key={x.num}>
-                <div className="border-t border-white/20 pt-6">
+                <div className="border-t border-black/20 pt-6">
                   <span className="text-xs font-mono opacity-50">{x.num}</span>
                   <h4 className="mt-4 text-xl md:text-2xl font-light">{x.t}</h4>
-                  <p className="mt-4 text-sm font-light text-white/60 leading-relaxed">{x.d}</p>
+                  <p className="mt-4 text-sm font-light text-black/60 leading-relaxed">{x.d}</p>
                 </div>
               </StaggerItem>
             ))}
@@ -178,7 +178,7 @@ export default function Team() {
           <FadeIn delay={0.4}>
             <Link
               href="/contacts"
-              className="mt-16 inline-flex items-center gap-3 border border-white/30 backdrop-blur-xl bg-white/5 px-8 py-5 text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500"
+              className="mt-16 inline-flex items-center gap-3 border border-black/30 px-8 py-5 text-xs uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all duration-500"
             >
               Записаться к мастеру <ArrowUpRight size={16} />
             </Link>

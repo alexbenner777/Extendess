@@ -504,14 +504,14 @@ function InnovationsCarousel() {
 
   const textVariants = {
     enter: (d: number) => ({ opacity: 0, y: d * 24 }),
-    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-    exit: (d: number) => ({ opacity: 0, y: d * -16, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+    exit: (d: number) => ({ opacity: 0, y: d * -16, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }),
   };
 
   const imgVariants = {
     enter: (d: number) => ({ opacity: 0, scale: 0.96, x: d * 30 }),
-    center: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
-    exit: (d: number) => ({ opacity: 0, scale: 0.96, x: d * -20, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] } }),
+    center: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
+    exit: (d: number) => ({ opacity: 0, scale: 0.96, x: d * -20, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }),
   };
 
   return (

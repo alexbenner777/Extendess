@@ -146,7 +146,7 @@ export function ImageReveal({
     visible: {
       clipPath: "inset(0 0 0 0)",
       scale: 1,
-      transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+      transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] }
     }
   };
 
@@ -263,7 +263,6 @@ export function AnimatedCounter({
           };
 
           animationFrame = requestAnimationFrame(animate);
-          return () => cancelAnimationFrame(animationFrame);
         }
       },
       { threshold: 0.3 }
