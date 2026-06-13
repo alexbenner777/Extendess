@@ -93,7 +93,7 @@ export function Navbar() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "fixed inset-0 bg-background/95 backdrop-blur-xl z-40 flex flex-col items-center justify-center gap-8 transition-transform duration-500 ease-in-out md:hidden",
+          "fixed inset-0 bg-background/98 backdrop-blur-xl z-[60] flex flex-col items-center justify-center gap-8 transition-transform duration-500 ease-in-out md:hidden",
           isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
         )}
       >
