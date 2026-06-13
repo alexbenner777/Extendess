@@ -1,6 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
-import { Plus } from "lucide-react";
+import { Plus, ArrowUpRight } from "lucide-react";
+import { Link } from "wouter";
 import {
   SplitText,
   FadeIn,
@@ -253,6 +254,20 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
                 </li>
               ))}
             </ul>
+            <div className="mt-8 flex items-center gap-4">
+              <Link
+                href="/price"
+                className="inline-flex items-center gap-2 border border-black text-black text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black hover:text-white transition-colors duration-300 rounded"
+              >
+                Прайс <ArrowUpRight size={11} />
+              </Link>
+              <Link
+                href="/contacts"
+                className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black/80 transition-colors duration-300 rounded"
+              >
+                Записаться <ArrowUpRight size={11} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
