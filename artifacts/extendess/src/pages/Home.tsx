@@ -767,30 +767,6 @@ export default function Home() {
       </section>
 
 
-      {/* SERVICES VIDEO REEL */}
-      <section className="relative w-full overflow-hidden bg-black" style={{ height: "80vh" }}>
-        <video
-          src="/images/services-reel.mp4"
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover opacity-75"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60" />
-        <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-16">
-          <div className="max-w-7xl mx-auto w-full">
-            <FadeIn>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">— Услуги · 06 направлений</span>
-            </FadeIn>
-            <h2 className="mt-4 font-extralight tracking-[-0.04em] leading-[0.9] text-white text-[clamp(3rem,9vw,9rem)]">
-              <SplitText text="Полный спектр" />
-              <SplitText text="услуг." delay={0.15} />
-            </h2>
-          </div>
-        </div>
-      </section>
-
       {/* FOCUS PULL — 3D cinematic services section */}
       <ServicesFocusPull />
 
