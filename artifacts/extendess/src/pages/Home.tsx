@@ -74,12 +74,6 @@ function BrandEvolution() {
   // ── Heritage labels (Dessange era) — visible from start ──
   const yearOpacity = useTransform(scrollYProgress, [0, 0.24, 0.36], [1, 1, 0]);
 
-  // ── Star flies in after EXTENDESS lands ──
-  const starOpacity  = useTransform(scrollYProgress, [0.72, 0.82, 1], [0, 1, 1]);
-  const starX        = useTransform(scrollYProgress, [0.72, 0.92], ["18vw", "0vw"]);
-  const starY        = useTransform(scrollYProgress, [0.72, 0.92], ["-14vh", "0vh"]);
-  const starScale    = useTransform(scrollYProgress, [0.72, 0.90], [0.2, 1]);
-  const starRotate   = useTransform(scrollYProgress, [0.72, 0.92], [120, 0]);
 
   return (
     <section ref={containerRef} className="relative h-[320vh]">
@@ -144,28 +138,6 @@ function BrandEvolution() {
             EXTENDESS
           </motion.h2>
         </div>
-
-        {/* ── Star flies in ── */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ opacity: starOpacity }}
-        >
-          <motion.span
-            style={{
-              x: starX,
-              y: starY,
-              scale: starScale,
-              rotate: starRotate,
-              display: "block",
-              fontSize: "clamp(1.4rem, 3vw, 3.5rem)",
-              color: "rgba(26,26,26,0.35)",
-              lineHeight: 1,
-              fontWeight: 300,
-            }}
-          >
-            ✦
-          </motion.span>
-        </motion.div>
 
         {/* ── Flash at crossover ── */}
         <motion.div
