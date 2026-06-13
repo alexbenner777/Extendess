@@ -44,6 +44,7 @@ const allServices = [
     desc: "Botox, филлеры, биоревитализация и аппаратные методики для сияния и молодости кожи без длительной реабилитации.",
     img: svcCosmetology,
     href: "/services",
+    imgScale: 0.7,
   },
   {
     num: "06",
@@ -195,6 +196,7 @@ export function Services() {
                       objectFit: "contain",
                       display: "block",
                       filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.18))",
+                      transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined,
                     }}
                   />
                 </div>
