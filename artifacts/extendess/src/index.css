@@ -99,7 +99,7 @@
   --ring: 0 0% 0%;
 
   --app-font-sans: 'Manrope', sans-serif;
-  --radius: 0rem; 
+  --radius: 0.25rem; 
   
   --shadow-2xs: 0px 2px 0px 0px rgba(0,0,0,0.02);
   --shadow-xs: 0px 2px 0px 0px rgba(0,0,0,0.03);
