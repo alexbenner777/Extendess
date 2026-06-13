@@ -23,8 +23,7 @@ export function Navbar() {
     { name: "Контакты", href: "/contacts" },
   ];
 
-  const isHomePage = location === "/";
-  const isLight = !isHomePage || isScrolled;
+  const isLight = isScrolled;
 
   const textColor = isLight ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white";
   const activeColor = isLight ? "text-black" : "text-white";
