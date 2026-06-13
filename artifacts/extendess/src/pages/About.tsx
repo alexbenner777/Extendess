@@ -34,7 +34,7 @@ export default function About() {
           className="absolute inset-0 h-full w-full object-cover opacity-50"
           style={{ y, scale: 1.15 }}
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 to-black/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/35" />
         <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
           <div className="max-w-7xl mx-auto w-full">
             <FadeIn>
