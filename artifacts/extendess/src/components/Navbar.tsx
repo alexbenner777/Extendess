@@ -103,19 +103,16 @@ export function Navbar() {
         >
           <X size={24} />
         </button>
-        {navLinks
-          .filter((link) => link.href !== "/contacts")
-          .map((link) => (
-            <Link
-              key={link.name}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="text-3xl font-bold uppercase tracking-widest text-foreground"
-            >
-              {link.name}
-            </Link>
-          ))
-        }
+        {navLinks.map((link) => (
+          <Link
+            key={link.name}
+            href={link.href}
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="text-3xl font-bold uppercase tracking-widest text-foreground"
+          >
+            {link.name}
+          </Link>
+        ))}
       </div>
     </motion.header>
   );
