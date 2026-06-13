@@ -274,7 +274,7 @@ export function Salons() {
                   }}
                 />
                 <span
-                  className="text-[9px] uppercase tracking-[0.1em] transition-colors duration-200 leading-tight"
+                  className="text-[11px] uppercase tracking-[0.1em] transition-colors duration-200 leading-tight"
                   style={{ color: i === active ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.3)" }}
                 >
                   {salon.metro}
