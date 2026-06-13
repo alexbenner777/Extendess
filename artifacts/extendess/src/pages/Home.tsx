@@ -514,7 +514,7 @@ function InnovationsCarousel() {
   };
 
   return (
-    <section className="py-16 md:py-24 px-6 md:px-16 overflow-hidden">
+    <section className="py-12 md:py-20 px-6 md:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
 
         {/* Left: image */}
@@ -731,7 +731,7 @@ export default function Home() {
       </div>
 
       {/* PHILOSOPHY */}
-      <section className="py-16 md:py-24 px-6 md:px-16">
+      <section className="py-12 md:py-20 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
@@ -781,7 +781,7 @@ export default function Home() {
       <InnovationsCarousel />
 
       {/* BRANDS */}
-      <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3]">
+      <section className="py-12 md:py-20 px-6 md:px-16 bg-[#F1EBE3]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-14 border-b border-black/10 pb-8">
             <div>
