@@ -148,6 +148,27 @@ export function Services() {
                 {/* Card background */}
                 <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, #eee9e0 0%, #e5ddd3 100%)" }} />
 
+                {/* Glass glare — diagonal shine */}
+                <div style={{
+                  position: "absolute", inset: 0, zIndex: 2, pointerEvents: "none",
+                  background: "linear-gradient(135deg, rgba(255,255,255,0.38) 0%, rgba(255,255,255,0.08) 35%, transparent 60%)",
+                  borderRadius: 6,
+                }} />
+
+                {/* Top edge highlight */}
+                <div style={{
+                  position: "absolute", top: 0, left: 0, right: 0,
+                  height: 1, zIndex: 3, pointerEvents: "none",
+                  background: "linear-gradient(to right, transparent 0%, rgba(255,255,255,0.85) 30%, rgba(255,255,255,0.85) 70%, transparent 100%)",
+                }} />
+
+                {/* Left edge highlight */}
+                <div style={{
+                  position: "absolute", top: 0, left: 0, bottom: 0,
+                  width: 1, zIndex: 3, pointerEvents: "none",
+                  background: "linear-gradient(to bottom, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.15) 50%, transparent 100%)",
+                }} />
+
                 {/* Number — top left */}
                 <span style={{
                   position: "absolute", top: 18, left: 22,
