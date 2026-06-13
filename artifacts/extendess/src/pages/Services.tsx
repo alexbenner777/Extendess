@@ -202,7 +202,7 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
   const reverse = index % 2 === 1;
 
   return (
-    <section className={`border-b border-black/10 ${index === 0 ? "border-t" : ""}`}>
+    <section id={`service-${cat.num}`} className={`border-b border-black/10 ${index === 0 ? "border-t" : ""}`}>
       <div className="max-w-7xl mx-auto px-6 md:px-16 py-24 md:py-32">
         <div className={`grid md:grid-cols-12 gap-12 md:gap-16 ${reverse ? "md:[direction:rtl]" : ""}`}>
           <div className="md:col-span-5 md:[direction:ltr]">
