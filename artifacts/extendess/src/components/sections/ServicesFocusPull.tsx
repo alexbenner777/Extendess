@@ -86,7 +86,7 @@ export function Services() {
   const s = allServices[activeIdx];
 
   return (
-    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]" style={{ marginTop: -260, zIndex: 10, position: "relative" }}>
+    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]" style={{ zIndex: 10, position: "relative" }}>
 
       {/* Top seamless transition from previous section */}
       <div style={{
