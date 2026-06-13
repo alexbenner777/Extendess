@@ -159,24 +159,6 @@ export function Services() {
                   width: 260, height: 235,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  {/* Depth aura — blurred shadow behind the image */}
-                  <motion.div
-                    animate={{ y: [-9, 9, -9], opacity: [0.22, 0.14, 0.22] }}
-                    transition={{
-                      duration: 3.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: i * 0.55,
-                    }}
-                    style={{
-                      position: "absolute",
-                      inset: "10% 8%",
-                      background: "radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.32) 0%, transparent 72%)",
-                      filter: "blur(18px)",
-                      transform: "translateY(12px) scaleY(0.85)",
-                      zIndex: 0,
-                    }}
-                  />
                   {/* Drop shadow ellipse on the floor */}
                   <motion.div
                     animate={{ scaleX: [1, 0.82, 1], opacity: [0.22, 0.10, 0.22] }}
