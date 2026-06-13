@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform, AnimatePresence, useMotionValueEvent } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import svcMakeup from "../../assets/svc-makeup-nobg.png";
@@ -71,16 +71,17 @@ export function Services() {
   });
 
   // Cube rotates on Y: 0° → −300° (5 steps × 60°) over full scroll
-  const rotateY = useTransform(
+  const rotateYRaw = useTransform(
     scrollYProgress,
     [0, 1],
     [0, -(FACE_ANGLE * (FACE_COUNT - 1))]
   );
+  const rotateY = useSpring(rotateYRaw, { stiffness: 80, damping: 20, mass: 0.5 });
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
+  useMotionValueEvent(scrollYProgress, "change", useCallback((v: number) => {
     const idx = Math.min(FACE_COUNT - 1, Math.round(v * (FACE_COUNT - 1)));
-    setActiveIdx(idx);
-  });
+    setActiveIdx(prev => prev === idx ? prev : idx);
+  }, []));
 
   const s = allServices[activeIdx];
 
@@ -141,6 +142,7 @@ export function Services() {
               position: "relative",
               transformStyle: "preserve-3d",
               rotateY,
+              willChange: "transform",
             }}
           >
             {allServices.map((svc, i) => (
@@ -197,33 +199,14 @@ export function Services() {
                   width: 260, height: 235,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  {/* Drop shadow ellipse on the floor */}
-                  <div
-                    style={{
-                      position: "absolute",
-                      bottom: -14,
-                      left: "50%",
-                      transform: "translateX(-50%)",
-                      width: 130,
-                      height: 18,
-                      background: "radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%)",
-                      borderRadius: "50%",
-                      filter: "blur(8px)",
-                      opacity: 0.18,
-                      zIndex: 0,
-                    }}
-                  />
                   <img
                     src={svc.img}
                     alt={svc.title}
                     style={{
-                      position: "relative",
-                      zIndex: 1,
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
                       display: "block",
-                      filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.22)) drop-shadow(0 2px 6px rgba(0,0,0,0.12))",
                       transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined,
                     }}
                   />
