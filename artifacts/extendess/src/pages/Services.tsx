@@ -7,17 +7,67 @@ import {
   Marquee,
   ImageReveal,
 } from "@/components/ui-extras/animations";
-import service1 from "@assets/images/service-1.png";
-import service2 from "@assets/images/service-2.png";
-import service3 from "@assets/images/service-3.png";
-import service4 from "@assets/images/service-4.png";
+import svcMakeup from "../assets/svc-makeup-nobg.png";
+import svcHair from "../assets/svc-hair-nobg.png";
+import svcNails from "../assets/svc-nails-nobg.png";
+import svcMedicine from "../assets/svc-medicine-nobg.png";
+import svcCosmetology from "../assets/svc-cosmetology-nobg.png";
+import svcSpa from "../assets/svc-spa-nobg.png";
 
 const categories = [
   {
     num: "01",
-    title: "Эстетическая медицина",
-    subtitle: "Инъекционные процедуры",
-    img: service1,
+    title: "Макияж и визаж",
+    subtitle: "Профессиональный образ",
+    img: svcMakeup,
+    items: [
+      { name: "Дневной макияж", price: "от 4 000 ₽" },
+      { name: "Вечерний макияж", price: "от 6 000 ₽" },
+      { name: "Свадебный макияж", price: "от 9 500 ₽" },
+      { name: "Макияж + причёска", price: "от 14 000 ₽" },
+    ],
+  },
+  {
+    num: "02",
+    title: "Парикмахерский сервис",
+    subtitle: "Французская школа",
+    img: svcHair,
+    items: [
+      { name: "Авторская стрижка", price: "от 4 500 ₽" },
+      { name: "Окрашивание", price: "от 8 500 ₽" },
+      { name: "Укладка", price: "от 3 500 ₽" },
+      { name: "Свадебная причёска", price: "от 12 000 ₽" },
+    ],
+  },
+  {
+    num: "03",
+    title: "Ногтевой сервис",
+    subtitle: "Маникюр и педикюр",
+    img: svcNails,
+    items: [
+      { name: "Маникюр для дам", price: "от 3 500 ₽" },
+      { name: "Педикюр для дам", price: "от 4 500 ₽" },
+      { name: "Наращивание ногтей", price: "от 5 500 ₽" },
+      { name: "Маникюр / педикюр для господ", price: "от 4 000 ₽" },
+    ],
+  },
+  {
+    num: "04",
+    title: "Эстетическая и превентивная медицина",
+    subtitle: "Программы молодости",
+    img: svcMedicine,
+    items: [
+      { name: "Комплексная программа молодости", price: "от 25 000 ₽" },
+      { name: "Превентивная диагностика", price: "от 18 000 ₽" },
+      { name: "IV-терапия", price: "от 12 000 ₽" },
+      { name: "Индивидуальный протокол", price: "по запросу" },
+    ],
+  },
+  {
+    num: "05",
+    title: "Инъекционная и аппаратная косметология",
+    subtitle: "Уход за кожей",
+    img: svcCosmetology,
     items: [
       { name: "Мезотерапия", price: "от 7 500 ₽" },
       { name: "Инъекции миорелаксантов", price: "от 12 000 ₽" },
@@ -26,39 +76,15 @@ const categories = [
     ],
   },
   {
-    num: "02",
-    title: "Косметология",
-    subtitle: "Уход за лицом",
-    img: service2,
+    num: "06",
+    title: "СПА",
+    subtitle: "Ритуалы восстановления",
+    img: svcSpa,
     items: [
-      { name: "Уходовые процедуры для лица", price: "от 6 500 ₽" },
-      { name: "Классический массаж лица", price: "от 4 500 ₽" },
-      { name: "Пилинги", price: "от 5 500 ₽" },
-      { name: "Чистка лица", price: "от 7 000 ₽" },
-    ],
-  },
-  {
-    num: "03",
-    title: "Волосы и стилистика",
-    subtitle: "Парикмахерские услуги",
-    img: service3,
-    items: [
-      { name: "Окрашивание", price: "от 8 500 ₽" },
-      { name: "Укладка", price: "от 3 500 ₽" },
-      { name: "Свадебная причёска", price: "от 12 000 ₽" },
-      { name: "Шитьё седины", price: "от 6 500 ₽" },
-    ],
-  },
-  {
-    num: "04",
-    title: "Ногтевой сервис",
-    subtitle: "Маникюр и педикюр",
-    img: service4,
-    items: [
-      { name: "Педикюр для дам", price: "от 4 500 ₽" },
-      { name: "Наращивание ногтей", price: "от 5 500 ₽" },
-      { name: "Маникюр для дам", price: "от 3 500 ₽" },
-      { name: "Маникюр / педикюр для господ", price: "от 4 000 ₽" },
+      { name: "Классический массаж", price: "от 5 000 ₽" },
+      { name: "Ароматерапевтический ритуал", price: "от 7 500 ₽" },
+      { name: "Обёртывание", price: "от 6 500 ₽" },
+      { name: "SPA-программа на день", price: "от 18 000 ₽" },
     ],
   },
 ];
