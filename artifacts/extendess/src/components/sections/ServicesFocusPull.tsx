@@ -96,7 +96,7 @@ export function Services() {
         zIndex: 20,
       }} />
 
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
+      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden" style={{ zIndex: 25 }}>
 
         {/* Progress bar */}
         <div className="absolute top-0 inset-x-0 h-[1px] bg-black/10 z-20">
