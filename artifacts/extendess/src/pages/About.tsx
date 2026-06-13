@@ -140,8 +140,8 @@ export default function About() {
 
       <section className="px-6 md:px-16 pb-32">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
-          <ImageReveal src={gallery1} alt="" className="aspect-[4/5] w-full" />
-          <ImageReveal src={highlightImg} alt="" className="aspect-[4/5] w-full mt-12 md:mt-32" direction="bottom" />
+          <ImageReveal src={gallery1} alt="" className="aspect-[4/5] w-full rounded-2xl" />
+          <ImageReveal src={highlightImg} alt="" className="aspect-[4/5] w-full mt-12 md:mt-32 rounded-2xl" direction="bottom" />
         </div>
       </section>
     </div>
