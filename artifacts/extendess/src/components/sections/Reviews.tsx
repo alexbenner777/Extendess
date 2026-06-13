@@ -199,11 +199,6 @@ export function Reviews() {
           </div>
         </div>
 
-        {/* Scroll hint */}
-        <div className="px-6 md:px-16 max-w-7xl mx-auto flex items-center gap-3 opacity-40">
-          <div className="h-px w-8 bg-black/30" />
-          <span className="text-[9px] uppercase tracking-[0.4em] text-black/30">Тяните для просмотра</span>
-        </div>
 
       </div>
 
