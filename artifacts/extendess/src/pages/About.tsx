@@ -48,6 +48,14 @@ export default function About() {
         </div>
       </section>
 
+      <div className="bg-black text-white py-6 border-y border-black/10">
+        <Marquee
+          text="HERITAGE · SCIENCE · CRAFT · PARIS 1954 · MOSCOW · "
+          speed={50}
+          className="text-xl md:text-3xl font-extralight uppercase tracking-[0.3em]"
+        />
+      </div>
+
       <section className="py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-12">
           <div className="md:col-span-5">
@@ -103,14 +111,6 @@ export default function About() {
           </StaggerContainer>
         </div>
       </section>
-
-      <div className="bg-black text-white py-6 border-y border-black/10">
-        <Marquee
-          text="HERITAGE · SCIENCE · CRAFT · PARIS 1954 · MOSCOW · "
-          speed={50}
-          className="text-xl md:text-3xl font-extralight uppercase tracking-[0.3em]"
-        />
-      </div>
 
       <section className="py-32 md:py-48 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
