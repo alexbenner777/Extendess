@@ -787,11 +787,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* SALONS + MAP */}
-      <Salons />
-
       {/* REVIEWS */}
       <Reviews />
+
+      {/* SALONS + MAP */}
+      <Salons />
     </div>
   );
 }
