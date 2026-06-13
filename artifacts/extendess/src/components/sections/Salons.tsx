@@ -119,7 +119,7 @@ export function Salons() {
         {/* LEFT — photo slider */}
         <div
           className="relative w-full overflow-hidden bg-black md:w-1/2"
-          style={{ aspectRatio: "16/9" }}
+          style={{ aspectRatio: "16/9", borderRadius: "16px" }}
         >
           <AnimatePresence mode="wait" custom={dir}>
             <motion.img
