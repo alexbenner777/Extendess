@@ -47,7 +47,7 @@ export default function Team() {
   const [active, setActive] = useState(0);
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-[#F1EBE3] text-black">
       <section className="pt-40 md:pt-56 pb-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
@@ -67,7 +67,7 @@ export default function Team() {
         </div>
       </section>
 
-      <div className="bg-black text-white py-6 border-y border-white/10">
+      <div className="bg-[#1A1A1A] text-white py-6 border-y border-white/10">
         <Marquee
           text="STYLISTS · COLORISTS · ARTISTS · MASTERS · "
           speed={40}
@@ -153,7 +153,7 @@ export default function Team() {
         </div>
       </section>
 
-      <section className="py-24 md:py-32 px-6 md:px-16 bg-black text-white">
+      <section className="py-24 md:py-32 px-6 md:px-16 bg-[#F1EBE3] text-black">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
             <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">

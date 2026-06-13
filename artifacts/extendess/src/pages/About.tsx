@@ -26,7 +26,7 @@ export default function About() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-[#F1EBE3] text-black">
       <section ref={ref} className="relative h-[80vh] overflow-hidden bg-black text-white">
         <motion.img
           src={heroImg}
@@ -76,7 +76,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="bg-black text-white py-32 md:py-48 px-6 md:px-16">
+      <section className="bg-[#F1EBE3] text-black py-32 md:py-48 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
             <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">— В цифрах</span>

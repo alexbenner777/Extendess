@@ -129,8 +129,8 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
 
 export default function Services() {
   return (
-    <div className="bg-white text-black">
-      <section className="pt-40 md:pt-56 pb-24 px-6 md:px-16 bg-white">
+    <div className="bg-[#F1EBE3] text-black">
+      <section className="pt-40 md:py-56 pb-24 px-6 md:px-16 bg-[#F1EBE3]">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">
@@ -149,7 +149,7 @@ export default function Services() {
         </div>
       </section>
 
-      <div className="bg-black text-white py-6 border-y border-white/10">
+      <div className="bg-[#1A1A1A] text-white py-6 border-y border-white/10">
         <Marquee
           text="ESTHETIC · MEDICINE · BEAUTY · COLOR · NAILS · WELLNESS · "
           speed={45}

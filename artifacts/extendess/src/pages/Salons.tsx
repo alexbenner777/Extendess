@@ -10,7 +10,7 @@ export default function Salons() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
 
   return (
-    <div className="bg-white text-black">
+    <div className="bg-[#F1EBE3] text-black">
       <section ref={ref} className="relative h-[60vh] overflow-hidden bg-black text-white">
         <motion.img
           src={heroImg}
@@ -31,7 +31,7 @@ export default function Salons() {
         </div>
       </section>
 
-      <div className="bg-black text-white py-6 border-y border-white/10">
+      <div className="bg-[#1A1A1A] text-white py-6 border-y border-white/10">
         <Marquee
           text="МОСКВА · ПАТРИАРШИЕ · САДОВАЯ · КИЕВСКАЯ · ЖУКОВКА · ЛЕНИНСКИЙ · ЗУБОВСКИЙ · "
           speed={45}
