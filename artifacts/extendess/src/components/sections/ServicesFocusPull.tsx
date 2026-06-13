@@ -88,6 +88,16 @@ export function Services() {
   return (
     <section ref={wrapperRef} className="relative h-[550vh] bg-[#EFE9E1]">
 
+      {/* Top seamless transition from previous section */}
+      <div style={{
+        position: "absolute",
+        top: 0, left: 0, right: 0,
+        height: 200,
+        background: "linear-gradient(to bottom, #F1EBE3 0%, #EFE9E1 100%)",
+        pointerEvents: "none",
+        zIndex: 5,
+      }} />
+
       {/* Bottom seamless transition to next section */}
       <div style={{
         position: "absolute",
