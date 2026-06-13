@@ -86,6 +86,16 @@ export function Services() {
 
   return (
     <section ref={wrapperRef} className="relative h-[550vh] bg-[#EFE9E1]">
+      {/* Bottom seamless transition to next section */}
+      <div style={{
+        position: "absolute",
+        bottom: 0, left: 0, right: 0,
+        height: 120,
+        background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
+        pointerEvents: "none",
+        zIndex: 20,
+      }} />
+
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Progress bar */}
