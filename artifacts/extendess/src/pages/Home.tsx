@@ -711,9 +711,6 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* BRAND EVOLUTION */}
-      <BrandEvolution />
-
       {/* MARQUEE */}
       <div className="bg-black text-white py-8 border-y border-white/10">
         <Marquee
@@ -722,6 +719,9 @@ export default function Home() {
           className="text-2xl md:text-4xl font-extralight uppercase tracking-[0.2em]"
         />
       </div>
+
+      {/* BRAND EVOLUTION */}
+      <BrandEvolution />
 
       {/* PHILOSOPHY */}
       <section className="py-8 md:py-14 px-6 md:px-16">
