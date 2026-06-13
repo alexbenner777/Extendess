@@ -680,7 +680,7 @@ export default function Home() {
           style={{ y: titleY }}
         >
           <div className="max-w-7xl mx-auto w-full">
-            <h1 className="font-extralight tracking-[-0.03em] leading-[0.9] text-[clamp(2rem,6vw,7rem)]">
+            <h1 className="font-extralight tracking-[-0.03em] leading-[0.9] text-[clamp(2.8rem,6vw,7rem)]">
               <SplitText text="Где красота" delay={0.4} />
               <SplitText text="встречается" delay={0.7} />
               <SplitText text="со здоровьем" delay={1.0} />
