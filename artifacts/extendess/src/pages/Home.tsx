@@ -515,7 +515,7 @@ function InnovationsCarousel() {
   };
 
   return (
-    <section className="py-20 md:py-32 px-6 md:px-16 overflow-hidden">
+    <section className="py-32 md:py-48 px-6 md:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
 
         {/* Left: image */}
