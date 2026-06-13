@@ -1,5 +1,5 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
 import { Plus } from "lucide-react";
 import {
   SplitText,
@@ -13,6 +13,7 @@ import svcNails from "../assets/svc-nails-nobg.png";
 import svcMedicine from "../assets/svc-medicine-nobg.png";
 import svcCosmetology from "../assets/svc-cosmetology-nobg.png";
 import svcSpa from "../assets/svc-spa-nobg.png";
+import servicesHero from "../assets/images/services-hero.png";
 
 const categories = [
   {
@@ -154,24 +155,37 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
 }
 
 export default function Services() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
+
   return (
     <div className="bg-[#F1EBE3] text-black">
-      <section className="pt-40 md:py-56 pb-24 px-6 md:px-16 bg-[#F1EBE3]">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">
-              — Услуги · 06 направлений
-            </span>
-          </FadeIn>
-          <h1 className="mt-8 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(3rem,11vw,11rem)]">
-            <SplitText text="Услуги." />
-          </h1>
-          <FadeIn delay={0.4}>
-            <p className="mt-12 max-w-xl text-base md:text-lg font-light text-black/60 leading-relaxed">
-              Полный спектр услуг премиум-класса — от классической косметологии
-              до инновационной эстетической медицины.
-            </p>
-          </FadeIn>
+      <section ref={heroRef} className="relative h-[80vh] overflow-hidden bg-black text-white">
+        <motion.img
+          src={servicesHero}
+          alt=""
+          className="absolute inset-0 h-full w-full object-cover opacity-50"
+          style={{ y, scale: 1.15 }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/35" />
+        <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
+          <div className="max-w-7xl mx-auto w-full">
+            <FadeIn>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">
+                — Услуги · 06 направлений
+              </span>
+            </FadeIn>
+            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
+              <SplitText text="Услуги." />
+            </h1>
+            <FadeIn delay={0.4}>
+              <p className="mt-8 max-w-xl text-base md:text-lg font-light text-white/60 leading-relaxed">
+                Полный спектр услуг премиум-класса — от классической косметологии
+                до инновационной эстетической медицины.
+              </p>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
