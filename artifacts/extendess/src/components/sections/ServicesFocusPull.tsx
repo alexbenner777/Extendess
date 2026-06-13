@@ -159,9 +159,27 @@ export function Services() {
                   width: 260, height: 235,
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
-                  {/* Drop shadow that follows the float */}
+                  {/* Depth aura — blurred shadow behind the image */}
                   <motion.div
-                    animate={{ scaleX: [1, 0.82, 1], opacity: [0.18, 0.09, 0.18] }}
+                    animate={{ y: [-9, 9, -9], opacity: [0.22, 0.14, 0.22] }}
+                    transition={{
+                      duration: 3.2,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: i * 0.55,
+                    }}
+                    style={{
+                      position: "absolute",
+                      inset: "10% 8%",
+                      background: "radial-gradient(ellipse at 50% 60%, rgba(0,0,0,0.32) 0%, transparent 72%)",
+                      filter: "blur(18px)",
+                      transform: "translateY(12px) scaleY(0.85)",
+                      zIndex: 0,
+                    }}
+                  />
+                  {/* Drop shadow ellipse on the floor */}
+                  <motion.div
+                    animate={{ scaleX: [1, 0.82, 1], opacity: [0.22, 0.10, 0.22] }}
                     transition={{
                       duration: 3.2,
                       repeat: Infinity,
@@ -175,9 +193,10 @@ export function Services() {
                       transform: "translateX(-50%)",
                       width: 130,
                       height: 18,
-                      background: "radial-gradient(ellipse, rgba(0,0,0,0.45) 0%, transparent 70%)",
+                      background: "radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%)",
                       borderRadius: "50%",
-                      filter: "blur(6px)",
+                      filter: "blur(8px)",
+                      zIndex: 0,
                     }}
                   />
                   <motion.img
@@ -191,11 +210,13 @@ export function Services() {
                       delay: i * 0.55,
                     }}
                     style={{
+                      position: "relative",
+                      zIndex: 1,
                       width: "100%",
                       height: "100%",
                       objectFit: "contain",
                       display: "block",
-                      filter: "drop-shadow(0 16px 32px rgba(0,0,0,0.18))",
+                      filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.22)) drop-shadow(0 2px 6px rgba(0,0,0,0.12))",
                       transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined,
                     }}
                   />
