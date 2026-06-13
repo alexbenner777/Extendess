@@ -114,7 +114,7 @@ export function Salons() {
     <section id="salons" className="bg-[#F1EBE3]">
 
       {/* Section label */}
-      <div className="px-6 md:px-16 pt-36 md:pt-44">
+      <div className="px-6 md:px-16 pt-10 md:pt-14">
         <span className="text-[9px] uppercase tracking-[0.45em] text-black/30">— Наши адреса</span>
       </div>
 

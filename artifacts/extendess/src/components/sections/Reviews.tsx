@@ -95,7 +95,7 @@ export function Reviews() {
 
   return (
     <section id="reviews" className="overflow-hidden" style={{ background: "#F1EBE3" }}>
-      <div className="pt-20 pb-8 md:pt-28 md:pb-10">
+      <div className="pt-10 pb-8 md:pt-14 md:pb-10">
 
         {/* Header */}
         <div className="px-6 md:px-16 max-w-7xl mx-auto mb-12 flex items-end justify-between">
