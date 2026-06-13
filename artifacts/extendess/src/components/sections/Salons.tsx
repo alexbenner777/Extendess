@@ -114,12 +114,13 @@ export function Salons() {
     <section id="salons" className="bg-[#F1EBE3]">
 
       {/* TOP ROW — two halves */}
-      <div className="flex flex-col md:flex-row" style={{ minHeight: 500 }}>
+      <div className="flex flex-col md:flex-row items-center" style={{ minHeight: 500 }}>
 
         {/* LEFT — photo slider */}
+        <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
         <div
-          className="relative w-full overflow-hidden bg-black md:w-1/2"
-          style={{ aspectRatio: "16/9", borderRadius: "16px" }}
+          className="relative w-full overflow-hidden bg-black"
+          style={{ aspectRatio: "16/9", borderRadius: "16px", boxShadow: "0 16px 48px rgba(0,0,0,0.18), 0 4px 16px rgba(0,0,0,0.10)" }}
         >
           <AnimatePresence mode="wait" custom={dir}>
             <motion.img
@@ -185,6 +186,7 @@ export function Salons() {
               />
             ))}
           </div>
+        </div>
         </div>
 
         {/* RIGHT — salon info + metro nav */}
