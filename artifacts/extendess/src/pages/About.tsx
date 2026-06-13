@@ -104,7 +104,7 @@ export default function About() {
         </div>
       </section>
 
-      <div className="bg-white text-black py-6 border-y border-black/10">
+      <div className="bg-black text-white py-6 border-y border-black/10">
         <Marquee
           text="HERITAGE · SCIENCE · CRAFT · PARIS 1954 · MOSCOW · "
           speed={50}
