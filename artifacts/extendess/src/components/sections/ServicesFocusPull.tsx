@@ -258,14 +258,14 @@ export function Services() {
           gap: 6,
         }}>
           {allServices.map((svc, i) => (
-            <button
+            <Link
               key={i}
-              onClick={() => setActiveIdx(i)}
+              href="/services"
               style={{
-                padding: "5px 12px",
+                padding: "8px 18px",
                 border: `1px solid ${activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)"}`,
                 borderRadius: 2,
-                fontSize: 7,
+                fontSize: 9,
                 letterSpacing: "0.35em",
                 textTransform: "uppercase",
                 color: activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)",
@@ -274,22 +274,22 @@ export function Services() {
                 cursor: "pointer",
                 transition: "all 0.25s ease",
                 whiteSpace: "nowrap",
+                textDecoration: "none",
+                display: "inline-block",
               }}
               onMouseEnter={(e) => {
-                if (activeIdx !== i) {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.35)";
-                  (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.65)";
-                }
+                (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.45)";
+                (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.75)";
+                (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.04)";
               }}
               onMouseLeave={(e) => {
-                if (activeIdx !== i) {
-                  (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.18)";
-                  (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.4)";
-                }
+                (e.currentTarget as HTMLElement).style.borderColor = activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)";
+                (e.currentTarget as HTMLElement).style.color = activeIdx === i ? "rgba(0,0,0,0.85)" : "rgba(0,0,0,0.4)";
+                (e.currentTarget as HTMLElement).style.background = activeIdx === i ? "rgba(0,0,0,0.05)" : "transparent";
               }}
             >
               {svc.title.replace("\n", " ")}
-            </button>
+            </Link>
           ))}
         </div>
 
