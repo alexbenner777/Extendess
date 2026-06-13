@@ -141,7 +141,7 @@ export function Reviews() {
               className="shrink-0 flex flex-col justify-between"
               style={{
                 width: "clamp(280px, 28vw, 380px)",
-                background: "rgba(255,255,255,0.55)",
+                background: "#EDE5DA",
                 border: "1px solid rgba(0,0,0,0.06)",
                 padding: "32px 28px 28px",
                 borderRadius: "16px",
@@ -178,7 +178,7 @@ export function Reviews() {
             className="shrink-0 flex flex-col items-start justify-end"
             style={{
               width: "clamp(200px, 18vw, 260px)",
-              background: "rgba(255,255,255,0.3)",
+              background: "#EDE5DA",
               border: "1px solid rgba(0,0,0,0.05)",
               padding: "32px 28px 28px",
               borderRadius: "16px",
