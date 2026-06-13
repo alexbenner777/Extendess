@@ -512,51 +512,53 @@ function InnovationsCarousel() {
             initial="enter"
             animate="center"
             exit="exit"
-            className="flex items-center gap-6 md:gap-10"
+            className="flex flex-col items-center gap-8"
           >
-            {/* Left arrow */}
-            <button
-              onClick={prev}
-              className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
-              aria-label="Предыдущий"
-            >
-              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
-
-            {/* Text side */}
-            <div className="flex-1 min-w-0">
-              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
-              <h3 className="mt-6 font-extralight tracking-[-0.02em] leading-[1] text-4xl md:text-5xl lg:text-6xl whitespace-pre-line">
-                {item.title}
-              </h3>
-              <p className="mt-8 text-sm md:text-base font-light text-black/60 leading-relaxed max-w-sm">
-                {item.description}
-              </p>
-              <Link
-                href={item.link}
-                className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
-              >
-                Подробнее <ArrowUpRight size={14} />
-              </Link>
-            </div>
-
-            {/* Image side */}
-            <div className="flex-1 min-w-0 overflow-hidden">
+            {/* Image top */}
+            <div className="w-full max-w-md mx-auto overflow-hidden">
               <img
                 src={item.img}
                 alt={item.title}
-                style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
+                style={{ width: "100%", height: 420, objectFit: "contain", display: "block" }}
               />
             </div>
 
-            {/* Right arrow */}
-            <button
-              onClick={next}
-              className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
-              aria-label="Следующий"
-            >
-              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
+            {/* Text bottom with arrows */}
+            <div className="flex items-center gap-6 md:gap-10 w-full">
+              {/* Left arrow */}
+              <button
+                onClick={prev}
+                className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+                aria-label="Предыдущий"
+              >
+                <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </button>
+
+              <div className="flex-1 min-w-0 text-center">
+                <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
+                <h3 className="mt-6 font-extralight tracking-[-0.02em] leading-[1] text-4xl md:text-5xl lg:text-6xl whitespace-pre-line">
+                  {item.title}
+                </h3>
+                <p className="mt-8 text-sm md:text-base font-light text-black/60 leading-relaxed max-w-sm mx-auto">
+                  {item.description}
+                </p>
+                <Link
+                  href={item.link}
+                  className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
+                >
+                  Подробнее <ArrowUpRight size={14} />
+                </Link>
+              </div>
+
+              {/* Right arrow */}
+              <button
+                onClick={next}
+                className="shrink-0 flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+                aria-label="Следующий"
+              >
+                <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </button>
+            </div>
           </motion.div>
         </AnimatePresence>
 
