@@ -82,7 +82,7 @@ function TiltImage({ src, alt }: { src: string; alt: string }) {
             inset: "10%",
             borderRadius: 16,
             filter: "blur(32px)",
-            background: "radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, transparent 70%)",
+            background: "radial-gradient(ellipse at center, rgba(180,155,120,0.45) 0%, transparent 70%)",
             translateX: shadowX,
             translateY: shadowY,
             translateZ: -60,
@@ -101,7 +101,7 @@ function TiltImage({ src, alt }: { src: string; alt: string }) {
             position: "relative",
             zIndex: 1,
             translateZ: 40,
-            filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.22))",
+            filter: "drop-shadow(0 24px 48px rgba(160,130,95,0.35))",
           }}
         />
 
