@@ -792,37 +792,6 @@ export default function Home() {
 
       {/* REVIEWS */}
       <Reviews />
-
-      {/* CTA */}
-      <section className="bg-[#F1EBE3] text-black py-32 md:py-48 px-6 md:px-16 relative overflow-hidden">
-        <motion.div
-          aria-hidden
-          className="absolute -top-40 -left-40 w-[40rem] h-[40rem] rounded-full bg-[#C9B7A2]/20 blur-3xl"
-          animate={{ x: [0, 100, 0], y: [0, 50, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <motion.div
-          aria-hidden
-          className="absolute -bottom-40 -right-40 w-[40rem] h-[40rem] rounded-full bg-[#C9B7A2]/20 blur-3xl"
-          animate={{ x: [0, -100, 0], y: [0, -50, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-        />
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <h2 className="font-extralight tracking-[-0.04em] leading-[0.95] text-[clamp(3rem,9vw,9rem)] text-black">
-            <SplitText text="Запишитесь" />
-            <SplitText text="сегодня." delay={0.1} />
-          </h2>
-          <FadeIn delay={0.4}>
-            <Link
-              href="/contacts"
-              className="mt-16 inline-flex items-center gap-4 border border-black/30 bg-transparent px-10 py-6 text-xs uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all duration-500"
-            >
-              Перейти к записи <ArrowUpRight size={16} />
-            </Link>
-          </FadeIn>
-
-        </div>
-      </section>
     </div>
   );
 }
