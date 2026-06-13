@@ -76,7 +76,7 @@ export function Navbar() {
         <div className="hidden md:block">
           <Link
             href="/contacts"
-            className="px-6 py-3 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest hover:bg-primary/90 transition-colors"
+            className="px-6 py-3 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest hover:bg-primary/90 transition-colors rounded"
           >
             Записаться
           </Link>
@@ -132,7 +132,7 @@ export function Navbar() {
               <Link
                 href="/contacts"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-10 py-4 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest w-64 text-center block"
+                className="px-10 py-4 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest w-64 text-center block rounded"
               >
                 Записаться
               </Link>
