@@ -101,7 +101,7 @@ function BrandEvolution() {
               style={{ filter: "invert(1)" }}
             />
             <p className="text-[9px] uppercase tracking-[0.65em] text-white/45 font-light">
-              С 1954 года · Французская школа красоты · 30 лет в России
+              С 1954 года · Французская школа красоты<br />· 30 лет в России
             </p>
           </motion.div>
 
