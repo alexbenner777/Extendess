@@ -114,10 +114,13 @@ export function Salons() {
     <section id="salons" className="bg-[#F1EBE3]">
 
       {/* TOP ROW — two halves */}
-      <div className="flex flex-col md:flex-row md:h-[60vh] md:min-h-[500px]">
+      <div className="flex flex-col md:flex-row" style={{ minHeight: 500 }}>
 
         {/* LEFT — photo slider */}
-        <div className="relative w-full aspect-[16/9] md:aspect-auto md:w-1/2 md:h-full overflow-hidden bg-black">
+        <div
+          className="relative w-full overflow-hidden bg-black md:w-1/2"
+          style={{ aspectRatio: "16/9" }}
+        >
           <AnimatePresence mode="wait" custom={dir}>
             <motion.img
               key={active}
@@ -185,7 +188,7 @@ export function Salons() {
         </div>
 
         {/* RIGHT — salon info + metro nav */}
-        <div className="relative w-full md:w-1/2 md:h-full flex bg-[#F1EBE3]">
+        <div className="relative w-full md:w-1/2 flex bg-[#F1EBE3]">
 
           {/* Info panel */}
           <div className="flex-1 flex flex-col justify-between px-7 py-8 min-w-0">
