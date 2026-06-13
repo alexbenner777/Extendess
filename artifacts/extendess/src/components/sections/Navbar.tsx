@@ -45,13 +45,13 @@ export function Navbar() {
         <a href="#" className="flex flex-col items-start leading-none">
           <span className={cn(
             "font-sans font-light uppercase tracking-[0.25em] transition-all duration-300",
-            isScrolled ? "text-3xl md:text-4xl text-primary" : "text-4xl md:text-5xl lg:text-6xl text-white"
+            isScrolled ? "text-3xl md:text-4xl text-primary" : "text-4xl md:text-5xl lg:text-6xl text-black"
           )}>
             Extendess
           </span>
           <span className={cn(
             "text-[10px] uppercase tracking-[0.3em] font-light mt-0.5 transition-all duration-300",
-            isScrolled ? "text-foreground/40" : "text-white/50"
+            isScrolled ? "text-foreground/40" : "text-black/50"
           )}>
             Москва · Новое Поколение
           </span>
@@ -65,13 +65,13 @@ export function Navbar() {
               onClick={(e) => scrollTo(e, link.href)}
               className={cn(
                 "text-xs font-medium uppercase tracking-widest transition-colors relative group",
-                isScrolled ? "text-foreground/70 hover:text-primary" : "text-white/70 hover:text-white"
+                isScrolled ? "text-foreground/70 hover:text-primary" : "text-black/70 hover:text-black"
               )}
             >
               {link.name}
               <span className={cn(
                 "absolute -bottom-1 left-0 w-0 h-[1px] transition-all duration-300 group-hover:w-full",
-                isScrolled ? "bg-primary" : "bg-white"
+                isScrolled ? "bg-primary" : "bg-black"
               )} />
             </a>
           ))}
@@ -93,7 +93,7 @@ export function Navbar() {
         </div>
 
         <button
-          className={cn("md:hidden", isScrolled ? "text-foreground" : "text-white")}
+          className={cn("md:hidden", isScrolled ? "text-foreground" : "text-black")}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
