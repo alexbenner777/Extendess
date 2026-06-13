@@ -1,15 +1,11 @@
-import { motion, useScroll, useTransform, AnimatePresence, MotionValue, useMotionTemplate, useMotionValueEvent, useMotionValue, useSpring } from "framer-motion";
-import { useRef, useState, useEffect, useCallback } from "react";
+import { motion, useScroll, useTransform, AnimatePresence, useMotionTemplate, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
 import {
   SplitText,
-  ImageReveal,
   Marquee,
   FadeIn,
-  StaggerContainer,
-  StaggerItem,
-  AnimatedCounter,
 } from "@/components/ui-extras/animations";
 import heroImg from "@assets/images/hero.png";
 import highlightImg from "@assets/4e8fdef0-e4c3-4847-8626-0552c762eca2_1781269893220.png";
