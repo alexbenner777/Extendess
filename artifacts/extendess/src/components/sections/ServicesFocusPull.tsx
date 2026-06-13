@@ -147,7 +147,7 @@ export function Services() {
         }} />
 
         {/* ── 3D PRISM SCENE ── */}
-        <div style={{ perspective: "1100px", perspectiveOrigin: "50% 48%" }}>
+        <div style={{ perspective: "1100px", perspectiveOrigin: "50% 48%", position: "relative", zIndex: 35 }}>
           <motion.div
             style={{
               width: FACE_W,
