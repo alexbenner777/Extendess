@@ -456,12 +456,6 @@ function StickyServices() {
           background: "linear-gradient(to bottom, #F1EBE3 0%, transparent 100%)",
         }} />
 
-        {/* Bottom fade */}
-        <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0,
-          height: 280, pointerEvents: "none", zIndex: 30,
-          background: "linear-gradient(to top, #F1EBE3 0%, #F1EBE3 20%, transparent 100%)",
-        }} />
       </div>
     </section>
   );

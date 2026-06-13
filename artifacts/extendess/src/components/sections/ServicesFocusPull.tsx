@@ -86,14 +86,14 @@ export function Services() {
   const s = allServices[activeIdx];
 
   return (
-    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]">
+    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]" style={{ marginTop: -260, zIndex: 10, position: "relative" }}>
 
       {/* Top seamless transition from previous section */}
       <div style={{
         position: "absolute",
         top: 0, left: 0, right: 0,
-        height: 320,
-        background: "linear-gradient(to bottom, #F1EBE3 0%, transparent 100%)",
+        height: 420,
+        background: "linear-gradient(to bottom, #F1EBE3 0%, #F1EBE3 30%, transparent 100%)",
         pointerEvents: "none",
         zIndex: 5,
       }} />
