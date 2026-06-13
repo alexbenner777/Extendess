@@ -44,7 +44,7 @@ const allServices = [
     desc: "Botox, филлеры, биоревитализация и аппаратные методики для сияния и молодости кожи без длительной реабилитации.",
     img: svcCosmetology,
     href: "/services",
-    imgScale: 0.7,
+    imgScale: 0.55,
   },
   {
     num: "06",
