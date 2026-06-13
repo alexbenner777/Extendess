@@ -111,7 +111,7 @@ export function Services() {
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden" style={{ zIndex: 25 }}>
 
         {/* Section label */}
-        <p className="absolute top-9 left-10 md:left-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none">
+        <p className="absolute top-9 left-10 md:left-20 text-[9px] uppercase tracking-[0.55em] text-black/60 font-light select-none">
           Услуги
         </p>
 
