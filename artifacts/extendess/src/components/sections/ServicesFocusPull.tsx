@@ -133,7 +133,7 @@ export function Services() {
         {/* Edge fade overlays */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 10, pointerEvents: "none",
-          background: "linear-gradient(to right, #EFE9E1 0%, transparent 30%, transparent 70%, #EFE9E1 100%)",
+          background: "linear-gradient(to right, #EFE9E1 0%, transparent 15%, transparent 85%, #EFE9E1 100%)",
         }} />
 
         {/* ── 3D PRISM SCENE ── */}
