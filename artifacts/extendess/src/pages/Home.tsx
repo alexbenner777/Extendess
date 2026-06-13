@@ -548,7 +548,7 @@ function InnovationsCarousel() {
         <div className="md:col-span-7 md:pt-8">
 
           {/* Navigation — above text */}
-          <div className="mb-10 flex items-center gap-5">
+          <div className="mb-10 flex items-center justify-between w-full">
             <button
               onClick={prev}
               className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
