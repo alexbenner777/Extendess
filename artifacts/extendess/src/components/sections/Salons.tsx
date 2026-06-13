@@ -122,10 +122,10 @@ export function Salons() {
       <div className="flex flex-col md:flex-row items-center pt-6 md:pt-8" style={{ minHeight: 500 }}>
 
         {/* LEFT — photo slider */}
-        <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
+        <div className="w-full md:w-3/5 flex items-center justify-center p-4 md:p-6">
         <div
           className="relative w-full overflow-hidden bg-black"
-          style={{ aspectRatio: "16/9", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)" }}
+          style={{ aspectRatio: "4/3", borderRadius: "16px", boxShadow: "0 8px 24px rgba(0,0,0,0.10), 0 2px 8px rgba(0,0,0,0.06)" }}
         >
           <AnimatePresence mode="wait" custom={dir}>
             <motion.img
@@ -190,7 +190,7 @@ export function Salons() {
         </div>
 
         {/* RIGHT — salon info + metro nav */}
-        <div className="relative w-full md:w-1/2 flex bg-[#F1EBE3]">
+        <div className="relative w-full md:w-2/5 flex bg-[#F1EBE3]">
 
           {/* Info panel */}
           <div className="flex-1 flex flex-col justify-between px-7 py-8 min-w-0">
