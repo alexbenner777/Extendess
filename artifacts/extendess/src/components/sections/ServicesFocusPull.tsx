@@ -160,14 +160,7 @@ export function Services() {
                   display: "flex", alignItems: "center", justifyContent: "center",
                 }}>
                   {/* Drop shadow ellipse on the floor */}
-                  <motion.div
-                    animate={{ scaleX: [1, 0.82, 1], opacity: [0.22, 0.10, 0.22] }}
-                    transition={{
-                      duration: 3.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: i * 0.55,
-                    }}
+                  <div
                     style={{
                       position: "absolute",
                       bottom: -14,
@@ -178,19 +171,13 @@ export function Services() {
                       background: "radial-gradient(ellipse, rgba(0,0,0,0.5) 0%, transparent 70%)",
                       borderRadius: "50%",
                       filter: "blur(8px)",
+                      opacity: 0.18,
                       zIndex: 0,
                     }}
                   />
-                  <motion.img
+                  <img
                     src={svc.img}
                     alt={svc.title}
-                    animate={{ y: [-9, 9, -9] }}
-                    transition={{
-                      duration: 3.2,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                      delay: i * 0.55,
-                    }}
                     style={{
                       position: "relative",
                       zIndex: 1,
