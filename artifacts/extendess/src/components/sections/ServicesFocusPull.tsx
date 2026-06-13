@@ -92,8 +92,8 @@ export function Services() {
       <div style={{
         position: "absolute",
         top: 0, left: 0, right: 0,
-        height: 200,
-        background: "linear-gradient(to bottom, #F1EBE3 0%, #EFE9E1 100%)",
+        height: 320,
+        background: "linear-gradient(to bottom, #F1EBE3 0%, transparent 100%)",
         pointerEvents: "none",
         zIndex: 5,
       }} />
@@ -102,8 +102,8 @@ export function Services() {
       <div style={{
         position: "absolute",
         bottom: 0, left: 0, right: 0,
-        height: 120,
-        background: "linear-gradient(to bottom, #EFE9E1 0%, #F1EBE3 100%)",
+        height: 320,
+        background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
         pointerEvents: "none",
         zIndex: 5,
       }} />
@@ -133,7 +133,7 @@ export function Services() {
         {/* Edge fade overlays */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 10, pointerEvents: "none",
-          background: "linear-gradient(to right, #EFE9E1 0%, transparent 15%, transparent 85%, #EFE9E1 100%)",
+          background: "linear-gradient(to right, #F1EBE3 0%, transparent 15%, transparent 85%, #F1EBE3 100%)",
         }} />
 
         {/* ── 3D PRISM SCENE ── */}
