@@ -246,26 +246,24 @@ export function Services() {
                       alignItems: "center",
                       gap: 7,
                       padding: "9px 18px",
-                      border: "1px solid rgba(0,0,0,0.22)",
+                      border: "1px solid rgba(0,0,0,0.85)",
                       borderRadius: 2,
                       fontSize: 9,
                       letterSpacing: "0.38em",
                       textTransform: "uppercase",
-                      color: "rgba(0,0,0,0.6)",
-                      fontWeight: 300,
-                      background: "transparent",
+                      color: "#fff",
+                      fontWeight: 400,
+                      background: "rgba(0,0,0,0.85)",
                       textDecoration: "none",
                       transition: "all 0.25s ease",
                     }}
                     onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.06)";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.45)";
-                      (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.85)";
+                      (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,1)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,1)";
                     }}
                     onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background = "transparent";
-                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.22)";
-                      (e.currentTarget as HTMLElement).style.color = "rgba(0,0,0,0.6)";
+                      (e.currentTarget as HTMLElement).style.background = "rgba(0,0,0,0.85)";
+                      (e.currentTarget as HTMLElement).style.borderColor = "rgba(0,0,0,0.85)";
                     }}
                   >
                     Открыть
