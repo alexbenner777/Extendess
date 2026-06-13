@@ -59,8 +59,8 @@ function ReviewAvatar({ src, name }: { src: string; name: string }) {
   const initial = name.charAt(0).toUpperCase();
   if (failed) {
     return (
-      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-        <span className="text-xs font-light text-white/60">{initial}</span>
+      <div className="w-10 h-10 rounded-full bg-black/10 flex items-center justify-center shrink-0">
+        <span className="text-xs font-light text-black/50">{initial}</span>
       </div>
     );
   }
@@ -94,24 +94,24 @@ export function Reviews() {
   const onMouseUp = () => setIsDragging(false);
 
   return (
-    <section id="reviews" className="bg-black text-white overflow-hidden">
+    <section id="reviews" className="overflow-hidden" style={{ background: "#EFE9E1" }}>
       <div className="pt-20 pb-8 md:pt-28 md:pb-10">
 
         {/* Header */}
         <div className="px-6 md:px-16 max-w-7xl mx-auto mb-12 flex items-end justify-between">
           <div>
-            <span className="block text-[9px] uppercase tracking-[0.45em] text-white/30 mb-5">— Google Reviews</span>
-            <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-5xl md:text-6xl text-white">
+            <span className="block text-[9px] uppercase tracking-[0.45em] text-black/30 mb-5">— Google Reviews</span>
+            <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-5xl md:text-6xl text-black">
               Отзывы
             </h2>
           </div>
           <div className="hidden md:flex flex-col items-end gap-2">
             <div className="flex items-center gap-1.5">
               {[...Array(5)].map((_, i) => (
-                <Star key={i} size={11} fill="white" strokeWidth={0} className="text-white/80" />
+                <Star key={i} size={11} fill="rgba(0,0,0,0.5)" strokeWidth={0} />
               ))}
             </div>
-            <span className="text-[9px] uppercase tracking-[0.4em] text-white/25">5.0 · {reviews.length} отзывов</span>
+            <span className="text-[9px] uppercase tracking-[0.4em] text-black/25">5.0 · {reviews.length} отзывов</span>
           </div>
         </div>
 
@@ -141,8 +141,8 @@ export function Reviews() {
               className="shrink-0 flex flex-col justify-between"
               style={{
                 width: "clamp(280px, 28vw, 380px)",
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.07)",
+                background: "rgba(255,255,255,0.55)",
+                border: "1px solid rgba(0,0,0,0.06)",
                 padding: "32px 28px 28px",
               }}
             >
@@ -150,22 +150,22 @@ export function Reviews() {
               <div>
                 <div className="flex items-center gap-1 mb-6">
                   {[...Array(r.rating)].map((_, j) => (
-                    <Star key={j} size={9} fill="rgba(255,255,255,0.5)" strokeWidth={0} />
+                    <Star key={j} size={9} fill="rgba(0,0,0,0.4)" strokeWidth={0} />
                   ))}
                 </div>
 
                 {/* Quote */}
-                <p className="font-extralight text-base leading-relaxed text-white/70 tracking-tight">
+                <p className="font-extralight text-base leading-relaxed text-black/65 tracking-tight">
                   «{r.text}»
                 </p>
               </div>
 
               {/* Author */}
-              <div className="mt-8 pt-6 border-t border-white/8 flex items-center gap-3">
+              <div className="mt-8 pt-6 flex items-center gap-3" style={{ borderTop: "1px solid rgba(0,0,0,0.07)" }}>
                 <ReviewAvatar src={r.avatar} name={r.name} />
                 <div className="min-w-0">
-                  <div className="text-sm font-light text-white/80 truncate">{r.name}</div>
-                  <div className="text-[9px] uppercase tracking-[0.3em] text-white/25 mt-0.5">{r.date}</div>
+                  <div className="text-sm font-light text-black/70 truncate">{r.name}</div>
+                  <div className="text-[9px] uppercase tracking-[0.3em] text-black/30 mt-0.5">{r.date}</div>
                 </div>
               </div>
             </motion.div>
@@ -176,19 +176,19 @@ export function Reviews() {
             className="shrink-0 flex flex-col items-start justify-end"
             style={{
               width: "clamp(200px, 18vw, 260px)",
-              background: "rgba(255,255,255,0.02)",
-              border: "1px solid rgba(255,255,255,0.06)",
+              background: "rgba(255,255,255,0.3)",
+              border: "1px solid rgba(0,0,0,0.05)",
               padding: "32px 28px 28px",
             }}
           >
-            <p className="text-[10px] uppercase tracking-[0.4em] text-white/25 mb-6 leading-relaxed">
+            <p className="text-[10px] uppercase tracking-[0.4em] text-black/25 mb-6 leading-relaxed">
               Читать все<br />отзывы
             </p>
             <a
               href="https://maps.google.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-white/20 px-5 py-3 text-[9px] uppercase tracking-[0.35em] text-white/50 hover:border-white/60 hover:text-white transition-all duration-300"
+              className="inline-flex items-center gap-2 border border-black/20 px-5 py-3 text-[9px] uppercase tracking-[0.35em] text-black/50 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
             >
               Google <ArrowUpRight size={10} />
             </a>
@@ -196,9 +196,9 @@ export function Reviews() {
         </div>
 
         {/* Scroll hint */}
-        <div className="px-6 md:px-16 max-w-7xl mx-auto flex items-center gap-3 opacity-30">
-          <div className="h-px w-8 bg-white/40" />
-          <span className="text-[9px] uppercase tracking-[0.4em] text-white/40">Тяните для просмотра</span>
+        <div className="px-6 md:px-16 max-w-7xl mx-auto flex items-center gap-3 opacity-40">
+          <div className="h-px w-8 bg-black/30" />
+          <span className="text-[9px] uppercase tracking-[0.4em] text-black/30">Тяните для просмотра</span>
         </div>
 
       </div>
