@@ -564,21 +564,6 @@ function InnovationsCarousel() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Dots — outside AnimatePresence so they don't duplicate */}
-        <div className="mt-10 flex items-center gap-4 px-16 md:px-20">
-          <span className="text-[10px] uppercase tracking-[0.35em] text-black/30">
-            {String(current + 1).padStart(2, "0")} / {String(innovations.length).padStart(2, "0")}
-          </span>
-          <div className="flex gap-2 ml-4">
-            {innovations.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => go(i)}
-                className={`h-px transition-all duration-500 ${i === current ? "w-10 bg-black" : "w-4 bg-black/20"}`}
-              />
-            ))}
-          </div>
-        </div>
 
       </div>
     </section>
