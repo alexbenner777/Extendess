@@ -114,10 +114,10 @@ export function Services() {
         <div style={{
           position: "absolute",
           bottom: 0, left: 0, right: 0,
-          height: 220,
-          background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
+          height: 260,
+          background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 72%, #F1EBE3 100%)",
           pointerEvents: "none",
-          zIndex: 30,
+          zIndex: 36,
         }} />
 
         {/* Section label */}
