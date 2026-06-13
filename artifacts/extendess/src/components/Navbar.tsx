@@ -25,10 +25,10 @@ export function Navbar() {
 
   const isLight = isScrolled;
 
-  const textColor = isLight ? "text-black/70 hover:text-black" : "text-white/70 hover:text-white";
-  const activeColor = isLight ? "text-black" : "text-white";
-  const lineColor = isLight ? "bg-black" : "bg-white";
-  const logoFilter = isLight ? "brightness(0)" : "brightness(0) invert(1)";
+  const textColor = "text-black/70 hover:text-black";
+  const activeColor = "text-black";
+  const lineColor = "bg-black";
+  const logoFilter = "brightness(0)";
 
   return (
     <motion.header
@@ -82,7 +82,7 @@ export function Navbar() {
         </div>
 
         <button
-          className={cn("md:hidden", isLight ? "text-black" : "text-white")}
+          className="md:hidden text-black"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
