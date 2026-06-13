@@ -258,7 +258,7 @@ export function Salons() {
           </div>
 
           {/* Metro nav — vertical list of stations */}
-          <div className="hidden md:flex flex-col justify-center gap-0.5 px-4 border-l border-black/10 py-8 w-[120px] shrink-0">
+          <div className="flex flex-col justify-center gap-0.5 px-4 border-l border-black/10 py-8 w-[110px] shrink-0">
             {salons.map((salon, i) => (
               <button
                 key={i}
