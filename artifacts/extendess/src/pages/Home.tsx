@@ -735,7 +735,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
-          <div className="md:col-span-5 flex flex-col gap-6 items-start">
+          <div className="md:col-span-5 flex flex-col gap-6 items-center md:items-start">
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Философия</span>
             <motion.div
               className="relative w-full"
