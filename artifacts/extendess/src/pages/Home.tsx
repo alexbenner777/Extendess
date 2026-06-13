@@ -515,7 +515,7 @@ function InnovationsCarousel() {
   };
 
   return (
-    <section className="pt-0 pb-8 md:pb-14 px-6 md:px-16 overflow-hidden bg-[#F1EBE3]">
+    <section className="py-8 md:py-14 px-6 md:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
 
         {/* Left: image */}
@@ -712,21 +712,19 @@ export default function Home() {
       </section>
 
       {/* MARQUEE */}
-      <div className="relative bg-black text-white py-8 overflow-hidden">
+      <div className="bg-black text-white py-8 border-y border-white/10">
         <Marquee
           text="МОСКВА • 6 САЛОНОВ • EXTENDESS • НОВОЕ ПОКОЛЕНИЕ • "
           speed={40}
           className="text-2xl md:text-4xl font-extralight uppercase tracking-[0.2em]"
         />
-        {/* Fade bottom into BrandEvolution (also dark) */}
-        <div className="absolute bottom-0 left-0 right-0 h-8 bg-gradient-to-b from-transparent to-[#0A0908] pointer-events-none" />
       </div>
 
       {/* BRAND EVOLUTION */}
       <BrandEvolution />
 
       {/* PHILOSOPHY */}
-      <section className="pt-0 pb-8 md:pb-14 px-6 md:px-16 bg-[#F1EBE3]">
+      <section className="py-8 md:py-14 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
@@ -776,7 +774,7 @@ export default function Home() {
       <InnovationsCarousel />
 
       {/* BRANDS */}
-      <section className="pt-0 pb-8 md:pb-14 px-6 md:px-16 bg-[#F1EBE3]">
+      <section className="py-8 md:py-14 px-6 md:px-16 bg-[#F1EBE3]">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-end justify-between mb-14 border-b border-black/10 pb-8">
             <div>
