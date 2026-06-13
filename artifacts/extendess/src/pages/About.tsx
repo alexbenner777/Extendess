@@ -79,7 +79,7 @@ export default function About() {
       <section className="bg-[#F1EBE3] text-black py-32 md:py-48 px-6 md:px-16">
         <div className="max-w-7xl mx-auto">
           <FadeIn>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-white/50">— В цифрах</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— В цифрах</span>
           </FadeIn>
           <StaggerContainer className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
             {[
@@ -89,12 +89,12 @@ export default function About() {
               { v: 1, suffix: "", label: "Научная лаборатория" },
             ].map((stat, i) => (
               <StaggerItem key={i}>
-                <div className="border-t border-white/20 pt-6">
+                <div className="border-t border-black/20 pt-6">
                   <div className="text-5xl md:text-7xl font-extralight tracking-tight">
                     <AnimatedCounter value={stat.v} duration={2.5} />
                     {stat.suffix}
                   </div>
-                  <div className="mt-4 text-xs uppercase tracking-[0.2em] text-white/50">
+                  <div className="mt-4 text-xs uppercase tracking-[0.2em] text-black/50">
                     {stat.label}
                   </div>
                 </div>
