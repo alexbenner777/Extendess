@@ -21,7 +21,7 @@ const salons = [
     hours: "пн–вс 10:00–22:00",
     img: "/images/salons/salon-sadovaya.webp",
     metro: "Баррикадная",
-    metroColor: "#7F0000",
+    metroColor: "#8B1A80",
     metroLine: "Таганско-Краснопресненская",
   },
   {
@@ -31,8 +31,8 @@ const salons = [
     hours: "пн–сб 08:00–22:00",
     img: "/images/salons/salon-dorogomilovskaya.webp",
     metro: "Киевская",
-    metroColor: "#009A49",
-    metroLine: "Кольцевая",
+    metroColor: "#003F8E",
+    metroLine: "Арбатско-Покровская",
   },
   {
     name: "Жуковка",
@@ -41,7 +41,7 @@ const salons = [
     hours: "пн–вс 10:00–22:00",
     img: "/images/salons/salon-zhukovka.webp",
     metro: "Молодёжная",
-    metroColor: "#009A49",
+    metroColor: "#003F8E",
     metroLine: "Арбатско-Покровская",
   },
   {
@@ -51,7 +51,7 @@ const salons = [
     hours: "пн–сб 08:00–22:00",
     img: "/images/salons/salon-leninskiy.webp",
     metro: "Ленинский просп.",
-    metroColor: "#FBAA33",
+    metroColor: "#FF7E00",
     metroLine: "Калужско-Рижская",
   },
   {
@@ -61,7 +61,7 @@ const salons = [
     hours: "пн–вс 10:00–22:00",
     img: "/images/salons/salon-zubovskiy.webp",
     metro: "Парк культуры",
-    metroColor: "#009A49",
+    metroColor: "#E42313",
     metroLine: "Сокольническая",
   },
 ];
