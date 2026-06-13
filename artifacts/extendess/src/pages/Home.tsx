@@ -8,6 +8,7 @@ import {
   FadeIn,
 } from "@/components/ui-extras/animations";
 import heroImg from "@assets/images/hero.png";
+import heroPhoto from "@assets/загруженное_1781365516338.png";
 import highlightImg from "@assets/4e8fdef0-e4c3-4847-8626-0552c762eca2_1781269893220.png";
 import service1 from "@assets/images/service-1.png";
 import service2 from "@assets/images/service-2.png";
@@ -613,12 +614,16 @@ export default function Home() {
   const heroOpacity = useTransform(heroProgress, [0, 0.7], [1, 0.3]);
   const titleY = useTransform(heroProgress, [0, 1], ["0%", "-50%"]);
 
-  const showVideo = true;
+  const [showVideo, setShowVideo] = useState(true);
 
   useEffect(() => {
     if (videoRef.current) {
       videoRef.current.play().catch(() => {});
     }
+    const interval = setInterval(() => {
+      setShowVideo(v => !v);
+    }, 6000);
+    return () => clearInterval(interval);
   }, []);
 
   return (
@@ -627,21 +632,19 @@ export default function Home() {
       <section ref={heroRef} className="relative h-[100vh] w-full overflow-hidden bg-black text-white">
         <motion.div className="absolute inset-0" style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}>
 
-          {/* Static hero image */}
-          <AnimatePresence initial={false}>
-            {!showVideo && (
-              <motion.img
-                key="hero-img"
-                src={heroImg}
-                alt=""
-                className="absolute inset-0 h-full w-full object-cover opacity-70"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 0.7 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 1.5, ease: "easeInOut" }}
-              />
-            )}
-          </AnimatePresence>
+          {/* Photo layer — fades in when video is hidden */}
+          <motion.div
+            className="absolute inset-0"
+            animate={{ opacity: showVideo ? 0 : 1 }}
+            transition={{ duration: 1.8, ease: "easeInOut" }}
+          >
+            <img
+              src={heroPhoto}
+              alt=""
+              className="absolute inset-0 h-full w-full object-cover"
+              style={{ opacity: 0.85 }}
+            />
+          </motion.div>
 
           {/* Video layer — always mounted, opacity toggled */}
           <motion.div
