@@ -509,7 +509,28 @@ function InnovationsCarousel() {
     <section className="py-16 md:py-24 px-6 md:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
 
-        {/* Left: text column */}
+        {/* Left: image */}
+        <div className="md:col-span-5">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={current}
+              custom={direction}
+              variants={imgVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="w-full overflow-hidden"
+            >
+              <img
+                src={item.img}
+                alt={item.title}
+                style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Right: text column */}
         <div className="md:col-span-7 md:pt-8">
           <AnimatePresence mode="wait" custom={direction}>
             <motion.div
@@ -563,27 +584,6 @@ function InnovationsCarousel() {
               <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
-        </div>
-
-        {/* Right: image */}
-        <div className="md:col-span-5">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={imgVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="w-full overflow-hidden"
-            >
-              <img
-                src={item.img}
-                alt={item.title}
-                style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
-              />
-            </motion.div>
-          </AnimatePresence>
         </div>
 
       </div>
