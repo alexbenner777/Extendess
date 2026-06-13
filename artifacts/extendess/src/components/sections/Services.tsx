@@ -50,7 +50,12 @@ export function Services() {
                   alt={category.title}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent transition-colors duration-500" />
+                <div className="absolute bottom-5 left-1/2 -translate-x-1/2">
+                  <button className="flex items-center gap-3 border border-white/70 text-white text-xs tracking-[0.2em] uppercase px-6 py-3 backdrop-blur-sm bg-white/10 hover:bg-white/20 transition-all duration-300 whitespace-nowrap">
+                    У С Л У Г И &nbsp; ↗
+                  </button>
+                </div>
               </div>
               <h3 className="text-2xl font-serif text-foreground border-b border-border pb-4 mb-6">
                 {category.title}
