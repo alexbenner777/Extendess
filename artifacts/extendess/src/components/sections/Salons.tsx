@@ -258,12 +258,12 @@ export function Salons() {
           </div>
 
           {/* Metro nav — vertical list of stations */}
-          <div className="flex flex-col justify-center gap-0.5 px-4 border-l border-black/10 py-8 w-[110px] shrink-0">
+          <div className="flex flex-col justify-center gap-0 px-2 border-l border-black/10 py-6 w-[90px] shrink-0">
             {salons.map((salon, i) => (
               <button
                 key={i}
                 onClick={() => go(i)}
-                className="flex items-center gap-2 py-2 px-2 text-left transition-all duration-200 rounded-sm hover:bg-black/5"
+                className="flex items-center gap-1.5 py-1.5 px-1.5 text-left transition-all duration-200 rounded-sm hover:bg-black/5"
               >
                 <span
                   className="w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"
@@ -274,7 +274,7 @@ export function Salons() {
                   }}
                 />
                 <span
-                  className="text-[8px] uppercase tracking-[0.2em] transition-colors duration-200 leading-tight"
+                  className="text-[7px] uppercase tracking-[0.1em] transition-colors duration-200 leading-tight"
                   style={{ color: i === active ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.3)" }}
                 >
                   {salon.metro}
