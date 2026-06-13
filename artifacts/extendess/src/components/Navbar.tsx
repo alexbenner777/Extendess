@@ -123,6 +123,20 @@ export function Navbar() {
                 </Link>
               </motion.div>
             ))}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: navLinks.length * 0.06 + 0.15, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="absolute bottom-10"
+            >
+              <Link
+                href="/contacts"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="px-10 py-4 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest w-64 text-center block"
+              >
+                Записаться
+              </Link>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
