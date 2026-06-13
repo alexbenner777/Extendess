@@ -86,7 +86,7 @@ export function Services() {
   const s = allServices[activeIdx];
 
   return (
-    <section ref={wrapperRef} className="relative h-[550vh] bg-[#EFE9E1]">
+    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]">
 
       {/* Top seamless transition from previous section */}
       <div style={{

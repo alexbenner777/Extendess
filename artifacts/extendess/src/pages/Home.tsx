@@ -265,7 +265,7 @@ function StickyServices() {
   const s = allServices[activeIdx];
 
   return (
-    <section ref={wrapperRef} className="relative h-[550vh] bg-[#EFE9E1]">
+    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]">
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
 
         {/* Progress bar */}

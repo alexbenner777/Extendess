@@ -94,7 +94,7 @@ export function Reviews() {
   const onMouseUp = () => setIsDragging(false);
 
   return (
-    <section id="reviews" className="overflow-hidden" style={{ background: "#EFE9E1" }}>
+    <section id="reviews" className="overflow-hidden" style={{ background: "#F1EBE3" }}>
       <div className="pt-20 pb-8 md:pt-28 md:pb-10">
 
         {/* Header */}
@@ -208,7 +208,7 @@ export function Reviews() {
         className="w-full pointer-events-none"
         style={{
           height: "120px",
-          background: "linear-gradient(to bottom, #EFE9E1, #F1EBE3)",
+          background: "linear-gradient(to bottom, #F1EBE3, #F1EBE3)",
         }}
       />
     </section>
