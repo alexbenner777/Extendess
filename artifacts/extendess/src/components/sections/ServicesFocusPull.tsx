@@ -111,7 +111,7 @@ export function Services() {
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden" style={{ zIndex: 25 }}>
 
         {/* Section label */}
-        <p className="absolute top-9 left-10 md:left-20 text-[10px] uppercase tracking-[0.4em] text-black/50 select-none">
+        <p className="absolute top-9 left-10 md:left-20 text-[10px] uppercase tracking-[0.4em] text-black/50 select-none" style={{ zIndex: 20 }}>
           — Услуги
         </p>
 
@@ -123,7 +123,8 @@ export function Services() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-9 right-10 md:right-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none"
+            className="absolute top-9 right-10 md:right-20 text-[10px] uppercase tracking-[0.4em] text-black/50 select-none"
+            style={{ zIndex: 20 }}
           >
             {allServices[activeIdx].num} / 06
           </motion.p>
