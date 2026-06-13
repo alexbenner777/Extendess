@@ -324,8 +324,8 @@ function StickyServices() {
                   boxShadow: "0 32px 80px rgba(0,0,0,0.18), 0 2px 12px rgba(0,0,0,0.06)",
                 }}
               >
-                {/* White card background */}
-                <div style={{ position: "absolute", inset: 0, background: "#faf8f5" }} />
+                {/* Card background */}
+                <div style={{ position: "absolute", inset: 0, background: "#F1EBE3" }} />
 
                 {/* Service photo — top element, 52% of card height */}
                 <div
@@ -349,7 +349,7 @@ function StickyServices() {
                     left: 0,
                     right: 0,
                     height: "13%",
-                    background: "linear-gradient(to bottom, transparent 0%, #faf8f5 100%)",
+                    background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
                   }}
                 />
 
