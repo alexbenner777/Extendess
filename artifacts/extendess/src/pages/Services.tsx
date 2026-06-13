@@ -160,7 +160,7 @@ export default function Services() {
         <div className="max-w-7xl mx-auto">
           <FadeIn>
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">
-              — Услуги · 04 направления
+              — Услуги · 06 направлений
             </span>
           </FadeIn>
           <h1 className="mt-8 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(3rem,11vw,11rem)]">
