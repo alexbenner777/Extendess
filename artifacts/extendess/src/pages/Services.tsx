@@ -1,5 +1,5 @@
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { motion } from "framer-motion";
+import { useState } from "react";
 import { Plus } from "lucide-react";
 import {
   SplitText,
@@ -13,7 +13,6 @@ import svcNails from "../assets/svc-nails-nobg.png";
 import svcMedicine from "../assets/svc-medicine-nobg.png";
 import svcCosmetology from "../assets/svc-cosmetology-nobg.png";
 import svcSpa from "../assets/svc-spa-nobg.png";
-import servicesHero from "../assets/images/services-hero.png";
 
 const categories = [
   {
@@ -155,20 +154,18 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
 }
 
 export default function Services() {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], ["0%", "40%"]);
-
   return (
     <div className="bg-[#F1EBE3] text-black">
-      <section ref={heroRef} className="relative h-[80vh] overflow-hidden bg-black text-white">
-        <motion.img
-          src={servicesHero}
-          alt=""
-          className="absolute inset-0 h-full w-full object-cover opacity-50"
-          style={{ y, scale: 1.15 }}
+      <section className="relative h-[80vh] overflow-hidden bg-black text-white">
+        <video
+          src="/images/services-bg.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-80"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/35" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/55" />
         <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
           <div className="max-w-7xl mx-auto w-full">
             <FadeIn>
