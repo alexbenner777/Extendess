@@ -572,15 +572,15 @@ function InnovationsCarousel() {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="mt-14 flex items-center gap-6">
+          <div className="mt-14 flex items-center gap-5">
             <button
               onClick={prev}
-              className="flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
               aria-label="Предыдущий"
             >
-              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="36" y1="8" x2="2" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M9 1L1 8L9 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center">
               {innovations.map((_, i) => (
                 <button
                   key={i}
@@ -592,10 +592,10 @@ function InnovationsCarousel() {
             </div>
             <button
               onClick={next}
-              className="flex items-center justify-center opacity-40 hover:opacity-100 transition-opacity"
+              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
               aria-label="Следующий"
             >
-              <svg width="36" height="16" viewBox="0 0 36 16" fill="none"><line x1="0" y1="8" x2="34" y2="8" stroke="currentColor" strokeWidth="1"/><path d="M27 1L35 8L27 15" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
             </button>
           </div>
         </div>
