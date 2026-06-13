@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -91,29 +91,41 @@ export function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      <div
-        className={cn(
-          "fixed inset-0 bg-background/98 backdrop-blur-xl z-[60] flex flex-col items-center justify-center gap-8 transition-transform duration-500 ease-in-out md:hidden",
-          isMobileMenuOpen ? "translate-y-0" : "-translate-y-full"
-        )}
-      >
-        <button
-          className="absolute top-6 right-6 text-foreground"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <X size={24} />
-        </button>
-        {navLinks.map((link) => (
-          <Link
-            key={link.name}
-            href={link.href}
-            onClick={() => setIsMobileMenuOpen(false)}
-            className="text-3xl font-bold uppercase tracking-widest text-foreground"
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="fixed inset-0 bg-[#F1EBE3] z-[60] flex flex-col items-center justify-center gap-8 md:hidden"
           >
-            {link.name}
-          </Link>
-        ))}
-      </div>
+            <button
+              className="absolute top-6 right-6 text-foreground"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              <X size={24} />
+            </button>
+            {navLinks.map((link, i) => (
+              <motion.div
+                key={link.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.06 + 0.1, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              >
+                <Link
+                  href={link.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-3xl font-bold uppercase tracking-widest text-foreground"
+                >
+                  {link.name}
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }
