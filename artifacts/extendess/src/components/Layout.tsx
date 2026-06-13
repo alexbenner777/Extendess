@@ -23,11 +23,19 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
       <Footer />
 
-      {/* Sticky Booking/WhatsApp Button */}
-      <div className="fixed bottom-6 right-6 z-50 hidden md:flex flex-col gap-4 items-end pointer-events-auto">
-        <Link 
+      {/* Sticky Booking Button — desktop: floating pill, mobile: full-width bar */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 md:bottom-6 md:right-6 md:left-auto md:right-6 pointer-events-auto">
+        {/* Mobile: full-width bar */}
+        <Link
           href="/contacts"
-          className="bg-primary/90 hover:bg-primary backdrop-blur-xl text-primary-foreground px-6 py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl transition-transform hover:scale-105 border border-primary-foreground/10"
+          className="flex md:hidden items-center justify-center bg-primary text-primary-foreground py-4 text-xs font-bold uppercase tracking-widest w-full"
+        >
+          Записаться
+        </Link>
+        {/* Desktop: floating pill */}
+        <Link
+          href="/contacts"
+          className="hidden md:flex bg-primary/90 hover:bg-primary backdrop-blur-xl text-primary-foreground px-6 py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl transition-transform hover:scale-105 border border-primary-foreground/10"
         >
           Записаться
         </Link>
