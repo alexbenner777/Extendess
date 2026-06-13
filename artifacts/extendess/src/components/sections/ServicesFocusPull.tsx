@@ -110,6 +110,16 @@ export function Services() {
 
       <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden" style={{ zIndex: 25 }}>
 
+        {/* Bottom fade into next section */}
+        <div style={{
+          position: "absolute",
+          bottom: 0, left: 0, right: 0,
+          height: 220,
+          background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
+          pointerEvents: "none",
+          zIndex: 30,
+        }} />
+
         {/* Section label */}
         <p className="absolute top-9 left-10 md:left-20 text-[10px] uppercase tracking-[0.4em] text-black/50 select-none" style={{ zIndex: 20 }}>
           — Услуги
