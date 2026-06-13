@@ -184,74 +184,105 @@ export function Salons() {
           </div>
         </div>
 
-        {/* RIGHT — salon info */}
-        <div className="relative md:w-1/2 h-full flex flex-col justify-between px-10 py-10 bg-[#F1EBE3]">
-          <AnimatePresence mode="wait" custom={dir}>
-            <motion.div
-              key={active}
-              custom={dir}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="flex flex-col h-full justify-between"
-            >
-              <div>
-                {/* Metro */}
-                <div className="flex items-center gap-2 mb-6">
-                  <span
-                    className="w-2 h-2 rounded-full shrink-0"
-                    style={{ backgroundColor: s.metroColor }}
-                  />
-                  <span className="text-[10px] uppercase tracking-[0.4em] text-black/40">
-                    м. {s.metro}
-                  </span>
-                  <span className="text-[9px] text-black/25 font-light ml-1">
-                    · {s.metroLine}
-                  </span>
+        {/* RIGHT — salon info + metro nav */}
+        <div className="relative md:w-1/2 h-full flex bg-[#F1EBE3]">
+
+          {/* Info panel */}
+          <div className="flex-1 flex flex-col justify-between px-10 py-10">
+            <AnimatePresence mode="wait" custom={dir}>
+              <motion.div
+                key={active}
+                custom={dir}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                className="flex flex-col h-full justify-between"
+              >
+                <div>
+                  {/* Metro */}
+                  <div className="flex items-center gap-2 mb-6">
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ backgroundColor: s.metroColor }}
+                    />
+                    <span className="text-[10px] uppercase tracking-[0.4em] text-black/40">
+                      м. {s.metro}
+                    </span>
+                    <span className="text-[9px] text-black/25 font-light ml-1">
+                      · {s.metroLine}
+                    </span>
+                  </div>
+
+                  {/* Name */}
+                  <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-3xl md:text-4xl lg:text-5xl text-black mb-8">
+                    {s.name}
+                  </h2>
+
+                  {/* Details */}
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-start gap-3 text-sm text-black/50 font-light">
+                      <MapPin size={13} className="mt-0.5 shrink-0 text-black/30" />
+                      <span>{s.address}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-black/45 font-light">
+                      <Clock size={13} className="shrink-0 text-black/30" />
+                      <span>{s.hours}</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-black/45 font-light">
+                      <Phone size={13} className="shrink-0 text-black/30" />
+                      <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
+                        {s.phone}
+                      </a>
+                    </div>
+                  </div>
                 </div>
 
-                {/* Name */}
-                <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-3xl md:text-4xl lg:text-5xl text-black mb-8">
-                  {s.name}
-                </h2>
-
-                {/* Details */}
-                <div className="flex flex-col gap-3">
-                  <div className="flex items-start gap-3 text-sm text-black/50 font-light">
-                    <MapPin size={13} className="mt-0.5 shrink-0 text-black/30" />
-                    <span>{s.address}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-black/45 font-light">
-                    <Clock size={13} className="shrink-0 text-black/30" />
-                    <span>{s.hours}</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-black/45 font-light">
-                    <Phone size={13} className="shrink-0 text-black/30" />
-                    <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
-                      {s.phone}
-                    </a>
-                  </div>
+                {/* CTA */}
+                <div className="flex items-center gap-4 mt-8">
+                  <Link
+                    href="/contacts"
+                    className="inline-flex items-center gap-2.5 bg-black text-white text-[10px] uppercase tracking-[0.35em] px-7 py-4 hover:bg-black/80 transition-colors duration-300"
+                  >
+                    Записаться <ArrowUpRight size={12} />
+                  </Link>
+                  <Link
+                    href="/salons"
+                    className="text-[10px] uppercase tracking-[0.35em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"
+                  >
+                    Все адреса
+                  </Link>
                 </div>
-              </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-              {/* CTA */}
-              <div className="flex items-center gap-4 mt-8">
-                <Link
-                  href="/contacts"
-                  className="inline-flex items-center gap-2.5 bg-black text-white text-[10px] uppercase tracking-[0.35em] px-7 py-4 hover:bg-black/80 transition-colors duration-300"
+          {/* Metro nav — vertical list of stations */}
+          <div className="hidden md:flex flex-col justify-center gap-1 pr-6 pl-4 border-l border-black/8 py-10 min-w-[130px]">
+            {salons.map((salon, i) => (
+              <button
+                key={i}
+                onClick={() => go(i)}
+                className="group flex items-center gap-2.5 py-2.5 px-3 text-left transition-all duration-200 rounded-sm hover:bg-black/5"
+              >
+                <span
+                  className="w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200"
+                  style={{
+                    backgroundColor: i === active ? salon.metroColor : "transparent",
+                    border: `1.5px solid ${i === active ? salon.metroColor : "rgba(0,0,0,0.2)"}`,
+                    transform: i === active ? "scale(1.2)" : "scale(1)",
+                  }}
+                />
+                <span
+                  className="text-[9px] uppercase tracking-[0.25em] transition-colors duration-200 leading-tight"
+                  style={{ color: i === active ? "rgba(0,0,0,0.8)" : "rgba(0,0,0,0.3)" }}
                 >
-                  Записаться <ArrowUpRight size={12} />
-                </Link>
-                <Link
-                  href="/salons"
-                  className="text-[10px] uppercase tracking-[0.35em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"
-                >
-                  Все адреса
-                </Link>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+                  {salon.metro}
+                </span>
+              </button>
+            ))}
+          </div>
+
         </div>
 
       </div>
