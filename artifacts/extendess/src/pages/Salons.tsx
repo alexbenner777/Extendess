@@ -409,7 +409,7 @@ export default function SalonsPage() {
                 onClick={() => { setActive(i); window.scrollTo({ top: 0, behavior: "smooth" }); }}
               >
                 {/* Photo */}
-                <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                <div className="relative overflow-hidden rounded-xl" style={{ aspectRatio: "4/3" }}>
                   <img
                     src={salon.img}
                     alt={salon.name}
