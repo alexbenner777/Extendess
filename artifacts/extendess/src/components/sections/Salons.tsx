@@ -114,7 +114,7 @@ export function Salons() {
     <section id="salons" className="bg-[#F1EBE3]">
 
       {/* TOP ROW — two halves */}
-      <div className="flex flex-col md:flex-row items-center pt-12 md:pt-20" style={{ minHeight: 500 }}>
+      <div className="flex flex-col md:flex-row items-center pt-24 md:pt-36" style={{ minHeight: 500 }}>
 
         {/* LEFT — photo slider */}
         <div className="w-full md:w-1/2 flex items-center justify-center p-6 md:p-10">
