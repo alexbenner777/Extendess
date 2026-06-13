@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
 import { MapPin, Clock, Phone, ChevronLeft, ChevronRight, Wifi, Coffee, ParkingMeter, Dumbbell, ShieldCheck, Star } from "lucide-react";
 import { SplitText, FadeIn, Marquee } from "@/components/ui-extras/animations";
@@ -144,15 +144,24 @@ const YANDEX_MAP_SRC =
 
 function SalonMap() {
   const containerRef = useRef<HTMLDivElement>(null);
-  return (
-    <div
-      ref={containerRef}
-      style={{ width: "100%", height: "100%" }}
-      dangerouslySetInnerHTML={{
-        __html: `<script charset="utf-8" async src="${YANDEX_MAP_SRC}"></script>`,
-      }}
-    />
-  );
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+    const existing = document.getElementById("yandex-salons-script");
+    if (existing) existing.remove();
+    const script = document.createElement("script");
+    script.id = "yandex-salons-script";
+    script.charset = "utf-8";
+    script.async = true;
+    script.src = YANDEX_MAP_SRC;
+    container.innerHTML = "";
+    container.appendChild(script);
+    return () => {
+      script.remove();
+      if (container) container.innerHTML = "";
+    };
+  }, []);
+  return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 }
 
 const variants = {
