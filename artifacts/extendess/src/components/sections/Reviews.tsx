@@ -188,7 +188,7 @@ export function Reviews() {
               href="https://maps.google.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 border border-black/20 px-5 py-3 rounded-full text-[9px] uppercase tracking-[0.35em] text-black/50 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
+              className="inline-flex items-center gap-2 border border-black/20 px-5 py-3 text-[9px] uppercase tracking-[0.35em] text-black/50 hover:bg-black hover:text-white hover:border-black transition-all duration-300"
             >
               Google <ArrowUpRight size={10} />
             </a>

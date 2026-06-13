@@ -186,7 +186,7 @@ export default function Price() {
           </div>
           <Link
             href="/contacts"
-            className="shrink-0 px-10 py-5 bg-black text-white text-xs font-semibold uppercase tracking-widest rounded-full hover:bg-black/80 transition-colors"
+            className="shrink-0 px-10 py-5 bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-black/80 transition-colors"
           >
             Записаться на консультацию
           </Link>

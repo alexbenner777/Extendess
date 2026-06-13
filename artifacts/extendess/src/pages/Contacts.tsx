@@ -113,7 +113,7 @@ export default function Contacts() {
                   type="submit"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="group inline-flex items-center gap-4 bg-black text-white px-10 py-6 rounded-full text-xs uppercase tracking-[0.3em] hover:bg-black/80 transition-colors"
+                  className="group inline-flex items-center gap-4 bg-black text-white px-10 py-6 text-xs uppercase tracking-[0.3em] hover:bg-black/80 transition-colors"
                 >
                   {submitted ? "Отправлено" : "Отправить"}
                   <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />

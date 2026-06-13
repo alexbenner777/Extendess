@@ -691,7 +691,7 @@ export default function Home() {
               </p>
               <Link
                 href="/contacts"
-                className="group inline-flex items-center gap-3 border border-white/30 backdrop-blur-xl bg-white/5 px-8 py-5 rounded-full text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500 self-start"
+                className="group inline-flex items-center gap-3 border border-white/30 backdrop-blur-xl bg-white/5 px-8 py-5 text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500 self-start"
               >
                 Записаться
                 <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
