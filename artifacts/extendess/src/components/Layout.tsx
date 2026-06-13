@@ -24,7 +24,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <Footer />
 
       {/* Sticky Booking/WhatsApp Button */}
-      <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-4 items-end pointer-events-auto">
+      <div className="fixed bottom-6 right-6 z-50 hidden md:flex flex-col gap-4 items-end pointer-events-auto">
         <Link 
           href="/contacts"
           className="bg-primary/90 hover:bg-primary backdrop-blur-xl text-primary-foreground px-6 py-4 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl transition-transform hover:scale-105 border border-primary-foreground/10"
