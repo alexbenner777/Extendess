@@ -202,6 +202,15 @@ export function Reviews() {
         </div>
 
       </div>
+
+      {/* Bottom fade to next section */}
+      <div
+        className="w-full pointer-events-none"
+        style={{
+          height: "120px",
+          background: "linear-gradient(to bottom, #EFE9E1, #F1EBE3)",
+        }}
+      />
     </section>
   );
 }
