@@ -1,47 +1,27 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { SplitText, FadeIn, Marquee } from "@/components/ui-extras/animations";
 import { Link } from "wouter";
 
 const priceCategories = [
   {
-    id: "medicine",
+    id: "makeup",
     num: "01",
-    title: "Эстетическая медицина",
-    subtitle: "Инъекционные процедуры",
+    title: "Макияж и визаж",
+    subtitle: "Профессиональный образ",
     items: [
-      { name: "Мезотерапия лица", price: "от 7 500 ₽", note: "1 зона" },
-      { name: "Инъекции миорелаксантов", price: "от 12 000 ₽", note: "1 зона" },
-      { name: "Биоревитализация", price: "от 14 500 ₽", note: "лицо" },
-      { name: "Контурная пластика губ", price: "от 22 000 ₽", note: "1 мл" },
-      { name: "Контурная пластика скул", price: "от 28 000 ₽", note: "1 мл" },
-      { name: "Коллагенотерапия", price: "от 18 000 ₽", note: "курс" },
-      { name: "Плазмолифтинг", price: "от 9 000 ₽", note: "1 процедура" },
-      { name: "Нитевой лифтинг", price: "от 35 000 ₽", note: "1 зона" },
-      { name: "Аппарат Vivace (RF-микронидлинг)", price: "от 25 000 ₽", note: "лицо" },
-    ],
-  },
-  {
-    id: "cosmetology",
-    num: "02",
-    title: "Косметология",
-    subtitle: "Уход за лицом и телом",
-    items: [
-      { name: "Уходовая процедура для лица", price: "от 6 500 ₽", note: "60 мин" },
-      { name: "Классический массаж лица", price: "от 4 500 ₽", note: "45 мин" },
-      { name: "Лимфодренажный массаж лица", price: "от 5 500 ₽", note: "60 мин" },
-      { name: "Химический пилинг", price: "от 5 500 ₽", note: "по типу кожи" },
-      { name: "Механическая чистка лица", price: "от 7 000 ₽", note: "90 мин" },
-      { name: "Комбинированная чистка", price: "от 8 500 ₽", note: "90 мин" },
-      { name: "Ультразвуковая чистка", price: "от 5 000 ₽", note: "45 мин" },
-      { name: "Микродермабразия", price: "от 6 000 ₽", note: "лицо" },
-      { name: "Лазерная фотомолодость", price: "от 12 000 ₽", note: "лицо" },
+      { name: "Дневной макияж", price: "от 4 000 ₽", note: "до 60 мин" },
+      { name: "Вечерний макияж", price: "от 6 000 ₽", note: "до 75 мин" },
+      { name: "Свадебный макияж", price: "от 9 500 ₽", note: "с пробником" },
+      { name: "Макияж + причёска", price: "от 14 000 ₽", note: "комплекс" },
+      { name: "Пробный образ", price: "от 7 500 ₽", note: "репетиция" },
+      { name: "Макияж для съёмки", price: "от 8 000 ₽", note: "HD" },
     ],
   },
   {
     id: "hair",
-    num: "03",
+    num: "02",
     title: "Волосы и стилистика",
     subtitle: "Парикмахерские услуги",
     items: [
@@ -59,7 +39,7 @@ const priceCategories = [
   },
   {
     id: "nails",
-    num: "04",
+    num: "03",
     title: "Ногтевой сервис",
     subtitle: "Маникюр и педикюр",
     items: [
@@ -74,10 +54,61 @@ const priceCategories = [
       { name: "Японский маникюр", price: "от 4 500 ₽", note: "P-Shine" },
     ],
   },
+  {
+    id: "medicine",
+    num: "04",
+    title: "Эстетическая медицина",
+    subtitle: "Инъекционные процедуры",
+    items: [
+      { name: "Мезотерапия лица", price: "от 7 500 ₽", note: "1 зона" },
+      { name: "Инъекции миорелаксантов", price: "от 12 000 ₽", note: "1 зона" },
+      { name: "Биоревитализация", price: "от 14 500 ₽", note: "лицо" },
+      { name: "Контурная пластика губ", price: "от 22 000 ₽", note: "1 мл" },
+      { name: "Контурная пластика скул", price: "от 28 000 ₽", note: "1 мл" },
+      { name: "Коллагенотерапия", price: "от 18 000 ₽", note: "курс" },
+      { name: "Плазмолифтинг", price: "от 9 000 ₽", note: "1 процедура" },
+      { name: "Нитевой лифтинг", price: "от 35 000 ₽", note: "1 зона" },
+      { name: "Аппарат Vivace (RF-микронидлинг)", price: "от 25 000 ₽", note: "лицо" },
+    ],
+  },
+  {
+    id: "cosmetology",
+    num: "05",
+    title: "Инъекционная и аппаратная косметология",
+    subtitle: "Уход за лицом и телом",
+    items: [
+      { name: "Уходовая процедура для лица", price: "от 6 500 ₽", note: "60 мин" },
+      { name: "Классический массаж лица", price: "от 4 500 ₽", note: "45 мин" },
+      { name: "Лимфодренажный массаж лица", price: "от 5 500 ₽", note: "60 мин" },
+      { name: "Химический пилинг", price: "от 5 500 ₽", note: "по типу кожи" },
+      { name: "Механическая чистка лица", price: "от 7 000 ₽", note: "90 мин" },
+      { name: "Комбинированная чистка", price: "от 8 500 ₽", note: "90 мин" },
+      { name: "Ультразвуковая чистка", price: "от 5 000 ₽", note: "45 мин" },
+      { name: "Микродермабразия", price: "от 6 000 ₽", note: "лицо" },
+      { name: "Лазерная фотомолодость", price: "от 12 000 ₽", note: "лицо" },
+    ],
+  },
+  {
+    id: "spa",
+    num: "06",
+    title: "СПА",
+    subtitle: "Ритуалы восстановления",
+    items: [
+      { name: "Классический массаж тела", price: "от 5 000 ₽", note: "60 мин" },
+      { name: "Расслабляющий массаж", price: "от 5 500 ₽", note: "60 мин" },
+      { name: "Ароматерапевтический ритуал", price: "от 7 500 ₽", note: "90 мин" },
+      { name: "Обёртывание (шоколад / водоросли)", price: "от 6 500 ₽", note: "60 мин" },
+      { name: "Скраб + массаж", price: "от 8 000 ₽", note: "90 мин" },
+      { name: "Стоун-массаж", price: "от 7 000 ₽", note: "70 мин" },
+      { name: "Тайский массаж", price: "от 7 500 ₽", note: "90 мин" },
+      { name: "SPA-программа на день", price: "от 18 000 ₽", note: "4–6 часов" },
+      { name: "Детокс-программа", price: "от 12 000 ₽", note: "индивидуально" },
+    ],
+  },
 ];
 
 function PriceCategory({ cat }: { cat: typeof priceCategories[number] }) {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <section className="border-b border-black/10">
@@ -90,7 +121,7 @@ function PriceCategory({ cat }: { cat: typeof priceCategories[number] }) {
             <span className="text-xs font-mono text-black/30">{cat.num}</span>
             <div className="text-left">
               <p className="text-[10px] uppercase tracking-[0.4em] text-black/40 mb-1">{cat.subtitle}</p>
-              <h2 className="font-extralight tracking-[-0.03em] text-3xl md:text-4xl text-black">
+              <h2 className="font-extralight tracking-[-0.03em] text-3xl md:text-4xl text-black group-hover:translate-x-1 transition-transform duration-300">
                 {cat.title}
               </h2>
             </div>
@@ -107,7 +138,7 @@ function PriceCategory({ cat }: { cat: typeof priceCategories[number] }) {
         <motion.div
           initial={false}
           animate={{ height: open ? "auto" : 0, opacity: open ? 1 : 0 }}
-          transition={{ duration: 0.35, ease: "easeInOut" }}
+          transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
           className="overflow-hidden"
         >
           <div className="pb-12">
@@ -118,7 +149,7 @@ function PriceCategory({ cat }: { cat: typeof priceCategories[number] }) {
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.04 }}
-                  className="flex items-center justify-between py-5 border-b border-black/5 group hover:bg-black/[0.015] px-2 -mx-2 transition-colors"
+                  className="flex items-center justify-between py-5 border-b border-black/5 group/row hover:bg-black/[0.02] px-2 -mx-2 transition-colors"
                 >
                   <div className="flex items-center gap-4">
                     <span className="text-[9px] font-mono text-black/20 w-5 shrink-0">{String(i + 1).padStart(2, "0")}</span>
@@ -139,22 +170,40 @@ function PriceCategory({ cat }: { cat: typeof priceCategories[number] }) {
 }
 
 export default function Price() {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
+  const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
+
   return (
     <div className="bg-[#F1EBE3] text-black">
-      <section className="pt-40 md:pt-56 pb-16 px-6 md:px-16">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Прайс-лист · 4 направления</span>
-          </FadeIn>
-          <h1 className="mt-8 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(3rem,11vw,11rem)]">
-            <SplitText text="Прайс." />
-          </h1>
-          <FadeIn delay={0.4}>
-            <p className="mt-12 max-w-xl text-base md:text-lg font-light text-black/60 leading-relaxed">
-              Актуальные цены на все услуги. Точная стоимость рассчитывается на консультации
-              с мастером — индивидуально для каждого гостя.
-            </p>
-          </FadeIn>
+      <section ref={heroRef} className="relative h-[80vh] overflow-hidden bg-black text-white">
+        <motion.video
+          src="/images/services-reel.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-60"
+          style={{ y, scale: 1.08 }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/65" />
+        <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
+          <div className="max-w-7xl mx-auto w-full">
+            <FadeIn>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">
+                — Прайс-лист · 6 направлений
+              </span>
+            </FadeIn>
+            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
+              <SplitText text="Прайс." />
+            </h1>
+            <FadeIn delay={0.4}>
+              <p className="mt-8 max-w-xl text-base md:text-lg font-light text-white/60 leading-relaxed">
+                Актуальные цены на все услуги. Точная стоимость рассчитывается
+                на консультации — индивидуально для каждого гостя.
+              </p>
+            </FadeIn>
+          </div>
         </div>
       </section>
 
