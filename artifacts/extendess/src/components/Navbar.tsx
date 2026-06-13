@@ -23,12 +23,12 @@ export function Navbar() {
     { name: "Контакты", href: "/contacts" },
   ];
 
-  const isLight = isScrolled;
-
-  const textColor = "text-black/70 hover:text-black";
-  const activeColor = "text-black";
-  const lineColor = "bg-black";
-  const logoFilter = "brightness(0)";
+  const textColor = isScrolled
+    ? "text-black/70 hover:text-black"
+    : "text-white/80 hover:text-white";
+  const activeColor = isScrolled ? "text-black" : "text-white";
+  const lineColor = isScrolled ? "bg-black" : "bg-white";
+  const logoFilter = isScrolled ? "brightness(0)" : "brightness(0) invert(1)";
 
   return (
     <motion.header
@@ -75,14 +75,19 @@ export function Navbar() {
         <div className="hidden md:block">
           <Link
             href="/contacts"
-            className="px-6 py-3 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest hover:bg-primary/90 transition-colors rounded"
+            className={cn(
+              "px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-colors rounded",
+              isScrolled
+                ? "bg-black text-white hover:bg-black/80"
+                : "bg-white text-black hover:bg-white/90"
+            )}
           >
             Записаться
           </Link>
         </div>
 
         <button
-          className="md:hidden text-black"
+          className={cn("md:hidden transition-colors", isScrolled ? "text-black" : "text-white")}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
