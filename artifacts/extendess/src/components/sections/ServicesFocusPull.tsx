@@ -202,20 +202,34 @@ export function Services() {
                       zIndex: 0,
                     }}
                   />
-                  <img
-                    src={svc.img}
-                    alt={svc.title}
-                    style={{
-                      position: "relative",
-                      zIndex: 1,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "contain",
-                      display: "block",
-                      filter: "drop-shadow(0 12px 24px rgba(0,0,0,0.22)) drop-shadow(0 2px 6px rgba(0,0,0,0.12))",
-                      transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined,
-                    }}
-                  />
+                  <div style={{
+                    position: "relative",
+                    zIndex: 1,
+                    width: "100%",
+                    height: "100%",
+                    perspective: "400px",
+                  }}>
+                    <img
+                      src={svc.img}
+                      alt={svc.title}
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "contain",
+                        display: "block",
+                        transform: svc.imgScale
+                          ? `scale(${svc.imgScale}) rotateX(6deg) rotateY(-4deg)`
+                          : "rotateX(6deg) rotateY(-4deg)",
+                        transformStyle: "preserve-3d",
+                        filter: [
+                          "drop-shadow(0 24px 32px rgba(0,0,0,0.28))",
+                          "drop-shadow(0 8px 12px rgba(0,0,0,0.18))",
+                          "drop-shadow(4px 4px 0px rgba(0,0,0,0.06))",
+                          "drop-shadow(8px 8px 0px rgba(0,0,0,0.04))",
+                        ].join(" "),
+                      }}
+                    />
+                  </div>
                 </div>
 
                 {/* Text + button — bottom */}
