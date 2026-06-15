@@ -236,233 +236,80 @@ const allServices = [
   },
 ];
 
-// Geometry constants for a 6-face prism rotating on Y
-const FACE_COUNT = 6;
-const FACE_ANGLE = 360 / FACE_COUNT; // 60° per face
-const FACE_W = 360;
-const FACE_H = 490;
-const PRISM_RADIUS = Math.round((FACE_W / 2) / Math.tan(Math.PI / FACE_COUNT)); // ≈312px
-
 function StickyServices() {
-  const wrapperRef = useRef<HTMLDivElement>(null);
-  const [activeIdx, setActiveIdx] = useState(0);
-
-  const { scrollYProgress } = useScroll({
-    target: wrapperRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Cube rotates on Y: −30° → −330° (starts angled so sides are visible)
-  const rotateY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    [-30, -(FACE_ANGLE * (FACE_COUNT - 1)) - 30]
-  );
-
-  // Track which face is front-facing
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    const idx = Math.min(FACE_COUNT - 1, Math.round(v * (FACE_COUNT - 1)));
-    setActiveIdx(idx);
-  });
-
-  const s = allServices[activeIdx];
-
   return (
-    <section ref={wrapperRef} className="relative h-[550vh] bg-[#F1EBE3]">
-      <div className="sticky top-0 h-screen flex flex-col items-center justify-center overflow-hidden">
-
-        {/* Progress bar */}
-        <div className="absolute top-0 inset-x-0 h-[1px] bg-black/10 z-20">
-          <motion.div
-            className="h-full bg-black/30 origin-left"
-            style={{ scaleX: scrollYProgress }}
-          />
+    <section className="bg-[#F1EBE3] py-24 md:py-36 px-6 md:px-16">
+      {/* Header */}
+      <div className="max-w-7xl mx-auto mb-16 flex items-end justify-between border-b border-black/10 pb-8">
+        <div>
+          <span className="text-[9px] uppercase tracking-[0.5em] text-black/30 block mb-4">— Направления</span>
+          <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl lg:text-6xl text-black">
+            Все услуги
+          </h2>
         </div>
-
-        {/* Section label */}
-        <p className="absolute top-9 left-10 md:left-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none">
-          Услуги
-        </p>
-
-        {/* Slide counter */}
-        <AnimatePresence mode="wait">
-          <motion.p
-            key={activeIdx}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute top-9 right-10 md:right-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none"
-          >
-            {allServices[activeIdx].num} / 06
-          </motion.p>
-        </AnimatePresence>
-
-        {/* ── 3D CUBE SCENE ── */}
-        <div
-          style={{
-            perspective: "1100px",
-            perspectiveOrigin: "50% 48%",
-          }}
+        <Link
+          href="/services"
+          className="hidden md:inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-1"
         >
+          Подробнее <ArrowUpRight size={11} />
+        </Link>
+      </div>
+
+      {/* Grid */}
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-px bg-black/8">
+        {allServices.map((svc, i) => (
           <motion.div
-            style={{
-              width: FACE_W,
-              height: FACE_H,
-              position: "relative",
-              transformStyle: "preserve-3d",
-              rotateY,
-            }}
+            key={i}
+            className="bg-[#F1EBE3] group relative overflow-hidden cursor-pointer"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
           >
-            {allServices.map((svc, i) => (
-              <div
-                key={i}
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  transform: `rotateY(${i * FACE_ANGLE}deg) translateZ(${PRISM_RADIUS}px)`,
-                  backfaceVisibility: "hidden",
-                  borderRadius: 6,
-                  overflow: "hidden",
-                  boxShadow: "none",
-                }}
-              >
-                {/* Card background */}
-                <div style={{ position: "absolute", inset: 0, background: "#F1EBE3" }} />
-
-                {/* Service photo — top element, 52% of card height */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: "52%",
-                    backgroundImage: `url(${svc.img})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center top",
-                  }}
+            <Link href={svc.href}>
+              {/* Image */}
+              <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+                <img
+                  src={svc.img}
+                  alt={svc.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
+                <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(241,235,227,0.9) 100%)" }} />
+              </div>
 
-                {/* Soft shadow at bottom of image — fades into white */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "39%",
-                    left: 0,
-                    right: 0,
-                    height: "13%",
-                    background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
-                  }}
-                />
-
-                {/* Text content — positioned below image */}
-                <div
-                  style={{
-                    position: "absolute",
-                    top: "52%",
-                    left: 0,
-                    right: 0,
-                    bottom: 0,
-                    padding: "12px 22px 16px",
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "center",
-                  }}
-                >
-                  <span
-                    style={{
-                      display: "block",
-                      fontSize: 8,
-                      letterSpacing: "0.45em",
-                      color: "rgba(0,0,0,0.35)",
-                      textTransform: "uppercase",
-                      marginBottom: 6,
-                      fontWeight: 300,
-                    }}
-                  >
-                    {svc.num}
-                  </span>
-                  <h3
-                    style={{
-                      fontSize: 19,
-                      fontWeight: 200,
-                      lineHeight: 1.1,
-                      letterSpacing: "-0.01em",
-                      color: "rgba(0,0,0,0.88)",
-                      whiteSpace: "pre-line",
-                      marginBottom: 6,
-                    }}
-                  >
-                    {svc.title}
-                  </h3>
-                  <p
-                    style={{
-                      fontSize: 10,
-                      color: "rgba(0,0,0,0.45)",
-                      lineHeight: 1.55,
-                      fontWeight: 300,
-                    }}
-                  >
-                    {svc.desc}
-                  </p>
+              {/* Text */}
+              <div className="px-6 py-6 md:px-8 md:py-7">
+                <span className="text-[8px] uppercase tracking-[0.45em] text-black/30 font-light block mb-3">
+                  {svc.num}
+                </span>
+                <h3 className="font-extralight text-xl md:text-2xl leading-[1.15] tracking-[-0.01em] text-black/88 whitespace-pre-line mb-3">
+                  {svc.title}
+                </h3>
+                <p className="text-xs font-light text-black/45 leading-relaxed line-clamp-2">
+                  {svc.desc}
+                </p>
+                <div className="mt-5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.35em] text-black/35 group-hover:text-black/70 transition-colors duration-300">
+                  Открыть <ArrowUpRight size={10} className="transition-transform duration-300 group-hover:rotate-45" />
                 </div>
               </div>
-            ))}
-          </motion.div>
-        </div>
-
-        {/* Active service CTA */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIdx}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="mt-9 flex items-center justify-center"
-          >
-            <Link
-              href={s.href}
-              className="group inline-flex items-center gap-2.5 border-b border-black/25 pb-1.5 text-[10px] uppercase tracking-[0.38em] text-black/50 hover:text-black/80 transition-colors duration-300"
-            >
-              Подробнее
-              <ArrowUpRight size={11} className="transition-transform duration-300 group-hover:rotate-45" />
             </Link>
           </motion.div>
-        </AnimatePresence>
+        ))}
+      </div>
 
-        {/* Dot indicators */}
-        <div className="absolute bottom-8 flex items-center gap-2">
-          {allServices.map((_, i) => (
-            <div
-              key={i}
-              className="rounded-full transition-all duration-500"
-              style={{
-                width: activeIdx === i ? 22 : 6,
-                height: 6,
-                background: activeIdx === i ? "rgba(0,0,0,0.55)" : "rgba(0,0,0,0.18)",
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Scroll hint */}
-        <p className="absolute bottom-[34px] right-10 md:right-20 text-[9px] uppercase tracking-[0.45em] text-black/18 font-light select-none">
-          Скролл ↓
-        </p>
-
-        {/* Top fade */}
-        <div style={{
-          position: "absolute", top: 0, left: 0, right: 0,
-          height: 160, pointerEvents: "none", zIndex: 30,
-          background: "linear-gradient(to bottom, #F1EBE3 0%, transparent 100%)",
-        }} />
-
+      {/* Mobile CTA */}
+      <div className="mt-10 flex justify-center md:hidden">
+        <Link
+          href="/services"
+          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-1"
+        >
+          Все услуги <ArrowUpRight size={11} />
+        </Link>
       </div>
     </section>
   );
 }
+
 
 const innovations = [
   {
