@@ -55,18 +55,18 @@ const allServices = [
   },
 ];
 
-const FACE_W = 320;
-const FACE_H = 440;
+const FACE_W = 390;
+const FACE_H = 530;
 
 function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: number }) {
   const absOffset = Math.abs(offset);
 
-  const rotateY = offset * 42;
-  const translateX = offset * 220;
-  const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.82 : 0.68;
+  const rotateY = offset * 38;
+  const translateX = Math.sign(offset) * (absOffset === 1 ? 260 : absOffset === 2 ? 450 : 0);
+  const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.80 : 0.64;
   const zIndex = absOffset === 0 ? 10 : absOffset === 1 ? 6 : 2;
-  const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.88 : absOffset === 2 ? 0.55 : 0;
-  const blur = absOffset === 0 ? 0 : absOffset === 1 ? 0 : 2;
+  const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.88 : absOffset === 2 ? 0.65 : 0;
+  const blur = 0;
 
   return (
     <motion.div
@@ -129,7 +129,7 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
         position: "absolute",
         top: "7%", left: "50%",
         transform: "translateX(-50%)",
-        width: 260, height: 235,
+        width: 320, height: 285,
         display: "flex", alignItems: "center", justifyContent: "center",
         zIndex: 4,
       }}>
@@ -231,7 +231,7 @@ export function Services() {
     <section className="relative bg-[#F1EBE3] py-0" style={{ zIndex: 10 }}>
       <div
         className="relative overflow-hidden"
-        style={{ height: 580 }}
+        style={{ height: 680 }}
         onMouseDown={handleDragStart}
         onMouseUp={handleDragEnd}
         onTouchStart={handleDragStart}
@@ -260,7 +260,7 @@ export function Services() {
         {/* Edge fade overlays */}
         <div style={{
           position: "absolute", inset: 0, zIndex: 15, pointerEvents: "none",
-          background: "linear-gradient(to right, #F1EBE3 0%, transparent 18%, transparent 82%, #F1EBE3 100%)",
+          background: "linear-gradient(to right, #F1EBE3 0%, transparent 9%, transparent 91%, #F1EBE3 100%)",
         }} />
 
         {/* 3D perspective scene */}
