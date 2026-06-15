@@ -19,18 +19,18 @@ export function Preloader() {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
         >
-          <div className="relative flex items-center justify-center" style={{ width: 320, height: 460 }}>
+          <div className="relative flex items-center justify-center" style={{ width: 360, height: 510 }}>
             <svg
               className="absolute inset-0 w-full h-full"
-              viewBox="0 0 320 460"
+              viewBox="0 0 360 510"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
             >
               <motion.rect
                 x="1"
                 y="1"
-                width="318"
-                height="458"
+                width="358"
+                height="508"
                 stroke="white"
                 strokeWidth="0.8"
                 fill="none"
@@ -44,7 +44,7 @@ export function Preloader() {
               <motion.img
                 src={logoUrl}
                 alt="Extendess"
-                className="w-48 object-contain"
+                className="w-56 object-contain"
                 style={{ filter: "brightness(0) invert(1)" }}
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -65,7 +65,7 @@ export function Preloader() {
                     transition={{ delay: 2.2, duration: 1.2, ease: "linear" }}
                   />
                 </div>
-                <span className="text-[11px] uppercase tracking-[0.5em] text-white/40 font-light">
+                <span className="text-[13px] uppercase tracking-[0.5em] text-white/40 font-light">
                   Загрузка
                 </span>
               </motion.div>
