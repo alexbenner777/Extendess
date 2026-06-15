@@ -129,7 +129,7 @@ function BrandEvolution() {
             className="absolute left-0 right-0 text-center font-extralight uppercase select-none leading-none tracking-[0.06em] whitespace-nowrap px-8"
             style={{
               fontSize: "clamp(3rem, 13vw, 13rem)",
-              color: "rgba(26,26,26,0.35)",
+              color: "rgba(26,26,26,0.70)",
               rotateX: extRotateX,
               opacity: extOpacity,
               scale: extScale,
