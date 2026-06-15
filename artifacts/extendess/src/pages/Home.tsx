@@ -158,14 +158,14 @@ function BrandEvolution() {
           <img
             src={extendessIconLogo}
             alt="Extendess"
-            className="w-16 object-contain"
+            className="w-48 object-contain"
             style={{ filter: "brightness(0)" }}
           />
         </motion.div>
 
         <motion.p
-          className="absolute top-[33%] left-0 right-0 text-center text-black/40 font-light"
-          style={{ opacity: subOpacity, y: subY, fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.08em" }}
+          className="absolute top-[33%] left-0 right-0 text-center uppercase text-black/25 font-light"
+          style={{ opacity: subOpacity, y: subY, fontSize: "clamp(0.7rem, 1.2vw, 1rem)", letterSpacing: tagSpacing }}
         >
           Новая глава истории бренда в России
         </motion.p>
