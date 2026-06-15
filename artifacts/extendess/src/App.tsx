@@ -12,6 +12,7 @@ import Contacts from "@/pages/Contacts";
 import Salons from "@/pages/Salons";
 import Price from "@/pages/Price";
 import { Layout } from "@/components/Layout";
+import { YClientsProvider } from "@/components/YClientsWidget";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -55,12 +56,14 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
-          <Layout>
-            <Router />
-          </Layout>
-        </WouterRouter>
-        <Toaster />
+        <YClientsProvider>
+          <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
+            <Layout>
+              <Router />
+            </Layout>
+          </WouterRouter>
+          <Toaster />
+        </YClientsProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

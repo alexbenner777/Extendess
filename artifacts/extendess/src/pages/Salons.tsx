@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { MapPin, Clock, Phone, ChevronLeft, ChevronRight, Wifi, Coffee, ParkingMeter, Dumbbell, ShieldCheck, Star } from "lucide-react";
 import { SplitText, FadeIn, Marquee } from "@/components/ui-extras/animations";
 import { Link } from "wouter";
+import { useYClients } from "@/components/YClientsWidget";
 
 const salons = [
   {
@@ -177,6 +178,8 @@ const variants = {
 };
 
 export default function SalonsPage() {
+  const { openWidget } = useYClients();
+
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "35%"]);
@@ -362,14 +365,12 @@ export default function SalonsPage() {
                       </div>
                     </div>
 
-                    <a
-                      href={s.bookingUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <button
+                      onClick={() => openWidget(s.bookingUrl)}
                       className="mt-6 inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-6 py-4 hover:bg-black/80 transition-colors self-start rounded"
                     >
                       Записаться в этот салон
-                    </a>
+                    </button>
                   </motion.div>
                 </AnimatePresence>
               </div>
@@ -498,27 +499,12 @@ export default function SalonsPage() {
               для подтверждения визита.
             </p>
           </div>
-          <form
-            className="shrink-0 flex flex-col gap-3 w-full md:w-auto"
-            onSubmit={(e) => e.preventDefault()}
+          <button
+            onClick={() => openWidget(salons[active].bookingUrl)}
+            className="shrink-0 px-10 py-5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors rounded-lg"
           >
-            <input
-              type="text"
-              placeholder="Имя"
-              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72 rounded-lg"
-            />
-            <input
-              type="tel"
-              placeholder="Телефон"
-              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72 rounded-lg"
-            />
-            <button
-              type="submit"
-              className="px-10 py-3.5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors rounded-lg"
-            >
-              Записаться
-            </button>
-          </form>
+            Записаться
+          </button>
         </div>
       </section>
     </div>
