@@ -8,7 +8,6 @@ import {
   FadeIn,
 } from "@/components/ui-extras/animations";
 import heroImg from "@assets/images/hero.png";
-import heroPhoto from "../assets/hero-woman.png";
 import highlightImg from "@assets/4e8fdef0-e4c3-4847-8626-0552c762eca2_1781269893220.png";
 import service1 from "@assets/images/service-1.png";
 import service2 from "@assets/images/service-2.png";
@@ -504,20 +503,6 @@ export default function Home() {
       {/* HERO */}
       <section ref={heroRef} className="relative h-[100vh] w-full overflow-hidden bg-black text-white">
         <motion.div className="absolute inset-0" style={{ scale: heroScale, y: heroY, opacity: heroOpacity }}>
-
-          {/* Photo layer — fades in when video is hidden */}
-          <motion.div
-            className="absolute inset-0"
-            animate={{ opacity: showVideo ? 0 : 1 }}
-            transition={{ duration: 1.8, ease: "easeInOut" }}
-          >
-            <img
-              src={heroPhoto}
-              alt=""
-              className="absolute inset-0 h-full w-full object-cover object-[30%_center] md:object-center"
-              style={{ opacity: 0.85 }}
-            />
-          </motion.div>
 
           {/* Video layer — always mounted, opacity toggled */}
           <motion.div
