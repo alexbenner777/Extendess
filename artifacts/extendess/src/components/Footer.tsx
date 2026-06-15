@@ -45,12 +45,12 @@ export function Footer() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
-                className="flex-1 bg-[#f0ebe4] text-black placeholder-black/40 text-sm font-light px-5 py-3.5 outline-none"
+                className="flex-1 bg-[#f0ebe4] text-black placeholder-black/40 text-sm font-light px-5 py-5 outline-none"
               />
               <button
                 type="button"
                 onClick={() => setEmail("")}
-                className="bg-[#f0ebe4] text-black text-[10px] font-bold uppercase tracking-widest px-6 py-3.5 border-l border-black/10 hover:bg-white transition-colors"
+                className="bg-[#f0ebe4] text-black text-[10px] font-bold uppercase tracking-widest px-6 py-5 border-l border-black/10 hover:bg-white transition-colors self-stretch"
               >
                 Подписаться
               </button>
