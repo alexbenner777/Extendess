@@ -152,13 +152,13 @@ function BrandEvolution() {
 
         {/* ── Logo icon + subtitle after EXTENDESS lands ── */}
         <motion.div
-          className="absolute top-[20%] left-0 right-0 flex flex-col items-center gap-3 pointer-events-none"
+          className="absolute top-[10%] left-0 right-0 flex flex-col items-center gap-3 pointer-events-none"
           style={{ opacity: logoOpacity, y: logoY }}
         >
           <img
             src={extendessIconLogo}
             alt="Extendess"
-            className="w-48 object-contain"
+            className="w-36 object-contain"
             style={{ filter: "brightness(0)" }}
           />
         </motion.div>
