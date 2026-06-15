@@ -37,22 +37,40 @@ export function Navbar() {
   return (
     <motion.header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b border-transparent",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b",
+        /* Desktop */
         dark
-          ? "bg-[#F1EBE3] backdrop-blur-2xl py-4 border-black/5 shadow-sm"
-          : "bg-transparent py-6"
+          ? "md:bg-[#F1EBE3] md:backdrop-blur-2xl md:py-4 md:border-black/5 md:shadow-sm"
+          : "md:bg-transparent md:py-6 md:border-transparent",
+        /* Mobile — always liquid glass */
+        "py-3 border-white/10",
       )}
+      style={{
+        /* Mobile glass applied via inline so it overrides on small screens */
+      }}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
     >
-      <div className="container mx-auto px-6 flex items-center justify-between">
+      {/* Mobile liquid-glass layer (hidden on md+) */}
+      <div
+        className="absolute inset-0 md:hidden"
+        style={{
+          backdropFilter: "blur(20px) saturate(180%) brightness(1.08)",
+          WebkitBackdropFilter: "blur(20px) saturate(180%) brightness(1.08)",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.45) 0%, rgba(241,235,227,0.35) 60%, rgba(255,255,255,0.2) 100%)",
+          borderBottom: "1px solid rgba(255,255,255,0.55)",
+          boxShadow: "0 2px 24px rgba(0,0,0,0.06), inset 0 1px 0 rgba(255,255,255,0.7)",
+        }}
+      />
+
+      <div className="container mx-auto px-6 flex items-center justify-between relative">
         <Link href="/" className="flex items-center">
           <img
             src={logoUrl}
             alt="Extendess"
             className="h-12 object-contain transition-all duration-500"
-            style={{ filter: logoFilter }}
+            style={{ filter: dark ? "brightness(0)" : "brightness(0)" }}
           />
         </Link>
 
@@ -91,10 +109,10 @@ export function Navbar() {
         </div>
 
         <button
-          className={cn("md:hidden transition-colors", isScrolled ? "text-black" : "text-white")}
+          className="md:hidden transition-colors text-black/70"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -107,10 +125,15 @@ export function Navbar() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="fixed inset-0 bg-[#F1EBE3] z-[60] flex flex-col items-center justify-center gap-8 md:hidden"
+            className="fixed inset-0 z-[60] flex flex-col items-center justify-center gap-8 md:hidden"
+            style={{
+              backdropFilter: "blur(32px) saturate(200%) brightness(1.05)",
+              WebkitBackdropFilter: "blur(32px) saturate(200%) brightness(1.05)",
+              background: "linear-gradient(160deg, rgba(255,255,255,0.72) 0%, rgba(241,235,227,0.82) 100%)",
+            }}
           >
             <button
-              className="absolute top-6 right-6 text-foreground"
+              className="absolute top-6 right-6 text-black/60"
               onClick={() => setIsMobileMenuOpen(false)}
             >
               <X size={24} />
@@ -125,7 +148,7 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-3xl font-bold uppercase tracking-widest text-foreground"
+                  className="text-3xl font-bold uppercase tracking-widest text-black/80"
                 >
                   {link.name}
                 </Link>
@@ -140,7 +163,7 @@ export function Navbar() {
               <Link
                 href="/contacts"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="px-10 py-4 bg-primary text-primary-foreground text-xs font-semibold uppercase tracking-widest w-64 text-center block rounded"
+                className="px-10 py-4 bg-black text-white text-xs font-semibold uppercase tracking-widest w-64 text-center block rounded"
               >
                 Записаться
               </Link>
