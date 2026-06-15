@@ -121,31 +121,6 @@ export default function About() {
       </section>
 
 
-      <section className="py-32 md:py-48 px-6 md:px-16">
-        <div className="max-w-7xl mx-auto">
-          <FadeIn>
-            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Хронология</span>
-          </FadeIn>
-          <div className="mt-16 space-y-0">
-            {timeline.map((item, i) => (
-              <FadeIn key={i} delay={i * 0.1}>
-                <div className="border-t border-black/10 py-10 grid md:grid-cols-12 gap-6 group hover:bg-black hover:text-white transition-colors duration-700 px-4 md:px-8 -mx-4 md:-mx-8">
-                  <div className="md:col-span-2 text-3xl md:text-5xl font-extralight tracking-tight">
-                    {item.year}
-                  </div>
-                  <div className="md:col-span-3 text-xs uppercase tracking-[0.3em] md:pt-4 opacity-70">
-                    {item.title}
-                  </div>
-                  <div className="md:col-span-7 text-base md:text-lg font-light leading-relaxed opacity-80 max-w-2xl">
-                    {item.text}
-                  </div>
-                </div>
-              </FadeIn>
-            ))}
-            <div className="border-t border-black/10" />
-          </div>
-        </div>
-      </section>
 
       <section className="px-6 md:px-16 pb-32">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-6">
