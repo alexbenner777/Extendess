@@ -38,11 +38,11 @@ export default function About() {
         <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
           <div className="max-w-7xl mx-auto w-full">
             <FadeIn>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">— О нас · с 1954</span>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">— О нас</span>
             </FadeIn>
             <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
-              <SplitText text="70 лет" />
-              <SplitText text="наследия." delay={0.2} />
+              <SplitText text="Extendess — новое" />
+              <SplitText text="поколение заботы о себе" delay={0.2} />
             </h1>
           </div>
         </div>
@@ -50,7 +50,7 @@ export default function About() {
 
       <div className="bg-black text-white py-6 border-y border-black/10">
         <Marquee
-          text="HERITAGE · SCIENCE · CRAFT · PARIS 1954 · MOSCOW · "
+          text="HERITAGE · SCIENCE · CRAFT · MOSCOW · BEAUTY · WELLNESS · "
           speed={50}
           className="text-xl md:text-3xl font-extralight uppercase tracking-[0.3em]"
         />
@@ -59,25 +59,17 @@ export default function About() {
       <section className="py-16 md:py-24 px-6 md:px-16">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-12">
           <div className="md:col-span-5">
-            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Story</span>
+            <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Кто мы</span>
             <h2 className="mt-6 font-extralight tracking-[-0.02em] leading-[1.05] text-3xl md:text-5xl">
-              <SplitText text="Парижское происхождение," />
-              <SplitText text="мировое присутствие." delay={0.15} />
+              <SplitText text="EXTENDESS — это экосистема" />
+              <SplitText text="красоты и здоровья" delay={0.1} />
+              <SplitText text="нового поколения." delay={0.2} />
             </h2>
           </div>
           <div className="md:col-span-7 md:pt-8">
             <FadeIn delay={0.3}>
               <p className="text-base md:text-lg font-light text-black/60 leading-relaxed">
-                Extendess родилась в Париже в 1954 году как камерная мастерская
-                парикмахерского искусства. Сегодня — это сеть из 400 салонов
-                премиум-класса в 47 странах мира, объединённая единым стандартом:
-                бескомпромиссное качество и безграничное внимание к деталям.
-              </p>
-              <p className="mt-6 text-base md:text-lg font-light text-black/60 leading-relaxed">
-                Каждый специалист сети проходит стажировку в школе Extendess
-                в Париже. Каждая процедура — авторская методика, выверенная
-                десятилетиями практики и подкреплённая научными исследованиями
-                нашей собственной лаборатории.
+                Мы сохранили команду, стандарты и экспертизу, которым доверяли годами, и расширили возможности бренда, объединив профессиональный beauty-сервис, эстетическую медицину и современные технологии.
               </p>
             </FadeIn>
           </div>
