@@ -68,32 +68,16 @@ export function Footer() {
       {/* Bottom: Nav + Social + Contacts */}
       <div className="container mx-auto px-6 py-12">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-10">
-          {/* Гостям */}
-          <div>
-            <h4 className="text-xs font-normal text-white/90 mb-5">Гостям</h4>
-            <ul className="flex flex-col gap-3">
+          {/* Nav links */}
+          <div className="col-span-2">
+            <h4 className="text-xs font-normal text-white/90 mb-5">Навигация</h4>
+            <ul className="grid grid-cols-2 gap-x-10 gap-y-3">
               {[
-                { label: "О салонах", href: "/salons" },
+                { label: "О бренде", href: "/about" },
                 { label: "Услуги", href: "/services" },
-                { label: "Специалисты", href: "/team" },
-                { label: "Подарочные сертификаты", href: "/contacts" },
-              ].map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href} className="text-xs font-light text-white/50 hover:text-white transition-colors">
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* События */}
-          <div>
-            <h4 className="text-xs font-normal text-white/90 mb-5">События</h4>
-            <ul className="flex flex-col gap-3">
-              {[
-                { label: "Спецпредложения", href: "/services" },
-                { label: "Новости", href: "/about" },
+                { label: "Прайс", href: "/price" },
+                { label: "Салоны", href: "/salons" },
+                { label: "Контакты", href: "/contacts" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="text-xs font-light text-white/50 hover:text-white transition-colors">
