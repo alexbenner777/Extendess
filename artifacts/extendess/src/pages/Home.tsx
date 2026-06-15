@@ -252,11 +252,11 @@ function StickyServices() {
     offset: ["start start", "end end"],
   });
 
-  // Cube rotates on Y: 0° → −300° (5 steps × 60°) over full scroll
+  // Cube rotates on Y: −30° → −330° (starts angled so sides are visible)
   const rotateY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, -(FACE_ANGLE * (FACE_COUNT - 1))]
+    [-30, -(FACE_ANGLE * (FACE_COUNT - 1)) - 30]
   );
 
   // Track which face is front-facing
