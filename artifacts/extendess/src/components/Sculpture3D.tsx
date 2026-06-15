@@ -74,7 +74,7 @@ function FallbackImage() {
         width: "100%",
         maxHeight: "65vh",
         objectFit: "contain",
-        filter: "drop-shadow(0 40px 60px rgba(0,0,0,0.13))",
+        filter: "drop-shadow(0 65px 60px rgba(0,0,0,0.13))",
       }}
     />
   );
@@ -137,7 +137,7 @@ export function Sculpture3D() {
             <CoralModel />
 
             <ContactShadows
-              position={[0, -0.8, 0]}
+              position={[0, -1.2, 0]}
               opacity={0.18}
               scale={2}
               blur={2.5}
