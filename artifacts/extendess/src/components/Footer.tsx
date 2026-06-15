@@ -106,8 +106,6 @@ export function Footer() {
           {/* Контакты */}
           <div>
             <h4 className="text-[9px] uppercase tracking-widest text-white/40 mb-5">Контакты</h4>
-            <p className="text-[10px] text-white/40 font-light mb-1">Единый номер для записи</p>
-            <p className="text-2xl font-light text-white tracking-tight mb-2">8 (945) 000-00-00</p>
             <p className="text-[10px] text-white/40 font-light">Ежедневно 10:00–22:00</p>
           </div>
         </div>
