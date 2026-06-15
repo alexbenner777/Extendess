@@ -8,7 +8,7 @@ import {
   FadeIn,
 } from "@/components/ui-extras/animations";
 import heroImg from "@assets/images/hero.png";
-import heroPhoto from "@assets/hero-woman.png";
+import heroPhoto from "../assets/hero-woman.png";
 import highlightImg from "@assets/4e8fdef0-e4c3-4847-8626-0552c762eca2_1781269893220.png";
 import service1 from "@assets/images/service-1.png";
 import service2 from "@assets/images/service-2.png";
