@@ -61,8 +61,8 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
   const absOffset = Math.abs(offset);
 
   const rotateY = offset * 38;
-  const translateX = Math.sign(offset) * (absOffset === 1 ? 260 : absOffset === 2 ? 450 : 0);
-  const scale = absOffset === 0 ? 1 : absOffset === 1 ? 0.80 : 0.64;
+  const translateX = Math.sign(offset) * (absOffset === 1 ? 420 : absOffset === 2 ? 840 : 0);
+  const scale = 1;
   const zIndex = absOffset === 0 ? 10 : absOffset === 1 ? 6 : 2;
   const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.88 : absOffset === 2 ? 0.65 : 0;
   const blur = 0;
