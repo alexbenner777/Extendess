@@ -74,7 +74,7 @@ function FallbackImage() {
         width: "100%",
         maxHeight: "65vh",
         objectFit: "contain",
-        filter: "drop-shadow(0 65px 60px rgba(0,0,0,0.13))",
+        filter: "drop-shadow(0 20px 28px rgba(0,0,0,0.09))",
       }}
     />
   );

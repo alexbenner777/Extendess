@@ -179,13 +179,6 @@ function BrandEvolution() {
           Эволюция совершенства
         </motion.p>
 
-        {/* Progress bar */}
-        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-white/[0.07] z-10">
-          <motion.div
-            className="h-full bg-black/20 origin-left"
-            style={{ scaleX: scrollYProgress }}
-          />
-        </div>
       </div>
     </section>
   );
