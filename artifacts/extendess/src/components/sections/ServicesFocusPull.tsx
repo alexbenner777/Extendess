@@ -37,6 +37,7 @@ const allServices = [
     desc: "Комплексные программы молодости и долголетия. Индивидуальные протоколы, разработанные врачами высшей категории.",
     img: svcMedicine,
     href: "/services#service-04",
+    imgPosition: "center center",
   },
   {
     num: "05",
@@ -134,7 +135,7 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
             width: "100%",
             height: "100%",
             objectFit: "cover",
-            objectPosition: "center top",
+            objectPosition: svc.imgPosition ?? "center top",
             display: "block",
           }}
         />
