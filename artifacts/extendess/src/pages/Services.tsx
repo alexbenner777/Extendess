@@ -7,12 +7,12 @@ import {
   FadeIn,
   Marquee,
 } from "@/components/ui-extras/animations";
-import svcMakeup from "../assets/svc-makeup-nobg.png";
-import svcHair from "../assets/svc-hair-nobg.png";
-import svcNails from "../assets/svc-nails-nobg.png";
-import svcMedicine from "../assets/svc-medicine-nobg.png";
-import svcCosmetology from "../assets/svc-cosmetology-nobg.png";
-import svcSpa from "../assets/svc-spa-nobg.png";
+import svcMakeup from "../assets/svc-makeup-new.png";
+import svcHair from "../assets/svc-hair-new.png";
+import svcNails from "../assets/svc-nails-new.png";
+import svcMedicine from "../assets/svc-medicine-new.png";
+import svcCosmetology from "../assets/svc-cosmetology-new.jpg";
+import svcSpa from "../assets/svc-spa-new.png";
 
 function TiltImage({ src, alt }: { src: string; alt: string }) {
   const ref = useRef<HTMLDivElement>(null);
