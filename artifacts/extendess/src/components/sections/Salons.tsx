@@ -220,22 +220,22 @@ export function Salons() {
                   </div>
 
                   {/* Name */}
-                  <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-2xl md:text-3xl lg:text-4xl text-black mb-6">
+                  <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-3xl md:text-4xl lg:text-5xl text-black mb-6">
                     {s.name}
                   </h2>
 
                   {/* Details */}
                   <div className="flex flex-col gap-2.5">
-                    <div className="flex items-start gap-2.5 text-xs text-black/50 font-light">
-                      <MapPin size={12} className="mt-0.5 shrink-0 text-black/30" />
+                    <div className="flex items-start gap-2.5 text-sm text-black/50 font-light">
+                      <MapPin size={14} className="mt-0.5 shrink-0 text-black/30" />
                       <span>{s.address}</span>
                     </div>
-                    <div className="flex items-center gap-2.5 text-xs text-black/45 font-light">
-                      <Clock size={12} className="shrink-0 text-black/30" />
+                    <div className="flex items-center gap-2.5 text-sm text-black/45 font-light">
+                      <Clock size={14} className="shrink-0 text-black/30" />
                       <span>{s.hours}</span>
                     </div>
-                    <div className="flex items-center gap-2.5 text-xs text-black/45 font-light">
-                      <Phone size={12} className="shrink-0 text-black/30" />
+                    <div className="flex items-center gap-2.5 text-sm text-black/45 font-light">
+                      <Phone size={14} className="shrink-0 text-black/30" />
                       <a href={`tel:${s.phone}`} className="hover:text-black transition-colors">
                         {s.phone}
                       </a>
