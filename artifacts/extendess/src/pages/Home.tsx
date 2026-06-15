@@ -14,6 +14,8 @@ import service1 from "@assets/images/service-1.png";
 import service2 from "@assets/images/service-2.png";
 import service3 from "@assets/images/service-3.png";
 import service4 from "@assets/images/service-4.png";
+import estetica3img from "@assets/1_1781529978995.png";
+import heleoProImg from "@assets/2_1781529978990.png";
 import dessangeLogo from "@assets/logo_1781078340581.svg";
 import extendessLogo from "@assets/logo-big_1776857562328.png";
 import philosophyImg from "@assets/112_1781267429252.png";
@@ -473,19 +475,19 @@ const innovations = [
     link: "/services",
   },
   {
-    tag: "— Косметология",
-    title: "Биоревитализация",
+    tag: "— Инновации в эстетической медицине",
+    title: "Estetica 3.0",
     description:
-      "Глубокое увлажнение и восстановление кожи с помощью инъекций гиалуроновой кислоты. Натуральный результат, который виден с первого сеанса.",
-    img: service1,
+      "Многофункциональная лазерная платформа нового поколения для комплексного омоложения и эстетической коррекции кожи. Объединяет IPL, диодный, неодимовый, эрбиевый и CO₂-лазеры — омоложение, эпиляция, сосуды, пигментация, акне и удаление татуировок.",
+    img: estetica3img,
     link: "/services",
   },
   {
-    tag: "— Wellness",
-    title: "Превентивная\nмедицина",
+    tag: "— Инновации в эстетической медицине",
+    title: "Heleo PRO LED",
     description:
-      "Индивидуальные программы оздоровления, разработанные с учётом вашего образа жизни. Комплексный подход к красоте и долголетию.",
-    img: service2,
+      "Современная LED-фототерапия нового поколения. Эффективна при акне, постакне, розацеа и гиперпигментации. Подходит для любого типа кожи круглый год — стимулирует регенерацию и активирует восстановительные процессы без агрессивного воздействия.",
+    img: heleoProImg,
     link: "/services",
   },
 ];
