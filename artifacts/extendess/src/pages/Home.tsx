@@ -159,7 +159,7 @@ function BrandEvolution() {
             src={extendessIconLogo}
             alt="Extendess"
             className="w-36 object-contain"
-            style={{ filter: "brightness(0)" }}
+            style={{ filter: "brightness(0)", opacity: 0.70 }}
           />
         </motion.div>
 
