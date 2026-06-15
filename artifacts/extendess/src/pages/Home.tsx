@@ -94,17 +94,18 @@ function BrandEvolution() {
         >
           {/* Dessange heritage block (fades in then out) */}
           <motion.div
-            className="absolute top-[18%] flex flex-col items-center gap-4 pointer-events-none"
+            className="absolute top-[17%] left-0 right-0 flex flex-col items-center gap-3 pointer-events-none"
             style={{ opacity: yearOpacity }}
           >
             <img
               src={dessangeLogo}
               alt="Dessange"
-              className="h-6 opacity-65"
-              style={{ filter: "invert(1)" }}
+              className="w-36 object-contain"
+              style={{ filter: "invert(1)", opacity: 0.70 }}
             />
-            <p className="text-[9px] uppercase tracking-[0.65em] text-white/45 font-light text-center">
-              · Французская школа красоты ·<br />· 30 лет в России ·
+            <p className="uppercase text-white/25 font-light text-center"
+               style={{ fontSize: "clamp(0.7rem, 1.2vw, 1rem)", letterSpacing: "0.55em" }}>
+              · Французская школа красоты · 30 лет в России ·
             </p>
           </motion.div>
 
