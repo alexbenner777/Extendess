@@ -11,6 +11,10 @@ export function Navbar() {
   const { scrollY } = useScroll();
   const [location] = useLocation();
 
+  const lightBgPages = ["/privacy", "/price", "/contacts", "/about", "/team", "/gallery", "/services"];
+  const forceDark = lightBgPages.includes(location);
+  const dark = isScrolled || forceDark;
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
   });
@@ -23,18 +27,18 @@ export function Navbar() {
     { name: "Контакты", href: "/contacts" },
   ];
 
-  const textColor = isScrolled
+  const textColor = dark
     ? "text-black/70 hover:text-black"
     : "text-white/80 hover:text-white";
-  const activeColor = isScrolled ? "text-black" : "text-white";
-  const lineColor = isScrolled ? "bg-black" : "bg-white";
-  const logoFilter = isScrolled ? "brightness(0)" : "brightness(0) invert(1)";
+  const activeColor = dark ? "text-black" : "text-white";
+  const lineColor = dark ? "bg-black" : "bg-white";
+  const logoFilter = dark ? "brightness(0)" : "brightness(0) invert(1)";
 
   return (
     <motion.header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b border-transparent",
-        isScrolled
+        dark
           ? "bg-[#F1EBE3] backdrop-blur-2xl py-4 border-black/5 shadow-sm"
           : "bg-transparent py-6"
       )}
@@ -77,7 +81,7 @@ export function Navbar() {
             href="/contacts"
             className={cn(
               "px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-colors rounded",
-              isScrolled
+              dark
                 ? "bg-black text-white hover:bg-black/80"
                 : "bg-white text-black hover:bg-white/90"
             )}
