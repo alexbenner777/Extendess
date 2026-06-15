@@ -93,20 +93,12 @@ export function Footer() {
             <h4 className="text-[9px] uppercase tracking-widest text-white/40 mb-5">Социальные сети</h4>
             <div className="flex items-center gap-3">
               <a
-                href="https://t.me/extendess"
+                href="https://t.me/dessange_ru"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/50 transition-all"
               >
                 <TelegramIcon />
-              </a>
-              <a
-                href="https://vk.com/extendess"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:text-white hover:border-white/50 transition-all"
-              >
-                <VkIcon />
               </a>
             </div>
           </div>
