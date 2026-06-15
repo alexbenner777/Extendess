@@ -505,16 +505,16 @@ export default function SalonsPage() {
             <input
               type="text"
               placeholder="Имя"
-              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72"
+              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72 rounded-lg"
             />
             <input
               type="tel"
               placeholder="Телефон"
-              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72"
+              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72 rounded-lg"
             />
             <button
               type="submit"
-              className="px-10 py-3.5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors"
+              className="px-10 py-3.5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors rounded-lg"
             >
               Записаться
             </button>

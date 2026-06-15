@@ -39,7 +39,7 @@ export function Footer() {
           {/* Subscribe block */}
           <div className="flex flex-col gap-4 w-full md:max-w-md">
             <p className="text-sm font-light text-white/80">Подпишитесь на рассылку</p>
-            <div className="flex items-center gap-0">
+            <div className="flex items-center gap-0 rounded-lg overflow-hidden">
               <input
                 type="email"
                 value={email}
