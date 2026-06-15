@@ -236,11 +236,25 @@ const allServices = [
   },
 ];
 
+const FAN_ANGLES  = [52,  28,   8,  -8, -28, -52];
+const FAN_SCALE   = [0.80, 0.89, 0.97, 0.97, 0.89, 0.80];
+const FAN_ORIGINS = [
+  "right center",
+  "right center",
+  "center center",
+  "center center",
+  "left center",
+  "left center",
+];
+const CARD_W = 230;
+const CARD_H = 370;
+
 function StickyServices() {
   return (
-    <section className="bg-[#F1EBE3] py-24 md:py-36 px-6 md:px-16">
+    <section className="bg-[#F1EBE3] pt-24 pb-28 md:pt-36 md:pb-36 overflow-hidden">
+
       {/* Header */}
-      <div className="max-w-7xl mx-auto mb-16 flex items-end justify-between border-b border-black/10 pb-8">
+      <div className="max-w-7xl mx-auto mb-20 px-6 md:px-16 flex items-end justify-between border-b border-black/10 pb-8">
         <div>
           <span className="text-[9px] uppercase tracking-[0.5em] text-black/30 block mb-4">— Направления</span>
           <h2 className="font-extralight tracking-[-0.03em] leading-[0.95] text-4xl md:text-5xl lg:text-6xl text-black">
@@ -255,42 +269,87 @@ function StickyServices() {
         </Link>
       </div>
 
-      {/* Grid */}
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 gap-px bg-black/8">
+      {/* ── Fan / accordion spread — desktop ── */}
+      <div className="hidden md:flex justify-center items-end" style={{ perspective: "1300px", perspectiveOrigin: "50% 80%" }}>
         {allServices.map((svc, i) => (
           <motion.div
             key={i}
-            className="bg-[#F1EBE3] group relative overflow-hidden cursor-pointer"
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.7, delay: i * 0.08, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ opacity: 0, rotateY: FAN_ANGLES[i] * 1.6, y: 60 }}
+            whileInView={{ opacity: 1, rotateY: FAN_ANGLES[i], y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 1.1, delay: i * 0.07, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              width: CARD_W,
+              height: CARD_H,
+              flexShrink: 0,
+              marginLeft: i === 0 ? 0 : -38,
+              transformOrigin: FAN_ORIGINS[i],
+              scale: FAN_SCALE[i],
+              zIndex: i < 3 ? i + 1 : 7 - i,
+              borderRadius: 6,
+              overflow: "hidden",
+              background: "#EDE7DF",
+              boxShadow: i === 2 || i === 3
+                ? "0 24px 64px rgba(0,0,0,0.18)"
+                : "0 8px 28px rgba(0,0,0,0.10)",
+              cursor: "pointer",
+            }}
           >
-            <Link href={svc.href}>
-              {/* Image */}
-              <div className="relative overflow-hidden" style={{ aspectRatio: "4/3" }}>
+            <Link href={svc.href} style={{ display: "block", height: "100%" }}>
+              {/* Image — top 54% */}
+              <div style={{ position: "relative", height: "54%", overflow: "hidden" }}>
                 <img
                   src={svc.img}
                   alt={svc.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center top" }}
                 />
-                <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, transparent 60%, rgba(241,235,227,0.9) 100%)" }} />
+                <div style={{
+                  position: "absolute", inset: 0,
+                  background: "linear-gradient(to bottom, transparent 70%, rgba(237,231,223,0.55) 100%)",
+                }} />
               </div>
 
-              {/* Text */}
-              <div className="px-6 py-6 md:px-8 md:py-7">
-                <span className="text-[8px] uppercase tracking-[0.45em] text-black/30 font-light block mb-3">
+              {/* Text — bottom 46% */}
+              <div style={{ padding: "14px 18px 18px", display: "flex", flexDirection: "column", gap: 0 }}>
+                <span style={{ fontSize: 7.5, letterSpacing: "0.44em", color: "rgba(0,0,0,0.32)", textTransform: "uppercase", fontWeight: 300, marginBottom: 7 }}>
                   {svc.num}
                 </span>
-                <h3 className="font-extralight text-xl md:text-2xl leading-[1.15] tracking-[-0.01em] text-black/88 whitespace-pre-line mb-3">
+                <h3 style={{ fontSize: 16, fontWeight: 200, lineHeight: 1.2, letterSpacing: "-0.01em", color: "rgba(0,0,0,0.88)", whiteSpace: "pre-line", marginBottom: 8 }}>
                   {svc.title}
                 </h3>
-                <p className="text-xs font-light text-black/45 leading-relaxed line-clamp-2">
+                <p style={{ fontSize: 9.5, color: "rgba(0,0,0,0.42)", lineHeight: 1.55, fontWeight: 300, display: "-webkit-box", WebkitLineClamp: 3, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                   {svc.desc}
                 </p>
-                <div className="mt-5 flex items-center gap-1.5 text-[9px] uppercase tracking-[0.35em] text-black/35 group-hover:text-black/70 transition-colors duration-300">
-                  Открыть <ArrowUpRight size={10} className="transition-transform duration-300 group-hover:rotate-45" />
+                <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 5, fontSize: 8, letterSpacing: "0.32em", textTransform: "uppercase", color: "rgba(0,0,0,0.32)" }}>
+                  Открыть <ArrowUpRight size={9} />
                 </div>
+              </div>
+            </Link>
+          </motion.div>
+        ))}
+      </div>
+
+      {/* ── Mobile: 2-col grid ── */}
+      <div className="md:hidden grid grid-cols-2 gap-px bg-black/8 mx-4">
+        {allServices.map((svc, i) => (
+          <motion.div
+            key={i}
+            className="bg-[#EDE7DF] overflow-hidden"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: i * 0.06 }}
+            style={{ borderRadius: 4 }}
+          >
+            <Link href={svc.href} style={{ display: "block" }}>
+              <div style={{ aspectRatio: "4/3", overflow: "hidden", position: "relative" }}>
+                <img src={svc.img} alt={svc.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to bottom, transparent 72%, rgba(237,231,223,0.55) 100%)" }} />
+              </div>
+              <div style={{ padding: "12px 14px 14px" }}>
+                <span style={{ fontSize: 7, letterSpacing: "0.4em", color: "rgba(0,0,0,0.3)", textTransform: "uppercase", display: "block", marginBottom: 5 }}>{svc.num}</span>
+                <h3 style={{ fontSize: 14, fontWeight: 200, lineHeight: 1.2, whiteSpace: "pre-line", color: "rgba(0,0,0,0.88)", marginBottom: 5 }}>{svc.title}</h3>
+                <p style={{ fontSize: 9, color: "rgba(0,0,0,0.42)", lineHeight: 1.5, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{svc.desc}</p>
               </div>
             </Link>
           </motion.div>
@@ -299,10 +358,7 @@ function StickyServices() {
 
       {/* Mobile CTA */}
       <div className="mt-10 flex justify-center md:hidden">
-        <Link
-          href="/services"
-          className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-1"
-        >
+        <Link href="/services" className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.38em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-1">
           Все услуги <ArrowUpRight size={11} />
         </Link>
       </div>
@@ -572,7 +628,7 @@ export default function Home() {
       <BrandEvolution />
 
       {/* PHILOSOPHY */}
-      <section className="py-8 md:py-14 px-6 md:px-16 md:-mt-24">
+      <section className="py-16 md:py-28 px-6 md:px-16 md:-mt-24">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
@@ -590,7 +646,7 @@ export default function Home() {
           </div>
 
           {/* Right: text column — sticky so it stays centered while image scrolls */}
-          <div className="md:col-span-7 md:pt-16">
+          <div className="md:col-span-7 md:pt-28">
             <h2 className="font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2rem,5vw,5rem)]">
               <SplitText text="EXTENDESS:" />
               <SplitText text="новая философия." delay={0.1} />
