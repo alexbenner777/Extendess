@@ -124,7 +124,7 @@ export default function Contacts() {
             <FadeIn>
               <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">— Запись · Контакты</span>
             </FadeIn>
-            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
+            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(2.8rem,9vw,9rem)]">
               <SplitText text="Контакты" />
             </h1>
             <FadeIn delay={0.4}>
