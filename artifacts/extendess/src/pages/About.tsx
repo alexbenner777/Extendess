@@ -37,12 +37,8 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/35" />
         <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
           <div className="max-w-7xl mx-auto w-full">
-            <FadeIn>
-              <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">— О нас</span>
-            </FadeIn>
-            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
-              <SplitText text="Extendess — новое" />
-              <SplitText text="поколение заботы о себе" delay={0.2} />
+            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(2rem,5vw,5rem)]">
+              <SplitText text="Extendess — новое поколение заботы о себе" />
             </h1>
           </div>
         </div>
