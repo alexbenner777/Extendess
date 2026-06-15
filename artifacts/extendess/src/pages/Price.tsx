@@ -61,7 +61,7 @@ const priceCategories: PriceCategory[] = [
     id: "hair",
     num: "02",
     title: "Парикмахерский зал",
-    subtitle: "Стрижки · Укладки · Уходы",
+    subtitle: "Стрижки · Укладки · Колористика · Уходы · Наращивание",
     items: [
       { name: "УСЛУГИ ДЛЯ ЖЕНЩИН · БАЗОВЫЙ МАСТЕР", price: "", isHeader: true },
       { name: "Укладка", price: "3 600 — 3 900 ₽", note: "60 мин" },
@@ -145,14 +145,7 @@ const priceCategories: PriceCategory[] = [
       { name: "Укладка", price: "2 100 — 2 500 ₽" },
       { name: "Стрижка для мужчин", price: "1 600 ₽" },
       { name: "Химическая завивка", price: "4 500 — 6 400 ₽" },
-    ],
-  },
-  {
-    id: "color",
-    num: "03",
-    title: "Колористические услуги",
-    subtitle: "Мелирование · Окрашивание · Завивка",
-    items: [
+      // ─── КОЛОРИСТИЧЕСКИЕ УСЛУГИ ───────────────────────────────────────
       { name: "МЕЛИРОВАНИЕ · БАЗОВЫЙ МАСТЕР", price: "", isHeader: true },
       { name: "Флэш (выделение нескольких прядей)", price: "4 100 — 4 600 ₽", note: "60 мин" },
       { name: "Санлайт (солнечный эффект)", price: "5 500 — 6 600 ₽", note: "90 мин" },
@@ -216,14 +209,7 @@ const priceCategories: PriceCategory[] = [
       { name: "Magic", price: "16 100 — 20 000 ₽", note: "120 мин" },
       { name: "Gold", price: "21 000 — 26 100 ₽", note: "120 мин" },
       { name: "Royal", price: "26 100 — 32 400 ₽", note: "180 мин" },
-    ],
-  },
-  {
-    id: "haircare",
-    num: "04",
-    title: "Уходы для волос · Наращивание",
-    subtitle: "Восстановление и объём",
-    items: [
+      // ─── УХОДЫ ДЛЯ ВОЛОС · НАРАЩИВАНИЕ ──────────────────────────────
       { name: "L'ORÉAL PROFESSIONNEL", price: "", isHeader: true },
       { name: "Уход L'Oréal Smartbond", price: "3 300 — 5 200 ₽" },
       { name: "SISLEY", price: "", isHeader: true },
@@ -272,7 +258,7 @@ const priceCategories: PriceCategory[] = [
   },
   {
     id: "nails",
-    num: "05",
+    num: "03",
     title: "Ногтевой сервис",
     subtitle: "Маникюр · Педикюр · Наращивание",
     items: [
@@ -324,11 +310,12 @@ const priceCategories: PriceCategory[] = [
     ],
   },
   {
-    id: "epilation",
-    num: "06",
-    title: "Эпиляция и депиляция",
-    subtitle: "Лазерная · Фото · Восковая",
+    id: "cosmo",
+    num: "04",
+    title: "Аппаратная косметология",
+    subtitle: "Эпиляция · Уходы · Аппаратные процедуры · Консультации",
     items: [
+      // ─── ЭПИЛЯЦИЯ И ДЕПИЛЯЦИЯ ─────────────────────────────────────────
       { name: "ДЕПИЛЯЦИЯ · ЖЕНЩИНЫ", price: "", isHeader: true },
       { name: "Депиляция над губой", price: "1 800 ₽", note: "15 мин" },
       { name: "Депиляция подбородка", price: "1 800 ₽", note: "15 мин" },
@@ -381,14 +368,7 @@ const priceCategories: PriceCategory[] = [
       { name: "Эпиляция рук (полностью)", price: "19 000 ₽", note: "40 мин" },
       { name: "Эпиляция «бразильское бикини»", price: "15 000 ₽", note: "40 мин" },
       { name: "Эпиляция бикини", price: "11 500 ₽", note: "30 мин" },
-    ],
-  },
-  {
-    id: "cosmo",
-    num: "07",
-    title: "Аппаратная косметология",
-    subtitle: "Уходы · Аппаратные процедуры · Консультации",
-    items: [
+      // ─── АППАРАТНАЯ КОСМЕТОЛОГИЯ ─────────────────────────────────────
       { name: "КОНСУЛЬТАЦИИ ВРАЧА", price: "", isHeader: true },
       { name: "Консультация врача по anti-age терапии", price: "6 000 ₽", note: "60 мин" },
       { name: "Консультация врача по косметологии", price: "6 000 ₽", note: "60 мин" },
@@ -477,7 +457,6 @@ const priceCategories: PriceCategory[] = [
       { name: "Лифтинг средней и нижней трети лица", price: "65 000 ₽", note: "75 мин" },
       { name: "Лифтинг век", price: "30 000 ₽", note: "30 мин" },
       { name: "Лифтинг шеи", price: "30 000 ₽", note: "30 мин" },
-      { name: "Лифтинг области подбородка", price: "30 000 ₽", note: "30 мин" },
       { name: "Лифтинг зоны декольте", price: "40 000 ₽", note: "45 мин" },
       { name: "Живот (от 500 до 800 линий)", price: "55 000 ₽", note: "60 мин" },
       { name: "Живот (от 800 до 1200 линий)", price: "80 000 ₽", note: "90 мин" },
@@ -552,7 +531,7 @@ const priceCategories: PriceCategory[] = [
   },
   {
     id: "injection",
-    num: "08",
+    num: "05",
     title: "Эстетическая медицина",
     subtitle: "Инъекционные процедуры",
     items: [
@@ -654,7 +633,7 @@ const priceCategories: PriceCategory[] = [
   },
   {
     id: "spa",
-    num: "09",
+    num: "06",
     title: "Массаж и СПА",
     subtitle: "Ритуалы восстановления",
     items: [
@@ -854,7 +833,7 @@ export default function Price() {
           <div className="max-w-7xl mx-auto w-full">
             <FadeIn>
               <span className="text-[10px] uppercase tracking-[0.4em] text-white/60">
-                — Прайс-лист · 9 направлений
+                — Прайс-лист · 6 направлений
               </span>
             </FadeIn>
             <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.85] text-[clamp(3.5rem,12vw,12rem)]">
