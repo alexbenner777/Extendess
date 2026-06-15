@@ -114,7 +114,7 @@ export function Footer() {
         <div className="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3 text-[9px] text-white/25 uppercase tracking-widest">
           <p>© {new Date().getFullYear()} Extendess. Все права защищены.</p>
           <div className="flex gap-4">
-            <Link href="/contacts" className="hover:text-white/50 transition-colors">Политика конфиденциальности</Link>
+            <Link href="/privacy" className="hover:text-white/50 transition-colors">Политика конфиденциальности</Link>
             <Link href="/contacts" className="hover:text-white/50 transition-colors">Лицензии</Link>
           </div>
         </div>

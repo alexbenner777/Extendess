@@ -11,6 +11,7 @@ import Gallery from "@/pages/Gallery";
 import Contacts from "@/pages/Contacts";
 import Salons from "@/pages/Salons";
 import Price from "@/pages/Price";
+import Privacy from "@/pages/Privacy";
 import { Layout } from "@/components/Layout";
 import { YClientsProvider } from "@/components/YClientsWidget";
 import { useEffect } from "react";
@@ -46,6 +47,7 @@ function Router() {
         <Route path="/contacts" component={Contacts} />
         <Route path="/salons" component={Salons} />
         <Route path="/price" component={Price} />
+        <Route path="/privacy" component={Privacy} />
         <Route component={NotFound} />
       </Switch>
     </>
