@@ -60,21 +60,17 @@ const FACE_H = 530;
 function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: number }) {
   const absOffset = Math.abs(offset);
 
-  const rotateY = offset * 38;
   const translateX = Math.sign(offset) * (absOffset === 1 ? 420 : absOffset === 2 ? 840 : 0);
-  const scale = 1;
+  const translateZ = absOffset === 0 ? 0 : absOffset === 1 ? -120 : -240;
   const zIndex = absOffset === 0 ? 10 : absOffset === 1 ? 6 : 2;
-  const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.88 : absOffset === 2 ? 0.65 : 0;
-  const blur = 0;
+  const opacity = absOffset === 0 ? 1 : absOffset === 1 ? 0.85 : absOffset === 2 ? 0.60 : 0;
 
   return (
     <motion.div
       animate={{
-        rotateY,
         x: translateX,
-        scale,
+        z: translateZ,
         opacity,
-        filter: `blur(${blur}px)`,
         zIndex,
       }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
@@ -264,11 +260,12 @@ export function Services() {
         {/* 3D perspective scene */}
         <div
           style={{
-            perspective: "1100px",
+            perspective: "1200px",
             perspectiveOrigin: "50% 48%",
             position: "absolute",
             inset: 0,
             zIndex: 10,
+            transformStyle: "preserve-3d",
           }}
         >
           {allServices.map((svc, i) => {
@@ -283,7 +280,7 @@ export function Services() {
                   if (offset === -1) prev();
                   else if (offset === 1) next();
                 }}
-                style={{ position: "absolute", inset: 0 }}
+                style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}
               >
                 <ServiceCard svc={svc} offset={offset} />
               </div>
