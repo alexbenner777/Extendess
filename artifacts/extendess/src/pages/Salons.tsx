@@ -24,6 +24,7 @@ const salons = [
     tags: ["Флагман", "Медицина", "Свадьба"],
     rating: "4.9",
     reviews: 312,
+    bookingUrl: "https://n522032.yclients.com/",
   },
   {
     id: 2,
@@ -44,6 +45,7 @@ const salons = [
     tags: ["Косметология", "Волосы"],
     rating: "4.8",
     reviews: 218,
+    bookingUrl: "https://n522035.yclients.com/",
   },
   {
     id: 3,
@@ -64,6 +66,7 @@ const salons = [
     tags: ["SPA", "Ранее открытие"],
     rating: "4.8",
     reviews: 196,
+    bookingUrl: "https://n522037.yclients.com/",
   },
   {
     id: 4,
@@ -84,6 +87,7 @@ const salons = [
     tags: ["VIP", "Флагман", "Загород"],
     rating: "5.0",
     reviews: 147,
+    bookingUrl: "https://n522030.yclients.com/",
   },
   {
     id: 5,
@@ -104,6 +108,7 @@ const salons = [
     tags: ["Косметология", "Ногти"],
     rating: "4.7",
     reviews: 183,
+    bookingUrl: "https://n504940.yclients.com/",
   },
   {
     id: 6,
@@ -124,6 +129,7 @@ const salons = [
     tags: ["Boutique", "Волосы", "Макияж"],
     rating: "4.9",
     reviews: 164,
+    bookingUrl: "https://n522038.yclients.com/",
   },
 ];
 
@@ -356,12 +362,14 @@ export default function SalonsPage() {
                       </div>
                     </div>
 
-                    <Link
-                      href="/contacts"
+                    <a
+                      href={s.bookingUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="mt-6 inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-6 py-4 hover:bg-black/80 transition-colors self-start rounded"
                     >
                       Записаться в этот салон
-                    </Link>
+                    </a>
                   </motion.div>
                 </AnimatePresence>
               </div>
