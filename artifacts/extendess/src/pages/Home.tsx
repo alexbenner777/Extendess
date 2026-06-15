@@ -21,7 +21,6 @@ import extendessLogo from "@assets/logo-big_1776857562328.png";
 import philosophyImg from "@assets/112_1781267429252.png";
 import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
-import { Reviews } from "@/components/sections/Reviews";
 import { FAQSection } from "@/components/sections/FAQ";
 import { Services as ServicesFocusPull } from "@/components/sections/ServicesFocusPull";
 import {
@@ -814,9 +813,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* REVIEWS */}
-      <Reviews />
 
       {/* SALONS + MAP */}
       <Salons />
