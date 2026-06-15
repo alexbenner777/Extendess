@@ -498,12 +498,27 @@ export default function SalonsPage() {
               для подтверждения визита.
             </p>
           </div>
-          <Link
-            href="/contacts"
-            className="shrink-0 px-10 py-5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors"
+          <form
+            className="shrink-0 flex flex-col gap-3 w-full md:w-auto"
+            onSubmit={(e) => e.preventDefault()}
           >
-            Записаться
-          </Link>
+            <input
+              type="text"
+              placeholder="Имя"
+              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72"
+            />
+            <input
+              type="tel"
+              placeholder="Телефон"
+              className="bg-white/10 border border-white/20 text-white placeholder-white/30 text-sm font-light px-5 py-3.5 outline-none focus:border-white/50 transition-colors w-full md:w-72"
+            />
+            <button
+              type="submit"
+              className="px-10 py-3.5 bg-white text-black text-xs font-semibold uppercase tracking-widest hover:bg-white/90 transition-colors"
+            >
+              Записаться
+            </button>
+          </form>
         </div>
       </section>
     </div>
