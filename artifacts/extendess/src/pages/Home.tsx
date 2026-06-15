@@ -158,7 +158,7 @@ function BrandEvolution() {
           <img
             src={extendessLogo}
             alt="Extendess"
-            className="h-20"
+            className="h-32"
             style={{ filter: "brightness(0)" }}
           />
         </motion.div>
