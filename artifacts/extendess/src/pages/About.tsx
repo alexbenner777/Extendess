@@ -77,9 +77,10 @@ export default function About() {
           <div className="md:col-span-5">
             <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Кто мы</span>
             <h2 className="mt-6 font-extralight tracking-[-0.02em] leading-[1.05] text-3xl md:text-5xl">
-              <SplitText text="EXTENDESS — это экосистема" />
-              <SplitText text="красоты и здоровья" delay={0.1} />
-              <SplitText text="нового поколения." delay={0.2} />
+              <SplitText text="EXTENDESS —" />
+              <SplitText text="экосистема красоты" delay={0.1} />
+              <SplitText text="и здоровья нового" delay={0.2} />
+              <SplitText text="поколения." delay={0.3} />
             </h2>
           </div>
           <div className="md:col-span-7 md:pt-8">
