@@ -636,7 +636,7 @@ export default function Home() {
             <img
               src={heroPhoto}
               alt=""
-              className="absolute inset-0 h-full w-full object-cover"
+              className="absolute inset-0 h-full w-full object-cover object-[30%_center] md:object-center"
               style={{ opacity: 0.85 }}
             />
           </motion.div>
