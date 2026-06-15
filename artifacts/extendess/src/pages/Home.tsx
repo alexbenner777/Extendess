@@ -588,12 +588,6 @@ function InnovationsCarousel() {
               <p className="mt-10 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
                 {item.description}
               </p>
-              <Link
-                href={item.link}
-                className="mt-10 inline-flex items-center gap-3 border-b border-black pb-2 text-xs uppercase tracking-[0.3em] hover:gap-5 transition-all"
-              >
-                Подробнее <ArrowUpRight size={14} />
-              </Link>
             </motion.div>
           </AnimatePresence>
         </div>
