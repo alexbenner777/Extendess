@@ -57,7 +57,7 @@ export default function About() {
         <div className="absolute inset-0 bg-gradient-to-b from-black/5 to-black/35" />
         <div className="relative z-10 h-full flex flex-col justify-end px-6 md:px-16 pb-20">
           <div className="max-w-7xl mx-auto w-full">
-            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(2rem,5vw,5rem)]">
+            <h1 className="mt-6 font-extralight tracking-[-0.04em] leading-[0.9] text-[clamp(2.5rem,7vw,7rem)]">
               <SplitText text="Extendess — новое поколение заботы о себе" />
             </h1>
           </div>
