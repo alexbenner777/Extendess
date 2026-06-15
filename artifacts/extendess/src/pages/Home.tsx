@@ -491,106 +491,109 @@ const innovations = [
   },
 ];
 
-function InnovationsCarousel() {
-  const [current, setCurrent] = useState(0);
-  const [direction, setDirection] = useState(1);
+function InnovationCounter({ index, total, progress }: { index: number; total: number; progress: import("framer-motion").MotionValue<number> }) {
+  const start = index / total;
+  const end = (index + 1) / total;
+  const mid = (start + end) / 2;
+  const opacity = useTransform(progress, [start, mid - 0.05, mid + 0.05, end], [0, 1, 1, 0]);
+  return (
+    <motion.p
+      style={{ opacity }}
+      className="absolute top-9 right-10 md:right-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none z-10"
+    >
+      0{index + 1} / 0{total}
+    </motion.p>
+  );
+}
 
-  const go = (next: number) => {
-    setDirection(next > current ? 1 : -1);
-    setCurrent(next);
-  };
-  const prev = () => go((current - 1 + innovations.length) % innovations.length);
-  const next = () => go((current + 1) % innovations.length);
+function InnovationPanel({ item, index, progress }: { item: typeof innovations[0]; index: number; progress: import("framer-motion").MotionValue<number> }) {
+  const start = index / innovations.length;
+  const end = (index + 1) / innovations.length;
+  const mid = (start + end) / 2;
 
-  const item = innovations[current];
-
-  const textVariants = {
-    enter: (d: number) => ({ opacity: 0, y: d * 24 }),
-    center: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-    exit: (d: number) => ({ opacity: 0, y: d * -16, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }),
-  };
-
-  const imgVariants = {
-    enter: (d: number) => ({ opacity: 0, scale: 0.96, x: d * 30 }),
-    center: { opacity: 1, scale: 1, x: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } },
-    exit: (d: number) => ({ opacity: 0, scale: 0.96, x: d * -20, transition: { duration: 0.35, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] } }),
-  };
+  const opacity = useTransform(progress, [start, mid - 0.05, mid + 0.05, end], [0, 1, 1, 0]);
+  const y = useTransform(progress, [start, mid, end], [40, 0, -40]);
+  const imgScale = useTransform(progress, [start, mid], [1.06, 1]);
 
   return (
-    <section className="py-32 md:py-48 px-6 md:px-16 overflow-hidden">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-center">
+    <motion.div
+      style={{ opacity, y }}
+      className="absolute inset-0 flex items-center px-6 md:px-20"
+    >
+      <div className="w-full max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-20 items-center">
 
         {/* Left: image */}
-        <div className="md:col-span-5">
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={imgVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              className="w-full overflow-hidden"
-            >
-              <img
-                src={item.img}
-                alt={item.title}
-                style={{ width: "100%", height: 520, objectFit: "contain", display: "block" }}
-              />
-            </motion.div>
-          </AnimatePresence>
+        <div className="md:col-span-5 flex items-center justify-center">
+          <motion.img
+            src={item.img}
+            alt={item.title}
+            style={{ scale: imgScale }}
+            className="w-full max-h-[70vh] object-contain"
+          />
         </div>
 
-        {/* Right: text column */}
-        <div className="md:col-span-7 md:pt-8">
-
-          {/* Navigation — above text */}
-          <div className="mb-10 flex items-center justify-between w-full">
-            <button
-              onClick={prev}
-              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
-              aria-label="Предыдущий"
+        {/* Right: text */}
+        <div className="md:col-span-7">
+          <div className="flex items-start gap-8 mb-8">
+            <span
+              className="font-extralight text-[clamp(4rem,10vw,9rem)] leading-none text-black/06 select-none"
+              style={{ color: "rgba(26,26,26,0.06)" }}
             >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M9 2L4 7L9 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
-            <div className="flex gap-2 items-center">
-              {innovations.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => go(i)}
-                  className={`h-px transition-all duration-300 ${i === current ? "w-8 bg-black" : "w-4 bg-black/25"}`}
-                  aria-label={`Слайд ${i + 1}`}
-                />
-              ))}
+              0{index + 1}
+            </span>
+            <div className="pt-3">
+              <span className="text-[9px] uppercase tracking-[0.5em] text-black/40 font-light">
+                Инновации
+              </span>
             </div>
-            <button
-              onClick={next}
-              className="w-11 h-11 rounded-full border border-black/20 flex items-center justify-center hover:border-black hover:bg-black hover:text-white transition-all duration-300"
-              aria-label="Следующий"
-            >
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M5 2L10 7L5 12" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg>
-            </button>
           </div>
-
-          <AnimatePresence mode="wait" custom={direction}>
-            <motion.div
-              key={current}
-              custom={direction}
-              variants={textVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-            >
-              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">{item.tag}</span>
-              <h3 className="mt-8 font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2.5rem,5vw,5rem)] whitespace-pre-line">
-                {item.title}
-              </h3>
-              <p className="mt-10 max-w-2xl text-base md:text-lg font-light text-black/60 leading-relaxed">
-                {item.description}
-              </p>
-            </motion.div>
-          </AnimatePresence>
+          <div className="w-8 h-px bg-black/30 mb-8" />
+          <h3 className="font-extralight tracking-[-0.03em] leading-[1.05] text-[clamp(2.8rem,5vw,5.5rem)]">
+            {item.title}
+          </h3>
+          <p className="mt-8 max-w-xl text-base md:text-[1.05rem] font-light text-black/55 leading-relaxed">
+            {item.description}
+          </p>
         </div>
+
+      </div>
+    </motion.div>
+  );
+}
+
+function InnovationsCarousel() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: wrapperRef,
+    offset: ["start start", "end end"],
+  });
+
+  return (
+    <section ref={wrapperRef} style={{ height: `${innovations.length * 100}vh` }} className="relative bg-[#F1EBE3]">
+      <div className="sticky top-0 h-screen overflow-hidden">
+
+        {/* Thin top line */}
+        <div className="absolute top-0 inset-x-0 h-px bg-black/08 z-10">
+          <motion.div
+            className="h-full bg-black/25 origin-left"
+            style={{ scaleX: scrollYProgress }}
+          />
+        </div>
+
+        {/* Section label */}
+        <p className="absolute top-9 left-10 md:left-20 text-[9px] uppercase tracking-[0.55em] text-black/25 font-light select-none z-10">
+          Технологии
+        </p>
+
+        {/* Counter */}
+        {innovations.map((_, i) => (
+          <InnovationCounter key={i} index={i} total={innovations.length} progress={scrollYProgress} />
+        ))}
+
+        {/* Panels */}
+        {innovations.map((item, i) => (
+          <InnovationPanel key={i} item={item} index={i} progress={scrollYProgress} />
+        ))}
 
       </div>
     </section>
