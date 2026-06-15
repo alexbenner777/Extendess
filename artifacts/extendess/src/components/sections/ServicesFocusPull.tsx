@@ -2,12 +2,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useRef, useState, useCallback } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight, ChevronLeft, ChevronRight } from "lucide-react";
-import svcMakeup from "../../assets/svc-makeup-nobg.png";
-import svcHair from "../../assets/svc-hair-nobg.png";
-import svcNails from "../../assets/svc-nails-nobg.png";
-import svcMedicine from "../../assets/svc-medicine-nobg.png";
-import svcCosmetology from "../../assets/svc-cosmetology-nobg.png";
-import svcSpa from "../../assets/svc-spa-nobg.png";
+import svcMakeup from "../../assets/svc-makeup-new.png";
+import svcHair from "../../assets/svc-hair-new.png";
+import svcNails from "../../assets/svc-nails-new.png";
+import svcMedicine from "../../assets/svc-medicine-new.png";
+import svcCosmetology from "../../assets/svc-cosmetology-new.jpg";
+import svcSpa from "../../assets/svc-spa-new.png";
 
 const allServices = [
   {
@@ -44,7 +44,6 @@ const allServices = [
     desc: "Botox, филлеры, биоревитализация и аппаратные методики для сияния и молодости кожи без длительной реабилитации.",
     img: svcCosmetology,
     href: "/services#service-05",
-    imgScale: 0.90,
   },
   {
     num: "06",
@@ -127,10 +126,9 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
 
       <div style={{
         position: "absolute",
-        top: "7%", left: "50%",
-        transform: "translateX(-50%)",
-        width: 320, height: 285,
-        display: "flex", alignItems: "center", justifyContent: "center",
+        top: 0, left: 0, right: 0,
+        height: "62%",
+        overflow: "hidden",
         zIndex: 4,
       }}>
         <img
@@ -139,9 +137,9 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
           style={{
             width: "100%",
             height: "100%",
-            objectFit: "contain",
+            objectFit: "cover",
+            objectPosition: "center top",
             display: "block",
-            transform: svc.imgScale ? `scale(${svc.imgScale})` : undefined,
           }}
         />
       </div>
