@@ -12,6 +12,26 @@ import {
 import heroImg from "@assets/images/hero.png";
 import gallery1 from "@assets/images/gallery-1.png";
 import highlightImg from "@assets/images/highlight.png";
+import { Sculpture3D } from "@/components/Sculpture3D";
+
+const philosophy = [
+  {
+    title: "Системный подход",
+    text: "Мы объединяем эстетику, медицину и уход, создавая персональные решения для комплексной и последовательной работы с внешностью.",
+  },
+  {
+    title: "Прогнозируемый результат",
+    text: "Каждая процедура основана на клиническом опыте и профессиональных протоколах и приводит к результату, соответствующему ожиданиям.",
+  },
+  {
+    title: "Деликатный сервис",
+    text: "В основе нашего подхода — внимание к деталям, уважение к личному пространству и индивидуальным особенностям, и безупречный уровень сервиса без избыточности.",
+  },
+  {
+    title: "Премиальные бренды и технологии",
+    text: "Мы работаем с ведущими мировыми брендами и инновационными методиками, которые доказали свою эффективность и безопасность.",
+  },
+];
 
 const timeline = [
   { year: "1954", title: "Основание", text: "Extendess появляется на мировом рынке как атeлье парикмахерского искусства в Париже." },
@@ -68,6 +88,33 @@ export default function About() {
                 Мы сохранили команду, стандарты и экспертизу, которым доверяли годами, и расширили возможности бренда, объединив профессиональный beauty-сервис, эстетическую медицину и современные технологии.
               </p>
             </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* SCULPTURE + PHILOSOPHY */}
+      <section className="bg-[#F1EBE3] py-0 md:py-8 px-6 md:px-16">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-0 md:gap-16 items-center">
+          {/* 3D sculpture */}
+          <div className="w-full">
+            <Sculpture3D />
+          </div>
+          {/* Philosophy */}
+          <div className="py-16 md:py-0">
+            <FadeIn>
+              <span className="text-[10px] uppercase tracking-[0.4em] text-black/50">— Философия бренда</span>
+            </FadeIn>
+            <StaggerContainer className="mt-10 space-y-0">
+              {philosophy.map((item, i) => (
+                <StaggerItem key={i}>
+                  <div className="border-t border-black/10 py-7">
+                    <h3 className="text-sm uppercase tracking-[0.2em] text-black font-light mb-3">{item.title}</h3>
+                    <p className="text-sm font-light text-black/55 leading-relaxed max-w-md">{item.text}</p>
+                  </div>
+                </StaggerItem>
+              ))}
+              <div className="border-t border-black/10" />
+            </StaggerContainer>
           </div>
         </div>
       </section>
