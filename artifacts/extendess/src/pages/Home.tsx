@@ -17,6 +17,7 @@ import estetica3img from "@assets/dcd49abb-ad13-46bc-b1a7-11c314f669dc_178153047
 import heleoProImg from "@assets/2_1781530470478.png";
 import dessangeLogo from "@assets/logo_1781078340581.svg";
 import extendessLogo from "@assets/logo-big_1776857562328.png";
+import extendessIconLogo from "@assets/111_1781556086499.png";
 import philosophyImg from "@assets/112_1781267429252.png";
 import { Sculpture3D } from "@/components/Sculpture3D";
 import { Salons } from "@/components/sections/Salons";
@@ -148,6 +149,26 @@ function BrandEvolution() {
             background: "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(241,235,227,1) 0%, transparent 70%)",
           }}
         />
+
+        {/* ── Logo icon + subtitle after EXTENDESS lands ── */}
+        <motion.div
+          className="absolute top-[20%] left-0 right-0 flex flex-col items-center gap-3 pointer-events-none"
+          style={{ opacity: logoOpacity, y: logoY }}
+        >
+          <img
+            src={extendessIconLogo}
+            alt="Extendess"
+            className="w-16 object-contain"
+            style={{ filter: "brightness(0)" }}
+          />
+        </motion.div>
+
+        <motion.p
+          className="absolute top-[33%] left-0 right-0 text-center text-black/40 font-light"
+          style={{ opacity: subOpacity, y: subY, fontSize: "clamp(0.75rem, 1.1vw, 1rem)", letterSpacing: "0.08em" }}
+        >
+          Новая глава истории бренда в России
+        </motion.p>
 
         {/* ── Текст 2: "Эволюция совершенства" — bottom ── */}
         <motion.p
