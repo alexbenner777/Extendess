@@ -70,7 +70,7 @@ export function Navbar() {
             src={logoUrl}
             alt="Extendess"
             className="h-12 object-contain transition-all duration-500"
-            style={{ filter: dark ? "brightness(0)" : "brightness(0)" }}
+            style={{ filter: logoFilter }}
           />
         </Link>
 
