@@ -150,27 +150,6 @@ function BrandEvolution() {
           }}
         />
 
-        {/* ── Logo — top ── */}
-        <motion.div
-          className="absolute top-[13%] left-0 right-0 flex justify-center"
-          style={{ opacity: logoOpacity, y: logoY }}
-        >
-          <img
-            src={extendessLogo}
-            alt="Extendess"
-            className="h-32"
-            style={{ filter: "brightness(0)" }}
-          />
-        </motion.div>
-
-        {/* ── Текст 1: "Москва · Новое поколение" — below logo ── */}
-        <motion.p
-          className="absolute top-[30%] left-0 right-0 text-center uppercase text-black/40 font-light tracking-[0.45em]"
-          style={{ opacity: subOpacity, y: subY, fontSize: "clamp(0.7rem, 1.2vw, 1rem)" }}
-        >
-          Новая глава истории бренда в России
-        </motion.p>
-
         {/* ── Текст 2: "Эволюция совершенства" — bottom ── */}
         <motion.p
           className="absolute top-[73%] left-0 right-0 text-center uppercase text-black/25 font-light"
