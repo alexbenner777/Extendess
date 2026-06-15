@@ -10,8 +10,8 @@ import {
   Marquee,
 } from "@/components/ui-extras/animations";
 import heroImg from "@assets/images/hero.png";
-import gallery1 from "@assets/images/gallery-1.png";
-import highlightImg from "@assets/images/highlight.png";
+import gallery1 from "@assets/155b6f86-a664-49c0-97dc-252ab958890e_1781535241675.png";
+import highlightImg from "@assets/1542242c-881e-4261-9339-37edb8540024_1781535241676.png";
 import { Sculpture3D } from "@/components/Sculpture3D";
 
 const philosophy = [
