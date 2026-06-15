@@ -60,7 +60,7 @@ function CoralModel() {
 
   return (
     <group ref={ref}>
-      <primitive object={scene} scale={0.93} dispose={null} />
+      <primitive object={scene} scale={0.75} dispose={null} />
     </group>
   );
 }
