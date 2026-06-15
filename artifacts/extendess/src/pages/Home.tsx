@@ -725,7 +725,7 @@ export default function Home() {
       <BrandEvolution />
 
       {/* PHILOSOPHY */}
-      <section className="py-8 md:py-14 px-6 md:px-16">
+      <section className="py-8 md:py-14 px-6 md:px-16 md:-mt-24">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
 
           {/* Left: animated sculpture */}
