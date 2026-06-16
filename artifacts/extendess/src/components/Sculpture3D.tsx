@@ -137,7 +137,7 @@ export function Sculpture3D() {
             <CoralModel />
 
             <ContactShadows
-              position={[0, -1.6, 0]}
+              position={[0, -0.8, 0]}
               opacity={0.22}
               scale={2.5}
               blur={2.5}
