@@ -11,9 +11,7 @@ export function Navbar() {
   const { scrollY } = useScroll();
   const [location] = useLocation();
 
-  const lightBgPages = ["/privacy", "/price", "/contacts", "/about", "/team", "/gallery", "/services"];
-  const forceDark = lightBgPages.includes(location);
-  const dark = isScrolled || forceDark;
+  const dark = isScrolled;
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
