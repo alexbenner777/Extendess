@@ -391,7 +391,9 @@ function InnovationCounter({ index, total, progress }: { index: number; total: n
   const start = index / total;
   const end = (index + 1) / total;
   const mid = (start + end) / 2;
-  const opacity = useTransform(progress, [start, mid - 0.05, mid + 0.05, end], [0, 1, 1, 0]);
+  const opIn  = index === 0 ? [0, mid + 0.05, end] : [start, mid - 0.05, mid + 0.05, end];
+  const opOut = index === 0 ? [1, 1, 0]            : [0, 1, 1, 0];
+  const opacity = useTransform(progress, opIn, opOut);
   return (
     <motion.p
       style={{ opacity }}
@@ -407,8 +409,11 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
   const end = (index + 1) / innovations.length;
   const mid = (start + end) / 2;
 
-  const opacity = useTransform(progress, [start, mid - 0.05, mid + 0.05, end], [0, 1, 1, 0]);
-  const y = useTransform(progress, [start, mid, end], [40, 0, -40]);
+  const opIn  = index === 0 ? [0, mid + 0.05, end] : [start, mid - 0.05, mid + 0.05, end];
+  const opOut = index === 0 ? [1, 1, 0]            : [0, 1, 1, 0];
+  const opacity = useTransform(progress, opIn, opOut);
+  const yIn  = index === 0 ? [0, mid, end] : [start, mid, end];
+  const y = useTransform(progress, yIn, [0, 0, -40]);
   const imgScale = useTransform(progress, [start, mid], [1.06, 1]);
 
   return (
