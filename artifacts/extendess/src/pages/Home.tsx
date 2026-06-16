@@ -449,7 +449,7 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
           <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2.2rem] mb-3">
             {item.title}
           </h3>
-          <p className="text-[0.82rem] font-light text-black/50 leading-[1.65]">
+          <p className="font-light text-black/50 leading-[1.65]" style={{ fontSize: "13.5px" }}>
             {item.description}
           </p>
         </div>
