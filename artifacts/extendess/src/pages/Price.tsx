@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { ChevronDown, Search, X } from "lucide-react";
 import { SplitText, FadeIn, Marquee } from "@/components/ui-extras/animations";
 import { Link } from "wouter";
+import { useYClients } from "@/components/YClientsWidget";
 
 type PriceItem = {
   name: string;
@@ -796,7 +797,10 @@ function PriceCategory({ cat }: { cat: PriceCategory }) {
   );
 }
 
+const BOOKING_URL = "https://n522032.yclients.com/";
+
 export default function Price() {
+  const { openWidget } = useYClients();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
@@ -946,12 +950,12 @@ export default function Price() {
               именно для вас — с учётом особенностей и пожеланий.
             </p>
           </div>
-          <Link
-            href="/contacts"
+          <button
+            onClick={() => openWidget(BOOKING_URL)}
             className="shrink-0 px-10 py-5 bg-black text-white text-xs font-semibold uppercase tracking-widest hover:bg-black/80 transition-colors"
           >
             Записаться на консультацию
-          </Link>
+          </button>
         </div>
       </section>
     </div>

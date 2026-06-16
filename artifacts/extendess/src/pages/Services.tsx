@@ -2,6 +2,7 @@ import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import { useState, useRef, useCallback } from "react";
 import { Plus, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
+import { useYClients } from "@/components/YClientsWidget";
 import {
   SplitText,
   FadeIn,
@@ -197,8 +198,11 @@ const categories = [
   },
 ];
 
+const BOOKING_URL = "https://n522032.yclients.com/";
+
 function Category({ cat, index }: { cat: typeof categories[number]; index: number }) {
   const [open, setOpen] = useState<number | null>(null);
+  const { openWidget } = useYClients();
   const reverse = index % 2 === 1;
 
   return (
@@ -261,12 +265,12 @@ function Category({ cat, index }: { cat: typeof categories[number]; index: numbe
               >
                 Прайс <ArrowUpRight size={11} />
               </Link>
-              <Link
-                href="/contacts"
+              <button
+                onClick={() => openWidget(BOOKING_URL)}
                 className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black/80 transition-colors duration-300 rounded"
               >
                 Записаться <ArrowUpRight size={11} />
-              </Link>
+              </button>
             </div>
           </div>
         </div>

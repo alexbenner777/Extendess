@@ -4,6 +4,7 @@ import { Link, useLocation } from "wouter";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import logoUrl from "@assets/logo-big_1776857562328.png";
+import { useYClients } from "@/components/YClientsWidget";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +13,8 @@ export function Navbar() {
   const [location] = useLocation();
 
   const dark = isScrolled;
+  const { openWidget } = useYClients();
+  const BOOKING_URL = "https://n522032.yclients.com/";
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
@@ -87,8 +90,8 @@ export function Navbar() {
         </nav>
 
         <div className="hidden md:block">
-          <Link
-            href="/contacts"
+          <button
+            onClick={() => openWidget(BOOKING_URL)}
             className={cn(
               "px-6 py-3 text-xs font-semibold uppercase tracking-widest transition-colors rounded",
               dark
@@ -97,7 +100,7 @@ export function Navbar() {
             )}
           >
             Записаться
-          </Link>
+          </button>
         </div>
 
         <button
@@ -152,13 +155,12 @@ export function Navbar() {
               transition={{ delay: navLinks.length * 0.06 + 0.15, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className="absolute bottom-10"
             >
-              <Link
-                href="/contacts"
-                onClick={() => setIsMobileMenuOpen(false)}
+              <button
+                onClick={() => { setIsMobileMenuOpen(false); openWidget(BOOKING_URL); }}
                 className="px-10 py-4 bg-black text-white text-xs font-semibold uppercase tracking-widest w-64 text-center block rounded"
               >
                 Записаться
-              </Link>
+              </button>
             </motion.div>
           </motion.div>
         )}

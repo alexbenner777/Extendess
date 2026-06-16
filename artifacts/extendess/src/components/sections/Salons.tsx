@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { MapPin, Clock, Phone, ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { Link } from "wouter";
 import { motion, AnimatePresence } from "framer-motion";
+import { useYClients } from "@/components/YClientsWidget";
 
 const salons = [
   {
@@ -93,9 +94,12 @@ function SalonMap() {
   return <div ref={containerRef} style={{ width: "100%", height: "100%" }} />;
 }
 
+const BOOKING_URL = "https://n522032.yclients.com/";
+
 export function Salons() {
   const [active, setActive] = useState(0);
   const [dir, setDir] = useState(1);
+  const { openWidget } = useYClients();
 
   const go = (next: number) => {
     setDir(next > active ? 1 : -1);
@@ -245,12 +249,12 @@ export function Salons() {
 
                 {/* CTA */}
                 <div className="flex items-center gap-3 mt-6">
-                  <Link
-                    href="/contacts"
+                  <button
+                    onClick={() => openWidget(BOOKING_URL)}
                     className="inline-flex items-center gap-2 bg-black text-white text-[9px] uppercase tracking-[0.3em] px-5 py-3.5 hover:bg-black/80 transition-colors duration-300 rounded"
                   >
                     Записаться <ArrowUpRight size={11} />
-                  </Link>
+                  </button>
                   <Link
                     href="/salons"
                     className="text-[9px] uppercase tracking-[0.3em] text-black/40 hover:text-black transition-colors border-b border-black/20 pb-0.5"

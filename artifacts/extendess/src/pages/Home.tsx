@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform, AnimatePresence, useMotionTemplate, useMotionValueEvent } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 import { Link } from "wouter";
+import { useYClients } from "@/components/YClientsWidget";
 import { ArrowUpRight } from "lucide-react";
 import {
   SplitText,
@@ -501,7 +502,10 @@ function InnovationsCarousel() {
   );
 }
 
+const BOOKING_URL = "https://n522032.yclients.com/";
+
 export default function Home() {
+  const { openWidget } = useYClients();
   const heroRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress: heroProgress } = useScroll({
@@ -570,13 +574,13 @@ export default function Home() {
               <p className="text-sm md:text-base text-white/70 max-w-md font-light leading-relaxed">
                 Сохраняя ДНК французской школы Dessange, мы создаём новое поколение beauty & wellness-пространств с международным уровнем сервиса
               </p>
-              <Link
-                href="/contacts"
+              <button
+                onClick={() => openWidget(BOOKING_URL)}
                 className="group inline-flex items-center gap-3 border border-white/30 backdrop-blur-xl bg-white/5 px-8 py-5 text-xs uppercase tracking-[0.3em] hover:bg-white hover:text-black transition-all duration-500 self-start rounded"
               >
                 Записаться
                 <ArrowUpRight size={16} className="transition-transform group-hover:rotate-45" />
-              </Link>
+              </button>
             </motion.div>
           </div>
         </motion.div>

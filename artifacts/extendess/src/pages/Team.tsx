@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Link } from "wouter";
 import { ArrowUpRight } from "lucide-react";
+import { useYClients } from "@/components/YClientsWidget";
 import {
   SplitText,
   FadeIn,
@@ -43,7 +44,10 @@ const members = [
   },
 ];
 
+const BOOKING_URL = "https://n522032.yclients.com/";
+
 export default function Team() {
+  const { openWidget } = useYClients();
   const [active, setActive] = useState(0);
 
   return (
@@ -176,12 +180,12 @@ export default function Team() {
             ))}
           </StaggerContainer>
           <FadeIn delay={0.4}>
-            <Link
-              href="/contacts"
+            <button
+              onClick={() => openWidget(BOOKING_URL)}
               className="mt-16 inline-flex items-center gap-3 border border-black/30 px-8 py-5 text-xs uppercase tracking-[0.3em] hover:bg-black hover:text-white transition-all duration-500"
             >
               Записаться к мастеру <ArrowUpRight size={16} />
-            </Link>
+            </button>
           </FadeIn>
         </div>
       </section>
