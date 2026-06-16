@@ -104,7 +104,7 @@ export function Navbar() {
         </div>
 
         <button
-          className="md:hidden transition-colors text-black/70"
+          className={cn("md:hidden transition-colors", isScrolled ? "text-black/70" : "text-white")}
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
