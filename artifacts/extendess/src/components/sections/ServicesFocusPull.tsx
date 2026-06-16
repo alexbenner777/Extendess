@@ -358,6 +358,18 @@ export function Services() {
           <ChevronRight size={16} strokeWidth={1.5} />
         </button>
 
+        {/* Bottom gradient fade — seamless into next section */}
+        <div style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          right: 0,
+          height: 120,
+          pointerEvents: "none",
+          zIndex: 20,
+          background: "linear-gradient(to bottom, transparent 0%, #F1EBE3 100%)",
+        }} />
+
         {/* Dots */}
         <div style={{
           position: "absolute",
