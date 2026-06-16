@@ -281,7 +281,11 @@ export function Services() {
                   if (offset === -1) prev();
                   else if (offset === 1) next();
                 }}
-                style={{ position: "absolute", inset: 0, transformStyle: "preserve-3d" }}
+                style={{
+                  position: "absolute", inset: 0, transformStyle: "preserve-3d",
+                  zIndex: offset === 0 ? 10 : Math.abs(offset) === 1 ? 6 : 2,
+                  pointerEvents: Math.abs(offset) > 1 ? "none" : "auto",
+                }}
               >
                 <ServiceCard svc={svc} offset={offset} />
               </div>
