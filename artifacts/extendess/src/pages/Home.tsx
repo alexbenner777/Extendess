@@ -606,9 +606,6 @@ export default function Home() {
       {/* BRAND EVOLUTION */}
       <BrandEvolution />
 
-      {/* Gradient seam: beige → white */}
-      <div className="h-32 bg-gradient-to-b from-[#F1EBE3] to-white pointer-events-none -mt-1" />
-
       {/* PHILOSOPHY */}
       <section className="py-16 md:py-28 px-6 md:px-16 md:-mt-24">
         <div className="max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-16 items-start">
@@ -651,9 +648,6 @@ export default function Home() {
         </div>
       </section>
 
-
-      {/* Gradient seam: white → beige */}
-      <div className="h-32 bg-gradient-to-b from-white to-[#F1EBE3] pointer-events-none -mb-1" />
 
       {/* FOCUS PULL — 3D cinematic services section */}
       <ServicesFocusPull />
