@@ -38,27 +38,23 @@ export function Navbar() {
     <motion.header
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out",
-        dark ? "py-3" : "py-4",
+        isScrolled ? "py-3" : "py-5",
       )}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.8, ease: "easeOut", delay: 0.5 }}
     >
-      {/* Liquid glass layer — always visible */}
-      <div
+      {/* Liquid glass layer — only on scroll */}
+      <motion.div
         className="absolute inset-0"
+        animate={{ opacity: isScrolled ? 1 : 0 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
         style={{
           backdropFilter: "blur(28px) saturate(200%) brightness(1.06)",
           WebkitBackdropFilter: "blur(28px) saturate(200%) brightness(1.06)",
-          background: dark
-            ? "linear-gradient(135deg, rgba(255,255,255,0.52) 0%, rgba(241,235,227,0.48) 60%, rgba(255,255,255,0.3) 100%)"
-            : "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.08) 60%, rgba(255,255,255,0.04) 100%)",
-          borderBottom: dark
-            ? "1px solid rgba(255,255,255,0.7)"
-            : "1px solid rgba(255,255,255,0.15)",
-          boxShadow: dark
-            ? "0 4px 32px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.85)"
-            : "0 2px 16px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.3)",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.52) 0%, rgba(241,235,227,0.48) 60%, rgba(255,255,255,0.3) 100%)",
+          borderBottom: "1px solid rgba(255,255,255,0.7)",
+          boxShadow: "0 4px 32px rgba(0,0,0,0.07), inset 0 1px 0 rgba(255,255,255,0.85)",
         }}
       />
 
