@@ -430,7 +430,7 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
             src={item.img}
             alt={item.title}
             style={{ scale: imgScale }}
-            className="w-auto max-w-[65%] max-h-[34vh] object-contain"
+            className="w-auto max-w-[78%] max-h-[42vh] object-contain"
           />
         </div>
 
