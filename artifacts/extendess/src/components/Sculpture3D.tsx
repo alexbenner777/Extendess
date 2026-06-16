@@ -60,7 +60,7 @@ function CoralModel() {
 
   return (
     <group ref={ref}>
-      <primitive object={scene} scale={0.75} dispose={null} />
+      <primitive object={scene} scale={0.85} dispose={null} />
     </group>
   );
 }
@@ -137,11 +137,11 @@ export function Sculpture3D() {
             <CoralModel />
 
             <ContactShadows
-              position={[0, -1.2, 0]}
-              opacity={0.18}
-              scale={2}
+              position={[0, -1.6, 0]}
+              opacity={0.22}
+              scale={2.5}
               blur={2.5}
-              far={1.2}
+              far={1.8}
               color="#7a6a5a"
             />
 
