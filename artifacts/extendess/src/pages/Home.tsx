@@ -423,33 +423,33 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
       className="absolute inset-0 flex items-center px-6 md:px-20"
     >
       {/* Mobile layout — image top, full text below */}
-      <div className="md:hidden w-full flex flex-col items-center pt-12 pb-4 gap-0">
+      <div className="md:hidden w-full flex flex-col items-center pt-8 pb-2">
         {/* Image */}
         <div className="w-full flex items-center justify-center">
           <motion.img
             src={item.img}
             alt={item.title}
-            style={{ scale: imgScale }}
-            className="w-auto max-w-[78%] max-h-[42vh] object-contain"
+            style={{ scale: imgScale, maxHeight: "30vh" }}
+            className="w-auto max-w-[70%] object-contain"
           />
         </div>
 
         {/* Text */}
-        <div className="w-full mt-5">
-          <div className="flex items-baseline gap-3 mb-3">
+        <div className="w-full mt-3">
+          <div className="flex items-baseline gap-2 mb-2">
             <span
-              className="font-extralight text-[2.8rem] leading-none select-none"
+              className="font-extralight text-[2.2rem] leading-none select-none"
               style={{ color: "rgba(26,26,26,0.07)" }}
             >
               0{index + 1}
             </span>
-            <span className="text-[7.5px] uppercase tracking-[0.45em] text-black/35 font-light">Инновации</span>
+            <span className="text-[7px] uppercase tracking-[0.45em] text-black/35 font-light">Инновации</span>
           </div>
-          <div className="w-6 h-px bg-black/25 mb-3" />
-          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2.2rem] mb-3">
+          <div className="w-5 h-px bg-black/25 mb-2" />
+          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[1.9rem] mb-2">
             {item.title}
           </h3>
-          <p className="font-light text-black/50 leading-[1.65]" style={{ fontSize: "13.5px" }}>
+          <p className="font-light text-black/50 leading-[1.6]" style={{ fontSize: "13.5px" }}>
             {item.description}
           </p>
         </div>
