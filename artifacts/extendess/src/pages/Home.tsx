@@ -570,15 +570,17 @@ export default function Home() {
             animate={{ opacity: showVideo ? 1 : 0 }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
           >
-            <video
-              ref={videoRef}
-              src="/images/hero2.mp4"
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="h-full w-full object-cover opacity-70"
-            />
+            <div className="absolute top-[-20%] bottom-[-20%] left-[-15%] right-[-15%] md:top-0 md:bottom-0 md:left-0 md:right-0">
+              <video
+                ref={videoRef}
+                src="/images/hero2.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
+                className="h-full w-full object-cover opacity-70"
+              />
+            </div>
           </motion.div>
 
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/80" />
