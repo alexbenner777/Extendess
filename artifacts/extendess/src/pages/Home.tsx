@@ -422,31 +422,34 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
       style={{ opacity, y }}
       className="absolute inset-0 flex items-center px-6 md:px-20"
     >
-      {/* Mobile layout */}
-      <div className="md:hidden w-full flex flex-col h-full pt-16 pb-6">
-        <div className="flex items-center gap-4 mb-3">
-          <span
-            className="font-extralight text-[4.5rem] leading-none select-none"
-            style={{ color: "rgba(26,26,26,0.06)" }}
-          >
-            0{index + 1}
-          </span>
-          <span className="text-[8px] uppercase tracking-[0.5em] text-black/40 font-light">Инновации</span>
-        </div>
-        <div className="flex-1 flex items-center justify-center min-h-0">
+      {/* Mobile layout — side by side */}
+      <div className="md:hidden w-full flex flex-row items-center gap-5 pt-14">
+        {/* Image — left column */}
+        <div className="w-[44%] flex-shrink-0 flex items-center justify-center">
           <motion.img
             src={item.img}
             alt={item.title}
             style={{ scale: imgScale }}
-            className="w-auto max-w-[75%] max-h-[42vh] object-contain"
+            className="w-full max-h-[56vh] object-contain drop-shadow-sm"
           />
         </div>
-        <div className="mt-4">
-          <div className="w-6 h-px bg-black/30 mb-4" />
-          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2.4rem]">
+
+        {/* Text — right column */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-baseline gap-2 mb-4">
+            <span
+              className="font-extralight text-[3.2rem] leading-none select-none"
+              style={{ color: "rgba(26,26,26,0.07)" }}
+            >
+              0{index + 1}
+            </span>
+            <span className="text-[7px] uppercase tracking-[0.45em] text-black/35 font-light">Инновации</span>
+          </div>
+          <div className="w-5 h-px bg-black/25 mb-4" />
+          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[1.85rem]">
             {item.title}
           </h3>
-          <p className="mt-3 text-sm font-light text-black/55 leading-relaxed line-clamp-3">
+          <p className="mt-3 text-[0.72rem] font-light text-black/50 leading-relaxed line-clamp-5">
             {item.description}
           </p>
         </div>
