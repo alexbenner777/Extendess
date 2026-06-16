@@ -577,7 +577,7 @@ export default function Home() {
               muted
               loop
               playsInline
-              className="h-full w-full object-cover opacity-70 origin-center scale-75 md:scale-100"
+              className="h-full w-full object-cover opacity-70"
             />
           </motion.div>
 
