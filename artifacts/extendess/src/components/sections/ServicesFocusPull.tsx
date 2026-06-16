@@ -56,7 +56,7 @@ const allServices = [
 ];
 
 const FACE_W = 390;
-const FACE_H = 530;
+const FACE_H = 570;
 
 function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: number }) {
   const absOffset = Math.abs(offset);
@@ -149,13 +149,13 @@ function ServiceCard({ svc, offset }: { svc: typeof allServices[0]; offset: numb
       }}>
         <div style={{ width: 24, height: 1, background: "rgba(0,0,0,0.18)", marginBottom: 9 }} />
         <h3 style={{
-          fontSize: 22, fontWeight: 200, lineHeight: 1.15,
+          fontSize: 26, fontWeight: 200, lineHeight: 1.15,
           letterSpacing: "-0.01em", color: "rgba(0,0,0,0.85)",
-          whiteSpace: "pre-line", marginBottom: 7,
+          whiteSpace: "pre-line", marginBottom: 8,
         }}>
           {svc.title}
         </h3>
-        <p style={{ fontSize: 12, color: "rgba(0,0,0,0.42)", lineHeight: 1.6, fontWeight: 300, marginBottom: 16 }}>
+        <p style={{ fontSize: 13.5, color: "rgba(0,0,0,0.42)", lineHeight: 1.6, fontWeight: 300, marginBottom: 16 }}>
           {svc.desc}
         </p>
         {offset === 0 && (
@@ -226,7 +226,7 @@ export function Services() {
     <section className="relative bg-[#F1EBE3] py-0" style={{ zIndex: 10 }}>
       <div
         className="relative overflow-hidden"
-        style={{ height: 680 }}
+        style={{ height: 720 }}
         onMouseDown={handleDragStart}
         onMouseUp={handleDragEnd}
         onTouchStart={handleDragStart}
