@@ -446,10 +446,10 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
             <span className="text-[7.5px] uppercase tracking-[0.45em] text-black/35 font-light">Инновации</span>
           </div>
           <div className="w-6 h-px bg-black/25 mb-3" />
-          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2rem] mb-3">
+          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2.2rem] mb-3">
             {item.title}
           </h3>
-          <p className="text-[0.7rem] font-light text-black/50 leading-[1.65]">
+          <p className="text-[0.82rem] font-light text-black/50 leading-[1.65]">
             {item.description}
           </p>
         </div>
