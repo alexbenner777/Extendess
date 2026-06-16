@@ -422,9 +422,38 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
       style={{ opacity, y }}
       className="absolute inset-0 flex items-center px-6 md:px-20"
     >
-      <div className="w-full max-w-7xl mx-auto grid md:grid-cols-12 gap-8 md:gap-20 items-center">
+      {/* Mobile layout */}
+      <div className="md:hidden w-full flex flex-col h-full pt-16 pb-6">
+        <div className="flex items-center gap-4 mb-3">
+          <span
+            className="font-extralight text-[4.5rem] leading-none select-none"
+            style={{ color: "rgba(26,26,26,0.06)" }}
+          >
+            0{index + 1}
+          </span>
+          <span className="text-[8px] uppercase tracking-[0.5em] text-black/40 font-light">Инновации</span>
+        </div>
+        <div className="flex-1 flex items-center justify-center min-h-0">
+          <motion.img
+            src={item.img}
+            alt={item.title}
+            style={{ scale: imgScale }}
+            className="w-auto max-w-[75%] max-h-[42vh] object-contain"
+          />
+        </div>
+        <div className="mt-4">
+          <div className="w-6 h-px bg-black/30 mb-4" />
+          <h3 className="font-extralight tracking-[-0.03em] leading-tight text-[2.4rem]">
+            {item.title}
+          </h3>
+          <p className="mt-3 text-sm font-light text-black/55 leading-relaxed line-clamp-3">
+            {item.description}
+          </p>
+        </div>
+      </div>
 
-        {/* Left: image */}
+      {/* Desktop layout */}
+      <div className="hidden md:grid w-full max-w-7xl mx-auto md:grid-cols-12 gap-20 items-center">
         <div className="md:col-span-5 flex items-center justify-center">
           <motion.img
             src={item.img}
@@ -433,12 +462,10 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
             className="w-full max-h-[70vh] object-contain"
           />
         </div>
-
-        {/* Right: text */}
         <div className="md:col-span-7">
           <div className="flex items-start gap-8 mb-8">
             <span
-              className="font-extralight text-[clamp(4rem,10vw,9rem)] leading-none text-black/06 select-none"
+              className="font-extralight text-[clamp(4rem,10vw,9rem)] leading-none select-none"
               style={{ color: "rgba(26,26,26,0.06)" }}
             >
               0{index + 1}
@@ -457,7 +484,6 @@ function InnovationPanel({ item, index, progress }: { item: typeof innovations[0
             {item.description}
           </p>
         </div>
-
       </div>
     </motion.div>
   );
